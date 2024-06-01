@@ -29,6 +29,10 @@
                     enable = true;
                   };
 
+                  packages = with pkgs; [
+                    goose
+                  ];
+
                   enterShell = ''
                     btcsupply shell started!
                   '';
