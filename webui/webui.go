@@ -124,7 +124,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 
 	var noteIDs []string
 	for _, loss := range losses {
-		noteIDs = append(noteIDs, fmt.Sprintf("output:%s:%s", loss.TxID, loss.Vout))
+		noteIDs = append(noteIDs, fmt.Sprintf("output:%s:%d", loss.TxID, loss.Vout))
 	}
 
 	for _, vout := range transaction.Vout {
