@@ -27,6 +27,7 @@ func (w *WebUI) Serve() {
 	router.GET("/", w.Index)
 	router.GET("/blocks", w.Blocks)
 	router.GET("/block/:hash", w.Block)
+	router.GET("/transaction/:hash", w.Transaction)
 
 	router.StaticFS("/static", http.FS(static.Static))
 
@@ -96,6 +97,53 @@ func (w *WebUI) Block(c *gin.Context) {
 		"Title":  fmt.Sprintf("Block %d - %s", block.BlockHeight, hash),
 		"Block":  block,
 		"Losses": losses,
+	})
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to render template")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+}
+
+func (w *WebUI) Transaction(c *gin.Context) {
+	hash := c.Param("hash")
+
+	losses, err := w.db.GetTransactionLosses(hash)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get transaction losses")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	transaction, err := w.db.GetTransactionDetail(hash)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get transaction")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	var noteIDs []string
+	for _, loss := range losses {
+		noteIDs = append(noteIDs, fmt.Sprintf("output:%s:%s", loss.TxID, loss.Vout))
+	}
+
+	for _, vout := range transaction.Vout {
+		noteIDs = append(noteIDs, fmt.Sprintf("address:%s", vout.ScriptPubKey.Hex))
+	}
+
+	notes, err := w.db.GetLossNotes(noteIDs)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get loss notes")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	tmpl := templates.New()
+	err = tmpl.Render(c.Writer, "transaction.tmpl", map[string]interface{}{
+		"Title":       "Transaction",
+		"Losses":      losses,
+		"Transaction": transaction,
+		"Notes":       notes,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")

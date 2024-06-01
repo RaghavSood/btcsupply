@@ -34,6 +34,20 @@ func (d *SqliteBackend) GetBlockLosses(hash string) ([]types.Loss, error) {
 	return losses, nil
 }
 
+func (d *SqliteBackend) GetTransactionLosses(hash string) ([]types.Loss, error) {
+	rows, err := d.db.Query("SELECT * FROM losses WHERE tx_id = ?", hash)
+	if err != nil {
+		return nil, err
+	}
+
+	losses, err := scanLosses(rows)
+	if err != nil {
+		return nil, err
+	}
+
+	return losses, nil
+}
+
 func scanLosses(rows *sql.Rows) ([]types.Loss, error) {
 	var losses []types.Loss
 	for rows.Next() {

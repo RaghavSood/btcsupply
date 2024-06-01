@@ -5,6 +5,7 @@ CREATE TABLE loss_notes (
     note_id TEXT NOT NULL,
     description TEXT NOT NULL,
     version INTEGER,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(note_id, version)
 );
 
