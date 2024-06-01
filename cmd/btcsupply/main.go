@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/RaghavSood/btcsupply/storage/sqlite"
+	"github.com/RaghavSood/btcsupply/webui"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -18,6 +19,11 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to open database")
 	}
+
+	webuiServer := webui.NewWebUI(db)
+
+	// Start the web server
+	webuiServer.Serve()
 
 	db.Close()
 }
