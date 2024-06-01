@@ -2,6 +2,7 @@ package sqlite
 
 import (
 	"database/sql"
+	"strings"
 
 	"github.com/RaghavSood/btcsupply/types"
 )
@@ -17,7 +18,12 @@ func (d *SqliteBackend) GetLossNote(noteID string) (types.LossNote, error) {
 }
 
 func (d *SqliteBackend) GetLossNotes(noteIDs []string) ([]types.LossNote, error) {
-	rows, err := d.db.Query("SELECT * FROM loss_notes WHERE note_id IN (?)", noteIDs)
+	anyNoteIDs := make([]interface{}, len(noteIDs))
+	for i, v := range noteIDs {
+		anyNoteIDs[i] = v
+	}
+
+	rows, err := d.db.Query("SELECT * FROM loss_notes WHERE note_id IN (?"+strings.Repeat(",?", len(noteIDs)-1)+")", anyNoteIDs...)
 	if err != nil {
 		return nil, err
 	}

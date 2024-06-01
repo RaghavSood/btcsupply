@@ -1,8 +1,86 @@
 {{ define "content" }}
 <div class="container mx-auto p-4">
-    <h2>Transaction: {{ .TxID }}</h2>
-    {{ template "input" . }}
-    <!-- ... additional transaction details ... -->
+  <h2 class="text-xl font-bold mb-4">Transaction Details</h2>
+
+        <!-- Transaction Summary -->
+        <div class="bg-gray-100 p-4 mb-4">
+            <h3 class="text-lg font-semibold">Transaction ID: {{ .Transaction.Txid }}</h3>
+            <p><strong>Block Hash:</strong> {{ .Transaction.Blockhash }}</p>
+            <p><strong>Confirmations:</strong> {{ .Transaction.Confirmations }}</p>
+            <p><strong>Time:</strong> {{ .Transaction.Time }}</p>
+        </div>
+
+        <!-- Transaction Inputs -->
+        <div class="mb-4">
+            <h3 class="text-lg font-semibold mb-2">Inputs</h3>
+            <table class="min-w-full bg-white border border-gray-200">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 border-b">Previous Output</th>
+                        <th class="px-4 py-2 border-b">Script Sig</th>
+                        <th class="px-4 py-2 border-b">Sequence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range .Transaction.Vin }}
+                    <tr>
+                        <td class="px-4 py-2 border-b">{{ .Txid }}:{{ .Vout }}</td>
+                        <td class="px-4 py-2 border-b">{{ .ScriptSig.Hex }}</td>
+                        <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Transaction Outputs -->
+        <div class="mb-4">
+            <h3 class="text-lg font-semibold mb-2">Outputs</h3>
+            <table class="min-w-full bg-white border border-gray-200">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 border-b">Index</th>
+                        <th class="px-4 py-2 border-b">Value (BTC)</th>
+                        <th class="px-4 py-2 border-b">Script Pub Key</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range $index, $vout := .Transaction.Vout }}
+                    <tr>
+                        <td class="px-4 py-2 border-b">{{ $index }}</td>
+                        <td class="px-4 py-2 border-b">{{ $vout.Value }}</td>
+                        <td class="px-4 py-2 border-b">{{ $vout.ScriptPubKey.Hex }}</td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Transaction-specific Notes -->
+        <div class="mb-4">
+            <h3 class="text-lg font-semibold mb-2">Transaction-specific Notes</h3>
+            {{ range .Notes }}
+                {{ if eq (slice .NoteID 0 6) "output" }}
+                <div class="bg-yellow-100 p-4 mb-2">
+                    <p><strong>Note ID:</strong> {{ .NoteID }}</p>
+                    <p>{{ .Description }}</p>
+                </div>
+                {{ end }}
+            {{ end }}
+        </div>
+
+        <!-- Address-specific Notes -->
+        <div class="mb-4">
+            <h3 class="text-lg font-semibold mb-2">Address-specific Notes</h3>
+            {{ range .Notes }}
+                {{ if eq (slice .NoteID 0 7) "address" }}
+                <div class="bg-green-100 p-4 mb-2">
+                    <p><strong>Address:</strong> {{ slice .NoteID 7 }}</p>
+                    <p>{{ .Description }}</p>
+                </div>
+                {{ end }}
+            {{ end }}
+        </div>
 </div>
 {{ end }}
 
