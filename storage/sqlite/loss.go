@@ -7,7 +7,7 @@ import (
 )
 
 func (d *SqliteBackend) GetRecentLosses(limit int) ([]types.Loss, error) {
-	rows, err := d.db.Query("SELECT * FROM losses ORDER BY timestamp DESC LIMIT ?", limit)
+	rows, err := d.db.Query("SELECT * FROM losses ORDER BY created_at DESC LIMIT ?", limit)
 	if err != nil {
 		return nil, err
 	}

@@ -1,13 +1,13 @@
 package webui
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/RaghavSood/btcsupply/static"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 )
 
 type WebUI struct {
@@ -30,12 +30,20 @@ func (w *WebUI) Serve() {
 }
 
 func (w *WebUI) Index(c *gin.Context) {
+	losses, err := w.db.GetRecentLosses(10)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get recent losses")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
 	tmpl := templates.New()
-	err := tmpl.Render(c.Writer, "index.tmpl", map[string]interface{}{
-		"Title": "Home",
+	err = tmpl.Render(c.Writer, "index.tmpl", map[string]interface{}{
+		"Title":  "Home",
+		"Losses": losses,
 	})
 	if err != nil {
-		fmt.Println(err)
+		log.Error().Err(err).Msg("Failed to render template")
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}

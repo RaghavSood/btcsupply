@@ -2,7 +2,9 @@ package types
 
 import (
 	"database/sql/driver"
+	"errors"
 	"math/big"
+	"strconv"
 )
 
 type BigInt struct {
@@ -24,10 +26,12 @@ func (b *BigInt) Scan(src interface{}) error {
 		s = src.(string)
 	case []byte:
 		s = string(src.([]byte))
+	case int64:
+		s = strconv.FormatInt(src.(int64), 10)
 	}
 	i, ok := new(big.Int).SetString(s, 10)
 	if !ok {
-		i = nil
+		return errors.New("Failed to parse BigInt")
 	}
 	b.Set(i)
 	return nil
