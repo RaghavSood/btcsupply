@@ -25,7 +25,9 @@ func (w *WebUI) Serve() {
 	router := gin.Default()
 
 	router.GET("/", w.Index)
+	router.GET("/blocks", w.Blocks)
 	router.GET("/block/:hash", w.Block)
+
 	router.StaticFS("/static", http.FS(static.Static))
 
 	router.Run(":8080")
@@ -50,6 +52,26 @@ func (w *WebUI) Index(c *gin.Context) {
 		return
 	}
 
+}
+
+func (w *WebUI) Blocks(c *gin.Context) {
+	blocks, err := w.db.GetLossyBlocks(10)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get lossy blocks")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	tmpl := templates.New()
+	err = tmpl.Render(c.Writer, "blocks.tmpl", map[string]interface{}{
+		"Title":  "Blocks",
+		"Blocks": blocks,
+	})
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to render template")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
 }
 
 func (w *WebUI) Block(c *gin.Context) {
