@@ -6,7 +6,7 @@
             <tr>
                 <th class="px-4 py-2 border-b">Transaction ID</th>
                 <th class="px-4 py-2 border-b">Block Hash</th>
-                <th class="px-4 py-2 border-b">Amount (Satoshis)</th>
+                <th class="px-4 py-2 border-b">Amount</th>
             </tr>
         </thead>
         <tbody>
@@ -14,7 +14,7 @@
             <tr>
                 <td class="px-4 py-2 border-b">{{ .TxID }}</td>
                 <td class="px-4 py-2 border-b">{{ .BlockHash }}</td>
-                <td class="px-4 py-2 border-b">{{ .Amount.String }}</td>
+                <td class="px-4 py-2 border-b">{{ .Amount.SatoshisToBTC }} BTC</td>
             </tr>
             {{ else }}
             <tr>

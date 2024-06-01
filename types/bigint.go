@@ -60,3 +60,14 @@ func (b *BigInt) UnmarshalJSON(data []byte) error {
 	b.Set(i)
 	return nil
 }
+
+func (b *BigInt) SatoshisToBTC() string {
+	if b == nil {
+		return "0"
+	}
+
+	// 1 BTC = 100,000,000 Satoshis
+	// 1 Satoshi = 0.00000001 BTC
+	btc := new(big.Float).Quo(new(big.Float).SetInt(b.BigInt()), big.NewFloat(100000000))
+	return btc.Text('f', 8) // 8 decimal places for BTC
+}
