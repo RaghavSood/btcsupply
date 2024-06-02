@@ -30,6 +30,16 @@ func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.Block, error) {
 	return blocks, nil
 }
 
+func (d *SqliteBackend) GetLatestBlock() (types.Block, error) {
+	var block types.Block
+	err := d.db.QueryRow("SELECT * FROM blocks ORDER BY block_height DESC LIMIT 1").Scan(&block.ID, &block.BlockHeight, &block.BlockHash, &block.BlockTimestamp, &block.ParentBlockHash, &block.NumTransactions, &block.BlockReward, &block.FeesReceived, &block.CreatedAt)
+	if err != nil {
+		return types.Block{}, err
+	}
+
+	return block, nil
+}
+
 func scanBlocks(rows *sql.Rows) ([]types.Block, error) {
 	var blocks []types.Block
 	for rows.Next() {

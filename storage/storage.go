@@ -9,6 +9,7 @@ type Storage interface {
 
 	GetLossyBlocks(limit int) ([]types.Block, error)
 	GetBlock(hash string) (types.Block, error)
+	GetLatestBlock() (types.Block, error)
 
 	GetLossNote(noteID string) (types.LossNote, error)
 	GetLossNotes(noteIDs []string) ([]types.LossNote, error)

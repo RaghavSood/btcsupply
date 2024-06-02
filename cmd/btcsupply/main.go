@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/RaghavSood/btcsupply/storage/sqlite"
+	"github.com/RaghavSood/btcsupply/tracker"
 	"github.com/RaghavSood/btcsupply/webui"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -16,10 +17,13 @@ func init() {
 
 func main() {
 	db, err := sqlite.NewSqliteBackend()
-	db.Close()
+	defer db.Close()
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to open database")
 	}
+
+	tracker := tracker.NewTracker(db)
+	go tracker.Run()
 
 	webuiServer := webui.NewWebUI(db)
 	webuiServer.Serve()
