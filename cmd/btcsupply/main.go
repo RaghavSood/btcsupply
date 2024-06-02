@@ -16,14 +16,11 @@ func init() {
 
 func main() {
 	db, err := sqlite.NewSqliteBackend()
+	db.Close()
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to open database")
 	}
 
 	webuiServer := webui.NewWebUI(db)
-
-	// Start the web server
 	webuiServer.Serve()
-
-	db.Close()
 }
