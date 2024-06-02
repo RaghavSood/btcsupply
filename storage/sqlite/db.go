@@ -8,13 +8,13 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/pressly/goose/v3"
-	"github.com/rs/zerolog/log"
+	zlog "github.com/rs/zerolog/log"
 )
 
 //go:embed migrations/*.sql
 var embeddedMigrations embed.FS
 
-var logger = log.With().Str("module", "sqlite").Logger()
+var log = zlog.Logger.With().Str("module", "sqlite").Logger()
 
 type SqliteBackend struct {
 	db *sql.DB

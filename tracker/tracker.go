@@ -1,15 +1,17 @@
 package tracker
 
 import (
+	"database/sql"
 	"os"
 	"time"
 
 	"github.com/RaghavSood/btcsupply/bitcoinrpc"
 	"github.com/RaghavSood/btcsupply/storage"
-	"github.com/rs/zerolog/log"
+	"github.com/RaghavSood/btcsupply/types"
+	zlog "github.com/rs/zerolog/log"
 )
 
-var logger = log.With().Str("module", "tracker").Logger()
+var log = zlog.With().Str("module", "tracker").Logger()
 
 type Tracker struct {
 	db     storage.Storage
@@ -24,7 +26,7 @@ func NewTracker(db storage.Storage) *Tracker {
 }
 
 func (t *Tracker) Run() {
-	logger.Info().Msg("Starting tracker")
+	log.Info().Msg("Starting tracker")
 
 	ticker := time.NewTicker(1 * time.Minute)
 	defer ticker.Stop()
@@ -32,20 +34,27 @@ func (t *Tracker) Run() {
 	for {
 		select {
 		case <-ticker.C:
-			logger.Debug().Msg("Checking for new blocks")
+			log.Info().Msg("Checking for new blocks")
 			info, err := t.client.GetBlockchainInfo()
 			if err != nil {
-				logger.Error().Err(err).Msg("Failed to get blockchain info")
+				log.Error().Err(err).Msg("Failed to get blockchain info")
 				continue
 			}
 
 			latestBlock, err := t.db.GetLatestBlock()
+			if err == sql.ErrNoRows {
+				latestBlock = types.Block{
+					BlockHeight: -1,
+				}
+				log.Info().Msg("No blocks found in database, starting initial sync")
+				err = nil
+			}
 			if err != nil {
-				logger.Error().Err(err).Msg("Failed to get latest block")
+				log.Error().Err(err).Msg("Failed to get latest block")
 				continue
 			}
 
-			logger.Info().
+			log.Info().
 				Int("latest_block", latestBlock.BlockHeight).
 				Int("current_block", info.Blocks).
 				Msg("Checking for new blocks")
