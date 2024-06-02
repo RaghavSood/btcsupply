@@ -14,6 +14,14 @@
         <div class="mb-4">
             <h3 class="text-lg font-semibold mb-2">Inputs</h3>
             <table class="min-w-full bg-white border border-gray-200">
+              {{ if (index .Transaction.Vin 0).Coinbase }}
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 border-b">Coinbase</th>
+                        <th class="px-4 py-2 border-b">Sequence</th>
+                    </tr>
+                </thead>
+              {{ else }}
                 <thead>
                     <tr>
                         <th class="px-4 py-2 border-b">Previous Output</th>
@@ -21,12 +29,18 @@
                         <th class="px-4 py-2 border-b">Sequence</th>
                     </tr>
                 </thead>
+              {{ end }}
                 <tbody>
                     {{ range .Transaction.Vin }}
                     <tr>
-                        <td class="px-4 py-2 border-b">{{ .Txid }}:{{ .Vout }}</td>
-                        <td class="px-4 py-2 border-b">{{ .ScriptSig.Hex }}</td>
-                        <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
+                      {{ if .Coinbase }}
+                      <td class="px-4 py-2 border-b">{{ .Coinbase }}</td>
+                      <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
+                      {{ else }}
+                      <td class="px-4 py-2 border-b">{{ .Txid }}:{{ .Vout }}</td>
+                      <td class="px-4 py-2 border-b">{{ .ScriptSig.Hex }}</td>
+                      <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
+                      {{ end }}
                     </tr>
                     {{ end }}
                 </tbody>
@@ -62,8 +76,8 @@
             {{ range .Notes }}
                 {{ if eq (slice .NoteID 0 6) "output" }}
                 <div class="bg-yellow-100 p-4 mb-2">
-                    <p><strong>Note ID:</strong> {{ .NoteID }}</p>
-                    <p>{{ .Description }}</p>
+                    <p><strong>Note ID:</strong> {{ slice .NoteID 6 }}</p>
+                    <p>{{ .Description | NoEscape }}</p>
                 </div>
                 {{ end }}
             {{ end }}

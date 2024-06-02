@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/RaghavSood/btcsupply/notes"
 	"github.com/RaghavSood/btcsupply/static"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/templates"
+	"github.com/RaghavSood/btcsupply/types"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
@@ -135,11 +137,22 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		noteIDs = append(noteIDs, fmt.Sprintf("address:%s", vout.ScriptPubKey.Hex))
 	}
 
-	notes, err := w.db.GetLossNotes(noteIDs)
+	rawNotes, err := w.db.GetLossNotes(noteIDs)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get loss notes")
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
+	}
+
+	var renderedNotes []types.LossNote
+	for _, note := range rawNotes {
+		renderedNote := types.LossNote{
+			NoteID:      note.NoteID,
+			Description: notes.RenderNote(note),
+			CreatedAt:   note.CreatedAt,
+			Version:     note.Version,
+		}
+		renderedNotes = append(renderedNotes, renderedNote)
 	}
 
 	tmpl := templates.New()
@@ -147,7 +160,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		"Title":       "Transaction",
 		"Losses":      losses,
 		"Transaction": transaction,
-		"Notes":       notes,
+		"Notes":       renderedNotes,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")

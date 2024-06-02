@@ -27,7 +27,8 @@ type TransactionDetail struct {
 				Type    string `json:"type"`
 			} `json:"scriptPubKey"`
 		} `json:"prevout"`
-		Sequence int64 `json:"sequence"`
+		Sequence int64  `json:"sequence"`
+		Coinbase string `json:"coinbase"`
 	} `json:"vin"`
 	Vout []struct {
 		Value        float64 `json:"value"`
