@@ -6,6 +6,8 @@
           <tr>
               <th class="px-4 py-2 border-b">Block Height</th>
               <th class="px-4 py-2 border-b">Subsidy (BTC)</th>
+              <th class="px-4 py-2 border-b">Subsidy (sats)</th>
+              <th class="px-4 py-2 border-b">Binary</th>
           </tr>
       </thead>
       <tbody>
@@ -13,6 +15,8 @@
           <tr>
               <td class="px-4 py-2 border-b">{{ .Height }}</td>
               <td class="px-4 py-2 border-b">{{ Int64ToBTC .Subsidy }}</td>
+              <td class="px-4 py-2 border-b text-right">{{ .Subsidy }}</td>
+              <td class="px-4 py-2 border-b">{{ printf "%b" .Subsidy }}</td>
           </tr>
           {{ end }}
       </tbody>
