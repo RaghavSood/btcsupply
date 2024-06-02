@@ -34,3 +34,32 @@ func (rpc *RpcClient) GetBlockchainInfo() (types.BlockchainInfo, error) {
 
 	return info, nil
 }
+
+func (rpc *RpcClient) GetBlockStats(height int64) (types.BlockStats, error) {
+	result, err := rpc.Do("getblockstats", []interface{}{height})
+	if err != nil {
+		return types.BlockStats{}, err
+	}
+
+	var stats types.BlockStats
+	if err := json.Unmarshal(result, &stats); err != nil {
+		return types.BlockStats{}, fmt.Errorf("failed to unmarshal getblockstats response: %v", err)
+	}
+
+	return stats, nil
+}
+
+func (rpc *RpcClient) GetBlock(hash string) (types.Block, error) {
+	// Ensure we always get the block in the most verbose mode
+	result, err := rpc.Do("getblock", []interface{}{hash, 3})
+	if err != nil {
+		return types.Block{}, err
+	}
+
+	var block types.Block
+	if err := json.Unmarshal(result, &block); err != nil {
+		return types.Block{}, fmt.Errorf("failed to unmarshal getblock response: %v", err)
+	}
+
+	return block, nil
+}

@@ -1,7 +1,7 @@
 package types
 
 type Coinstats struct {
-	Height                 int       `json:"height"`
+	Height                 int64     `json:"height"`
 	Bestblock              string    `json:"bestblock"`
 	Txouts                 int       `json:"txouts"`
 	Bogosize               int       `json:"bogosize"`
