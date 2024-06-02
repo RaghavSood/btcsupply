@@ -25,9 +25,13 @@ func (w *WebUI) Serve() {
 	router := gin.Default()
 
 	router.GET("/", w.Index)
+
 	router.GET("/blocks", w.Blocks)
 	router.GET("/block/:hash", w.Block)
+
 	router.GET("/transaction/:hash", w.Transaction)
+
+	router.GET("/schedule", w.HalvingSchedule)
 
 	router.StaticFS("/static", http.FS(static.Static))
 

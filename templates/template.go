@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"io"
 	"time"
+
+	"github.com/RaghavSood/btcsupply/util"
 )
 
 //go:embed *
@@ -16,7 +18,8 @@ type Template struct {
 
 func New() *Template {
 	funcMap := template.FuncMap{
-		"now": func() interface{} { return time.Now() },
+		"now":        func() interface{} { return time.Now() },
+		"Int64ToBTC": util.Int64ToBTC,
 	}
 
 	templates := template.Must(template.New("").Funcs(funcMap).ParseFS(Templates, "footer.tmpl", "header.tmpl", "base.tmpl"))

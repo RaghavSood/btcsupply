@@ -1,0 +1,21 @@
+{{ define "content" }}
+<div class="container mx-auto p-4">
+  <h2 class="text-xl font-bold mb-4">Bitcoin Halving Schedule</h2>
+  <table class="min-w-full bg-white border border-gray-200">
+      <thead>
+          <tr>
+              <th class="px-4 py-2 border-b">Block Height</th>
+              <th class="px-4 py-2 border-b">Subsidy (BTC)</th>
+          </tr>
+      </thead>
+      <tbody>
+          {{ range .Schedule }}
+          <tr>
+              <td class="px-4 py-2 border-b">{{ .Height }}</td>
+              <td class="px-4 py-2 border-b">{{ Int64ToBTC .Subsidy }}</td>
+          </tr>
+          {{ end }}
+      </tbody>
+  </table>
+</div>
+{{ end }}

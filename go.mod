@@ -3,6 +3,7 @@ module github.com/RaghavSood/btcsupply
 go 1.22.3
 
 require (
+	github.com/RaghavSood/blockreward v0.0.0-20240602022227-3963806d10e6
 	github.com/gin-gonic/gin v1.10.0
 	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/pressly/goose/v3 v3.20.0
