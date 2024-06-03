@@ -8,6 +8,7 @@ import (
 	"github.com/RaghavSood/btcsupply/bitcoinrpc"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/types"
+	"github.com/RaghavSood/btcsupply/util"
 	zlog "github.com/rs/zerolog/log"
 )
 
@@ -93,10 +94,7 @@ func (t *Tracker) processBlock(height int) error {
 		Float64("total_amount", coinStats.TotalAmount).
 		Float64("total_unspendable_amount", coinStats.TotalUnspendableAmount).
 		Str("bestblock", coinStats.Bestblock).
-		Int("txouts", coinStats.Txouts).
 		Float64("coinbase", coinStats.BlockInfo.Coinbase).
-		Float64("prevout_spent", coinStats.BlockInfo.PrevoutSpent).
-		Float64("new_outputs_ex_coinbase", coinStats.BlockInfo.NewOutputsExCoinbase).
 		Float64("unspendable", coinStats.BlockInfo.Unspendable).
 		Float64("genesis_block", coinStats.BlockInfo.Unspendables.GenesisBlock).
 		Float64("bip30", coinStats.BlockInfo.Unspendables.Bip30).
@@ -114,6 +112,22 @@ func (t *Tracker) processBlock(height int) error {
 		Int("nTx", block.NTx).
 		Int64("height", block.Height).
 		Msg("Block")
+
+	feesAccumulated := blockStats.Totalfee
+	coinbaseEntitlement := blockStats.Subsidy
+
+	coinbaseMinted := util.FloatBTCToSats(coinStats.BlockInfo.Coinbase)
+
+	if coinbaseMinted != coinbaseEntitlement+feesAccumulated {
+		log.Warn().
+			Int64("coinbase_minted", coinbaseMinted).
+			Int64("coinbase_entitlement", coinbaseEntitlement).
+			Msg("Coinbase mismatch")
+	}
+
+	if coinStats.BlockInfo.Unspendables.Scripts != 0 {
+		log.Warn().Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).Msg("Unspendable scripts")
+	}
 
 	return nil
 }
