@@ -2,8 +2,8 @@ package types
 
 type BlockchainInfo struct {
 	Chain                string  `json:"chain"`
-	Blocks               int     `json:"blocks"`
-	Headers              int     `json:"headers"`
+	Blocks               int64   `json:"blocks"`
+	Headers              int64   `json:"headers"`
 	Bestblockhash        string  `json:"bestblockhash"`
 	Difficulty           float64 `json:"difficulty"`
 	Time                 int     `json:"time"`

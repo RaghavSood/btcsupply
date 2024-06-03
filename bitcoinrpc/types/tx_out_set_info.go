@@ -1,6 +1,6 @@
 package types
 
-type Coinstats struct {
+type TxOutSetInfo struct {
 	Height                 int64     `json:"height"`
 	Bestblock              string    `json:"bestblock"`
 	Txouts                 int       `json:"txouts"`

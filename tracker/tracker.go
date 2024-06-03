@@ -2,6 +2,7 @@ package tracker
 
 import (
 	"database/sql"
+	"fmt"
 	"os"
 	"time"
 
@@ -56,14 +57,14 @@ func (t *Tracker) Run() {
 			}
 
 			log.Info().
-				Int("latest_block", latestBlock.BlockHeight).
-				Int("current_block", info.Blocks).
+				Int64("latest_block", latestBlock.BlockHeight).
+				Int64("current_block", info.Blocks).
 				Msg("Checking for new blocks")
 
 			for i := latestBlock.BlockHeight + 1; i <= info.Blocks; i++ {
 				err = t.processBlock(i)
 				if err != nil {
-					log.Error().Err(err).Int("block_height", i).Msg("Failed to process block")
+					log.Error().Err(err).Int64("block_height", i).Msg("Failed to process block")
 					break
 				}
 			}
@@ -71,8 +72,8 @@ func (t *Tracker) Run() {
 	}
 }
 
-func (t *Tracker) processBlock(height int) error {
-	log.Info().Int("block_height", height).Msg("Processing block")
+func (t *Tracker) processBlock(height int64) error {
+	log.Info().Int64("block_height", height).Msg("Processing block")
 	blockStats, err := t.client.GetBlockStats(int64(height))
 	if err != nil {
 		return err
@@ -127,6 +128,11 @@ func (t *Tracker) processBlock(height int) error {
 
 	if coinStats.BlockInfo.Unspendables.Scripts != 0 {
 		log.Warn().Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).Msg("Unspendable scripts")
+	}
+
+	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), coinStats, blockStats)
+	if err != nil {
+		return fmt.Errorf("failed to record block index results: %v", err)
 	}
 
 	return nil

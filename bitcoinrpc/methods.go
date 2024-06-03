@@ -7,15 +7,15 @@ import (
 	"github.com/RaghavSood/btcsupply/bitcoinrpc/types"
 )
 
-func (rpc *RpcClient) GetTxOutSetInfo(hashType string, blockHeight int64, useIndex bool) (types.Coinstats, error) {
+func (rpc *RpcClient) GetTxOutSetInfo(hashType string, blockHeight int64, useIndex bool) (types.TxOutSetInfo, error) {
 	result, err := rpc.Do("gettxoutsetinfo", []interface{}{hashType, blockHeight, useIndex})
 	if err != nil {
-		return types.Coinstats{}, err
+		return types.TxOutSetInfo{}, err
 	}
 
-	var stats types.Coinstats
+	var stats types.TxOutSetInfo
 	if err := json.Unmarshal(result, &stats); err != nil {
-		return types.Coinstats{}, fmt.Errorf("failed to unmarshal gettxoutsetinfo response: %v", err)
+		return types.TxOutSetInfo{}, fmt.Errorf("failed to unmarshal gettxoutsetinfo response: %v", err)
 	}
 
 	return stats, nil

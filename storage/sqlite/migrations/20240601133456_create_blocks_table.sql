@@ -7,8 +7,6 @@ CREATE TABLE blocks (
     block_timestamp DATETIME NOT NULL,
     parent_block_hash TEXT NOT NULL,
     num_transactions INTEGER NOT NULL,
-    block_reward INTEGER NOT NULL,
-    fees_received INTEGER NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX idx_block_hash ON blocks (block_hash);

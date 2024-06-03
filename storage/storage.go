@@ -1,6 +1,9 @@
 package storage
 
-import "github.com/RaghavSood/btcsupply/types"
+import (
+	btypes "github.com/RaghavSood/btcsupply/bitcoinrpc/types"
+	"github.com/RaghavSood/btcsupply/types"
+)
 
 type Storage interface {
 	GetRecentLosses(limit int) ([]types.Loss, error)
@@ -15,4 +18,6 @@ type Storage interface {
 	GetLossNotes(noteIDs []string) ([]types.LossNote, error)
 
 	GetTransactionDetail(hash string) (types.TransactionDetail, error)
+
+	RecordBlockIndexResults(block types.Block, txoutset btypes.TxOutSetInfo, blockstats btypes.BlockStats) error
 }
