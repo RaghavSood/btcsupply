@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/RaghavSood/btcsupply/bitcoinrpc"
+	"github.com/RaghavSood/btcsupply/bloomfilter"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/types"
 	"github.com/RaghavSood/btcsupply/util"
@@ -20,17 +21,33 @@ var log = zlog.With().Str("module", "tracker").Logger()
 type Tracker struct {
 	db     storage.Storage
 	client *bitcoinrpc.RpcClient
+	bf     *bloomfilter.BloomFilter
 }
 
 func NewTracker(db storage.Storage) *Tracker {
 	return &Tracker{
 		db:     db,
 		client: bitcoinrpc.NewRpcClient(os.Getenv("BITCOIND_HOST"), os.Getenv("BITCOIND_USER"), os.Getenv("BITCOIND_PASS")),
+		bf:     bloomfilter.NewBloomFilter(),
 	}
 }
 
 func (t *Tracker) Run() {
 	log.Info().Msg("Starting tracker")
+
+	log.Info().Msg("Loading burn scripts from database")
+	burnScripts, err := t.db.GetOnlyBurnScripts()
+	if err == sql.ErrNoRows {
+		log.Info().Msg("No burn scripts found in database")
+		err = nil
+	}
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to load burn scripts")
+	} else {
+		log.Info().Int("count", len(burnScripts)).Msg("Loading burn scripts into bloom filter")
+		t.bf.AddStrings(burnScripts)
+		log.Info().Int("count", len(burnScripts)).Msg("Burn scripts loaded")
+	}
 
 	ticker := time.NewTicker(1 * time.Minute)
 	defer ticker.Stop()

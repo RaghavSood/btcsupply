@@ -4,6 +4,26 @@ import (
 	"github.com/RaghavSood/btcsupply/types"
 )
 
+func (d *SqliteBackend) GetOnlyBurnScripts() ([]string, error) {
+	var scripts []string
+	rows, err := d.db.Query("SELECT script FROM burn_scripts")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var script string
+		err = rows.Scan(&script)
+		if err != nil {
+			return nil, err
+		}
+		scripts = append(scripts, script)
+	}
+
+	return scripts, nil
+}
+
 func (d *SqliteBackend) GetBurnScripts() ([]types.BurnScript, error) {
 	var scripts []types.BurnScript
 	rows, err := d.db.Query("SELECT * FROM burn_scripts")
