@@ -8,7 +8,6 @@ import (
 	"github.com/RaghavSood/btcsupply/static"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/templates"
-	"github.com/RaghavSood/btcsupply/types"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
@@ -128,39 +127,30 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		return
 	}
 
-	var noteIDs []string
+	var notePointers []notes.NotePointer
 	for _, loss := range losses {
-		noteIDs = append(noteIDs, fmt.Sprintf("output:%s:%d", loss.TxID, loss.Vout))
+		notePointers = append(notePointers, notes.NotePointer{
+			NoteType:     notes.Output,
+			PathElements: []string{loss.TxID, fmt.Sprintf("%d", loss.Vout)},
+		})
+
 	}
 
 	for _, vout := range transaction.Vout {
-		noteIDs = append(noteIDs, fmt.Sprintf("address:%s", vout.ScriptPubKey.Hex))
+		notePointers = append(notePointers, notes.NotePointer{
+			NoteType:     notes.Script,
+			PathElements: []string{vout.ScriptPubKey.Hex},
+		})
 	}
 
-	rawNotes, err := w.db.GetLossNotes(noteIDs)
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to get loss notes")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
-
-	var renderedNotes []types.LossNote
-	for _, note := range rawNotes {
-		renderedNote := types.LossNote{
-			NoteID:      note.NoteID,
-			Description: notes.RenderNote(note),
-			CreatedAt:   note.CreatedAt,
-			Version:     note.Version,
-		}
-		renderedNotes = append(renderedNotes, renderedNote)
-	}
+	notes := notes.ReadNotes(notePointers)
 
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "transaction.tmpl", map[string]interface{}{
 		"Title":       "Transaction",
 		"Losses":      losses,
 		"Transaction": transaction,
-		"Notes":       renderedNotes,
+		"Notes":       notes,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")

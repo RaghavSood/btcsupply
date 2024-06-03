@@ -74,10 +74,10 @@
         <div class="mb-4">
             <h3 class="text-lg font-semibold mb-2">Transaction-specific Notes</h3>
             {{ range .Notes }}
-                {{ if eq (slice .NoteID 0 6) "output" }}
+                {{ if eq .Type "output" }}
                 <div class="bg-yellow-100 p-4 mb-2">
-                    <p><strong>Note ID:</strong> {{ slice .NoteID 6 }}</p>
-                    <p>{{ .Description | NoEscape }}</p>
+                    <p><strong>Note ID:</strong> {{ .NoteID }}</p>
+                    <p>{{ .Data | NoEscape }}</p>
                 </div>
                 {{ end }}
             {{ end }}
@@ -87,10 +87,10 @@
         <div class="mb-4">
             <h3 class="text-lg font-semibold mb-2">Address-specific Notes</h3>
             {{ range .Notes }}
-                {{ if eq (slice .NoteID 0 7) "address" }}
+                {{ if eq .Type "script" }}
                 <div class="bg-green-100 p-4 mb-2">
-                    <p><strong>Address:</strong> {{ slice .NoteID 7 }}</p>
-                    <p>{{ .Description }}</p>
+                    <p><strong>Script:</strong> {{ .NoteID }}</p>
+                    <p>{{ .Data | NoEscape }}</p>
                 </div>
                 {{ end }}
             {{ end }}
