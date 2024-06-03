@@ -5,6 +5,6 @@ import "time"
 type BurnScript struct {
 	Script          string    `json:"script"`
 	ConfidenceLevel string    `json:"confidence_level"`
-	Provence        string    `json:"provence"`
+	Provenance      string    `json:"provenance"`
 	CreatedAt       time.Time `json:"created_at"`
 }
