@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/RaghavSood/btcsupply/bitcoinrpc"
+	btypes "github.com/RaghavSood/btcsupply/bitcoinrpc/types"
 	"github.com/RaghavSood/btcsupply/bloomfilter"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/types"
@@ -170,10 +171,56 @@ func (t *Tracker) processBlock(height int64) error {
 		log.Warn().Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).Msg("Unspendable scripts")
 	}
 
+	txLosses, txTransactions := t.scanTransactions(block.Hash, block.Tx)
+
+	losses = append(losses, txLosses...)
+	transactions = append(transactions, txTransactions...)
+
 	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), types.FromRPCTxOutSetInfo(coinStats), blockStats, losses, transactions)
 	if err != nil {
 		return fmt.Errorf("failed to record block index results: %v", err)
 	}
 
 	return nil
+}
+
+func (t *Tracker) scanTransactions(blockhash string, transactions []btypes.TransactionDetail) ([]types.Loss, []types.Transaction) {
+	var losses []types.Loss
+	var txs []types.Transaction
+
+	for _, tx := range transactions {
+		for _, vout := range tx.Vout {
+			if t.bf.TestString(vout.ScriptPubKey.Hex) {
+				exists, err := t.db.BurnScriptExists(vout.ScriptPubKey.Hex)
+				if err != nil {
+					log.Error().Err(err).Str("script", vout.ScriptPubKey.Hex).Msg("Failed to check if script exists")
+					continue
+				}
+
+				log.Info().Str("script", vout.ScriptPubKey.Hex).Bool("exists", exists).Msg("Burn script identified")
+
+				if exists {
+					jsonTx, err := json.Marshal(tx)
+					if err != nil {
+						log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to marshal transaction")
+						continue
+					}
+
+					losses = append(losses, types.Loss{
+						TxID:      tx.Txid,
+						BlockHash: blockhash,
+						Vout:      vout.N,
+						Amount:    types.FromBTCFloat64(vout.Value),
+					})
+
+					txs = append(txs, types.Transaction{
+						TxID:               tx.Txid,
+						TransactionDetails: string(jsonTx),
+					})
+				}
+			}
+		}
+	}
+
+	return losses, txs
 }

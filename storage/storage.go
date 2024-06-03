@@ -20,4 +20,5 @@ type Storage interface {
 
 	GetOnlyBurnScripts() ([]string, error)
 	GetBurnScripts() ([]types.BurnScript, error)
+	BurnScriptExists(script string) (bool, error)
 }

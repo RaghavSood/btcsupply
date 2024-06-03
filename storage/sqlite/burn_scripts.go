@@ -43,3 +43,12 @@ func (d *SqliteBackend) GetBurnScripts() ([]types.BurnScript, error) {
 
 	return scripts, nil
 }
+
+func (d *SqliteBackend) BurnScriptExists(script string) (bool, error) {
+	var exists bool
+	err := d.db.QueryRow("SELECT EXISTS(SELECT 1 FROM burn_scripts WHERE script = ?)", script).Scan(&exists)
+	if err != nil {
+		return false, err
+	}
+	return exists, nil
+}
