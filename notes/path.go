@@ -34,7 +34,6 @@ func DeriveNotePath(noteType NoteType, elements ...string) (string, error) {
 	hash := sha256.Sum256([]byte(noteID))
 	hashStr := hex.EncodeToString(hash[:])
 
-	dir := "notes/" + noteType
-	filePath := fmt.Sprintf("%s/%s.md", dir, hashStr)
+	filePath := fmt.Sprintf("%s/%s.md", noteType, hashStr)
 	return filePath, nil
 }
