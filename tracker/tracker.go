@@ -130,7 +130,7 @@ func (t *Tracker) processBlock(height int64) error {
 		log.Warn().Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).Msg("Unspendable scripts")
 	}
 
-	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), coinStats, blockStats)
+	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), types.FromRPCTxOutSetInfo(coinStats), blockStats)
 	if err != nil {
 		return fmt.Errorf("failed to record block index results: %v", err)
 	}

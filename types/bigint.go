@@ -5,14 +5,23 @@ import (
 	"errors"
 	"math/big"
 	"strconv"
+
+	"github.com/RaghavSood/btcsupply/util"
 )
 
+// TODO: Fix pointer/non-pointer issues
 type BigInt struct {
 	big.Int
 }
 
 func FromMathBigInt(i *big.Int) *BigInt {
 	return &BigInt{*i}
+}
+
+func FromBTCFloat64(f float64) BigInt {
+	i64sats := util.FloatBTCToSats(f)
+	i := new(big.Int).SetInt64(i64sats)
+	return BigInt{*i}
 }
 
 func (b *BigInt) BigInt() *big.Int {
@@ -37,11 +46,9 @@ func (b *BigInt) Scan(src interface{}) error {
 	return nil
 }
 
-func (b *BigInt) Value() (driver.Value, error) {
+func (b BigInt) Value() (driver.Value, error) {
 	var s = `0`
-	if b != nil {
-		s = b.String()
-	}
+	s = b.String()
 	return s, nil
 }
 

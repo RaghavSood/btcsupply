@@ -4,7 +4,7 @@ type TxOutSetInfo struct {
 	Height                 int64     `json:"height"`
 	Bestblock              string    `json:"bestblock"`
 	Txouts                 int       `json:"txouts"`
-	Bogosize               int       `json:"bogosize"`
+	Bogosize               int64     `json:"bogosize"`
 	Muhash                 string    `json:"muhash"`
 	TotalAmount            float64   `json:"total_amount"`
 	TotalUnspendableAmount float64   `json:"total_unspendable_amount"`
