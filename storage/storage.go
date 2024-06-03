@@ -16,7 +16,7 @@ type Storage interface {
 
 	GetTransactionDetail(hash string) (types.TransactionDetail, error)
 
-	RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats, losses []types.Loss, transactions []types.Transaction) error
+	RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats, losses []types.Loss, transactions []types.Transaction, spentTxids []string, spentVouts []int) error
 
 	GetOnlyBurnScripts() ([]string, error)
 	GetBurnScripts() ([]types.BurnScript, error)

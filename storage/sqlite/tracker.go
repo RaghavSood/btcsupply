@@ -7,7 +7,7 @@ import (
 	"github.com/RaghavSood/btcsupply/types"
 )
 
-func (d *SqliteBackend) RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats, losses []types.Loss, transactions []types.Transaction) error {
+func (d *SqliteBackend) RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats, losses []types.Loss, transactions []types.Transaction, spentTxids []string, spentVouts []int) error {
 	tx, err := d.db.Begin()
 	if err != nil {
 		return fmt.Errorf("failed to start transaction: %v", err)
@@ -49,6 +49,15 @@ func (d *SqliteBackend) RecordBlockIndexResults(block types.Block, txoutset type
 		if err != nil {
 			tx.Rollback()
 			return fmt.Errorf("failed to insert transaction record: %v", err)
+		}
+	}
+
+	// Remove any previously recorded outputs that were spent in this block
+	for i := range spentTxids {
+		_, err = tx.Exec("DELETE FROM losses WHERE tx_id = ? AND vout = ?", spentTxids[i], spentVouts[i])
+		if err != nil {
+			tx.Rollback()
+			return fmt.Errorf("failed to delete spent output: %v", err)
 		}
 	}
 

@@ -171,12 +171,12 @@ func (t *Tracker) processBlock(height int64) error {
 		log.Warn().Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).Msg("Unspendable scripts")
 	}
 
-	txLosses, txTransactions := t.scanTransactions(block.Hash, block.Tx)
+	txLosses, txTransactions, spentTxids, spentVouts := t.scanTransactions(block.Hash, block.Tx)
 
 	losses = append(losses, txLosses...)
 	transactions = append(transactions, txTransactions...)
 
-	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), types.FromRPCTxOutSetInfo(coinStats), blockStats, losses, transactions)
+	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), types.FromRPCTxOutSetInfo(coinStats), blockStats, losses, transactions, spentTxids, spentVouts)
 	if err != nil {
 		return fmt.Errorf("failed to record block index results: %v", err)
 	}
@@ -184,11 +184,41 @@ func (t *Tracker) processBlock(height int64) error {
 	return nil
 }
 
-func (t *Tracker) scanTransactions(blockhash string, transactions []btypes.TransactionDetail) ([]types.Loss, []types.Transaction) {
+func (t *Tracker) scanTransactions(blockhash string, transactions []btypes.TransactionDetail) ([]types.Loss, []types.Transaction, []string, []int) {
 	var losses []types.Loss
 	var txs []types.Transaction
+	var spentTxids []string
+	var spentVouts []int
 
 	for _, tx := range transactions {
+		for _, vin := range tx.Vin {
+			if vin.Coinbase != "" {
+				continue
+			}
+
+			spentScript := vin.Prevout.ScriptPubKey.Hex
+
+			if t.bf.TestString(spentScript) {
+				exists, err := t.db.BurnScriptExists(spentScript)
+				if err != nil {
+					log.Error().Err(err).Str("script", spentScript).Msg("Failed to check if script exists")
+					continue
+				}
+
+				log.Info().
+					Str("script", spentScript).
+					Bool("exists", exists).
+					Str("txid", vin.Txid).
+					Int("vout", vin.Vout).
+					Msg("Identified spending of burn script output")
+
+				if exists {
+					spentTxids = append(spentTxids, vin.Txid)
+					spentVouts = append(spentVouts, vin.Vout)
+				}
+			}
+		}
+
 		for _, vout := range tx.Vout {
 			if t.bf.TestString(vout.ScriptPubKey.Hex) {
 				exists, err := t.db.BurnScriptExists(vout.ScriptPubKey.Hex)
@@ -222,5 +252,5 @@ func (t *Tracker) scanTransactions(blockhash string, transactions []btypes.Trans
 		}
 	}
 
-	return losses, txs
+	return losses, txs, spentTxids, spentVouts
 }
