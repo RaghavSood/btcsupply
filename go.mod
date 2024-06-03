@@ -4,6 +4,7 @@ go 1.22.3
 
 require (
 	github.com/RaghavSood/blockreward v0.0.0-20240602022227-3963806d10e6
+	github.com/bits-and-blooms/bloom/v3 v3.7.0
 	github.com/gin-gonic/gin v1.10.0
 	github.com/gomarkdown/markdown v0.0.0-20240419095408-642f0ee99ae2
 	github.com/mattn/go-sqlite3 v1.14.22
@@ -12,6 +13,7 @@ require (
 )
 
 require (
+	github.com/bits-and-blooms/bitset v1.10.0 // indirect
 	github.com/bytedance/sonic v1.11.6 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
