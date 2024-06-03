@@ -14,9 +14,6 @@ type Storage interface {
 	GetBlock(hash string) (types.Block, error)
 	GetLatestBlock() (types.Block, error)
 
-	GetLossNote(noteID string) (types.LossNote, error)
-	GetLossNotes(noteIDs []string) ([]types.LossNote, error)
-
 	GetTransactionDetail(hash string) (types.TransactionDetail, error)
 
 	RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats, losses []types.Loss, transactions []types.Transaction) error
