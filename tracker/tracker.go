@@ -2,7 +2,9 @@ package tracker
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
+	"math/big"
 	"os"
 	"time"
 
@@ -114,23 +116,44 @@ func (t *Tracker) processBlock(height int64) error {
 		Int64("height", block.Height).
 		Msg("Block")
 
+	var losses []types.Loss
+	var transactions []types.Transaction
+
 	feesAccumulated := blockStats.Totalfee
 	coinbaseEntitlement := blockStats.Subsidy
+	expectedCoinbase := coinbaseEntitlement + feesAccumulated
 
 	coinbaseMinted := util.FloatBTCToSats(coinStats.BlockInfo.Coinbase)
 
-	if coinbaseMinted != coinbaseEntitlement+feesAccumulated {
+	if coinbaseMinted != expectedCoinbase {
 		log.Warn().
 			Int64("coinbase_minted", coinbaseMinted).
 			Int64("coinbase_entitlement", coinbaseEntitlement).
 			Msg("Coinbase mismatch")
+
+		losses = append(losses, types.Loss{
+			TxID:      block.Tx[0].Txid,
+			BlockHash: block.Hash,
+			Vout:      -1,
+			Amount:    *types.FromMathBigInt(big.NewInt(expectedCoinbase - coinbaseMinted)),
+		})
+
+		jsonTx, err := json.Marshal(block.Tx[0])
+		if err != nil {
+			return fmt.Errorf("failed to marshal coinbase tx: %v", err)
+		}
+
+		transactions = append(transactions, types.Transaction{
+			TxID:               block.Tx[0].Txid,
+			TransactionDetails: string(jsonTx),
+		})
 	}
 
 	if coinStats.BlockInfo.Unspendables.Scripts != 0 {
 		log.Warn().Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).Msg("Unspendable scripts")
 	}
 
-	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), types.FromRPCTxOutSetInfo(coinStats), blockStats)
+	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), types.FromRPCTxOutSetInfo(coinStats), blockStats, losses, transactions)
 	if err != nil {
 		return fmt.Errorf("failed to record block index results: %v", err)
 	}

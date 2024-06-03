@@ -7,7 +7,7 @@ import (
 	"github.com/RaghavSood/btcsupply/types"
 )
 
-func (d *SqliteBackend) RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats) error {
+func (d *SqliteBackend) RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats, losses []types.Loss, transactions []types.Transaction) error {
 	tx, err := d.db.Begin()
 	if err != nil {
 		return fmt.Errorf("failed to start transaction: %v", err)
@@ -32,6 +32,24 @@ func (d *SqliteBackend) RecordBlockIndexResults(block types.Block, txoutset type
 	if err != nil {
 		tx.Rollback()
 		return fmt.Errorf("failed to insert blockstats record: %v", err)
+	}
+
+	// Insert the losses records into the losses table
+	for _, loss := range losses {
+		_, err = tx.Exec("INSERT INTO losses (tx_id, block_hash, vout, amount) VALUES (?, ?, ?, ?)", loss.TxID, loss.BlockHash, loss.Vout, loss.Amount)
+		if err != nil {
+			tx.Rollback()
+			return fmt.Errorf("failed to insert loss record: %v", err)
+		}
+	}
+
+	// Insert the transactions records into the transactions table
+	for _, transaction := range transactions {
+		_, err = tx.Exec("INSERT INTO transactions (tx_id, transaction_details) VALUES (?, ?)", transaction.TxID, transaction.TransactionDetails)
+		if err != nil {
+			tx.Rollback()
+			return fmt.Errorf("failed to insert transaction record: %v", err)
+		}
 	}
 
 	err = tx.Commit()
