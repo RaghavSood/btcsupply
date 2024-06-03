@@ -5,7 +5,8 @@ CREATE TABLE burn_scripts (
     script TEXT NOT NULL,
     confidence_level TEXT NOT NULL,
     provenance TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (script)
 );
 CREATE INDEX idx_script ON burn_scripts (script);
 CREATE INDEX idx_confidence_level ON burn_scripts (confidence_level);
