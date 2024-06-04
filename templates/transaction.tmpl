@@ -25,7 +25,6 @@
                 <thead>
                     <tr>
                         <th class="px-4 py-2 border-b">Previous Output</th>
-                        <th class="px-4 py-2 border-b">Script Sig</th>
                         <th class="px-4 py-2 border-b">Sequence</th>
                     </tr>
                 </thead>
@@ -38,7 +37,6 @@
                       <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
                       {{ else }}
                       <td class="px-4 py-2 border-b">{{ .Txid }}:{{ .Vout }}</td>
-                      <td class="px-4 py-2 border-b">{{ .ScriptSig.Hex }}</td>
                       <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
                       {{ end }}
                     </tr>
