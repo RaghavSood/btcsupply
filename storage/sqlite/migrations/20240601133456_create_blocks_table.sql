@@ -7,9 +7,9 @@ CREATE TABLE blocks (
     block_timestamp DATETIME NOT NULL,
     parent_block_hash TEXT NOT NULL,
     num_transactions INTEGER NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(block_hash)
 );
-CREATE INDEX idx_block_hash ON blocks (block_hash);
 CREATE INDEX idx_block_height ON blocks (block_height);
 CREATE INDEX idx_parent_block_hash ON blocks (parent_block_hash);
 -- +goose StatementEnd

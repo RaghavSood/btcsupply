@@ -36,7 +36,7 @@ func (d *SqliteBackend) RecordScriptUnspents(script types.ScriptQueue, unspentTx
 	}
 
 	for i, txid := range unspentTxids {
-		_, err = tx.Exec("INSERT INTO transaction_queue (txid, block_height) VALUES (?, ?)", txid, unspentHeights[i])
+		_, err = tx.Exec("INSERT INTO transaction_queue (txid, block_height) VALUES (?, ?) ON CONFLICT (txid) DO NOTHING", txid, unspentHeights[i])
 		if err != nil {
 			tx.Rollback()
 			return err

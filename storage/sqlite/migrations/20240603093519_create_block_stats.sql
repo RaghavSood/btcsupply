@@ -5,8 +5,8 @@ CREATE TABLE block_stats (
     avgfee INTEGER NOT NULL,
     avgfeerate INTEGER NOT NULL,
     avgtxsize INTEGER NOT NULL,
-    blockhash TEXT NOT NULL,
-    height INTEGER NOT NULL UNIQUE,
+    blockhash TEXT NOT NULL UNIQUE,
+    height INTEGER NOT NULL,
     ins INTEGER NOT NULL,
     maxfee INTEGER NOT NULL,
     maxfeerate INTEGER NOT NULL,
@@ -34,8 +34,7 @@ CREATE TABLE block_stats (
     utxo_size_inc_actual INTEGER NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
-CREATE INDEX idx_blockhash ON block_stats (blockhash);
-CREATE INDEX idx_height ON block_stats (height);
+CREATE INDEX idx_block_stats_height ON block_stats (height);
 -- +goose StatementEnd
 
 -- +goose Down
