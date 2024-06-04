@@ -90,6 +90,7 @@ func (t *Tracker) Run() {
 				Msg("Checking for new blocks")
 
 			t.processScriptQueue()
+			t.processTransactionQueue()
 
 			// We limit ourselves to batch processing 10 blocks at a time
 			// so that other indexing jobs also run often enough
@@ -102,6 +103,40 @@ func (t *Tracker) Run() {
 					break
 				}
 			}
+		}
+	}
+}
+
+func (t *Tracker) processTransactionQueue() {
+	log.Info().Msg("Processing transaction queue")
+
+	txs, err := t.db.GetTransactionQueue()
+	if err == sql.ErrNoRows {
+		log.Info().Msg("No transactions in queue")
+		return
+	}
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get transactions from queue")
+		return
+	}
+
+	for _, tx := range txs {
+		log.Info().Str("txid", tx.Txid).Msg("Processing transaction")
+		txDetails, err := t.client.GetTransaction(tx.Txid)
+		if err != nil {
+			log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to get transaction details")
+			continue
+		}
+
+		if txDetails.Blockhash == "" {
+			log.Info().Str("txid", tx.Txid).Msg("Transaction not yet confirmed")
+			continue
+		}
+
+		losses, txs, spentTxids, spentVouts := t.scanTransactions(txDetails.Blockhash, []btypes.TransactionDetail{txDetails})
+		err = t.db.RecordTransactionIndexResults(losses, txs, spentTxids, spentVouts)
+		if err != nil {
+			log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to record transaction index results")
 		}
 	}
 }

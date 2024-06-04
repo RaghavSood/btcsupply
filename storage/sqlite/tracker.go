@@ -65,3 +65,46 @@ func (d *SqliteBackend) RecordBlockIndexResults(block types.Block, txoutset type
 
 	return err
 }
+
+func (d *SqliteBackend) RecordTransactionIndexResults(losses []types.Loss, transactions []types.Transaction, spentTxids []string, spentVouts []int) error {
+	tx, err := d.db.Begin()
+	if err != nil {
+		return fmt.Errorf("failed to start transaction: %v", err)
+	}
+
+	// Insert the losses records into the losses table
+	for _, loss := range losses {
+		_, err = tx.Exec("INSERT INTO losses (tx_id, block_hash, vout, amount) VALUES (?, ?, ?, ?)", loss.TxID, loss.BlockHash, loss.Vout, loss.Amount)
+		if err != nil {
+			tx.Rollback()
+			return fmt.Errorf("failed to insert loss record: %v", err)
+		}
+	}
+
+	// Insert the transactions records into the transactions table
+	for _, transaction := range transactions {
+		_, err = tx.Exec("INSERT INTO transactions (tx_id, transaction_details) VALUES (?, ?)", transaction.TxID, transaction.TransactionDetails)
+		if err != nil {
+			tx.Rollback()
+			return fmt.Errorf("failed to insert transaction record: %v", err)
+		}
+	}
+
+	// Remove any previously recorded outputs that were spent by this transaction
+	for i := range spentTxids {
+		_, err = tx.Exec("DELETE FROM losses WHERE tx_id = ? AND vout = ?", spentTxids[i], spentVouts[i])
+		if err != nil {
+			tx.Rollback()
+			return fmt.Errorf("failed to delete spent output: %v", err)
+		}
+	}
+
+	// Delete the transaction from the transaction queue
+	_, err = tx.Exec("DELETE FROM transaction_queue WHERE txid = ?", transactions[0].TxID)
+	if err != nil {
+		tx.Rollback()
+		return fmt.Errorf("failed to delete transaction from queue: %v", err)
+	}
+
+	return tx.Commit()
+}

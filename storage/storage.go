@@ -17,6 +17,7 @@ type Storage interface {
 	GetTransactionDetail(hash string) (types.TransactionDetail, error)
 
 	RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats, losses []types.Loss, transactions []types.Transaction, spentTxids []string, spentVouts []int) error
+	RecordTransactionIndexResults(losses []types.Loss, transactions []types.Transaction, spentTxids []string, spentVouts []int) error
 
 	GetOnlyBurnScripts() ([]string, error)
 	GetBurnScripts() ([]types.BurnScript, error)
@@ -25,4 +26,6 @@ type Storage interface {
 	GetScriptQueue() ([]types.ScriptQueue, error)
 	IncrementScriptQueueTryCount(scriptID int) error
 	RecordScriptUnspents(script types.ScriptQueue, unspentTxids []string, unspentHeights []int64) error
+
+	GetTransactionQueue() ([]types.TransactionQueue, error)
 }
