@@ -89,6 +89,8 @@ func (t *Tracker) Run() {
 				Int64("current_block", info.Blocks).
 				Msg("Checking for new blocks")
 
+			t.processScriptQueue()
+
 			// We limit ourselves to batch processing 10 blocks at a time
 			// so that other indexing jobs also run often enough
 			target := min(latestBlock.BlockHeight+1+10, info.Blocks)
@@ -99,6 +101,47 @@ func (t *Tracker) Run() {
 					log.Error().Err(err).Int64("block_height", i).Msg("Failed to process block")
 					break
 				}
+			}
+		}
+	}
+}
+
+func (t *Tracker) processScriptQueue() {
+	log.Info().Msg("Processing script queue")
+
+	scripts, err := t.db.GetScriptQueue()
+	if err == sql.ErrNoRows {
+		log.Info().Msg("No scripts in queue")
+		return
+	}
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get addresses from queue")
+		return
+	}
+
+	for _, script := range scripts {
+		if script.TryCount > 5 {
+			log.Warn().Str("script", script.Script).Int("try_count", script.TryCount).Msg("Script has been tried too many times, skipping")
+			continue
+		}
+
+		log.Info().Str("script", script.Script).Int("try_count", script.TryCount).Msg("Processing script")
+		unspentTxids, unspentHeights, err := t.eclient.GetScriptUnspents(script.Script)
+		if err != nil {
+			log.Error().Err(err).Str("script", script.Script).Msg("Failed to get unspents")
+			err = t.db.IncrementScriptQueueTryCount(script.ID)
+			if err != nil {
+				log.Error().Err(err).Int("id", script.ID).Msg("Failed to increment try count")
+			}
+			continue
+		}
+
+		err = t.db.RecordScriptUnspents(script, unspentTxids, unspentHeights)
+		if err != nil {
+			log.Error().Err(err).Str("script", script.Script).Msg("Failed to record unspents")
+			err = t.db.IncrementScriptQueueTryCount(script.ID)
+			if err != nil {
+				log.Error().Err(err).Int("id", script.ID).Msg("Failed to increment try count")
 			}
 		}
 	}

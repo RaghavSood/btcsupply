@@ -21,4 +21,8 @@ type Storage interface {
 	GetOnlyBurnScripts() ([]string, error)
 	GetBurnScripts() ([]types.BurnScript, error)
 	BurnScriptExists(script string) (bool, error)
+
+	GetScriptQueue() ([]types.ScriptQueue, error)
+	IncrementScriptQueueTryCount(scriptID int) error
+	RecordScriptUnspents(script types.ScriptQueue, unspentTxids []string, unspentHeights []int64) error
 }
