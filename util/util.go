@@ -1,6 +1,7 @@
 package util
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 )
@@ -15,4 +16,12 @@ func NoEscapeHTML(str string) template.HTML {
 
 func FloatBTCToSats(btc float64) int64 {
 	return int64(btc * 1e8)
+}
+
+func PrettyPrintJSON(data interface{}) (string, error) {
+	b, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		return "", fmt.Errorf("failed to marshal JSON: %w", err)
+	}
+	return string(b), nil
 }

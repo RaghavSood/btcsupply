@@ -93,6 +93,12 @@
                 {{ end }}
             {{ end }}
         </div>
+        <div class="mb-4">
+          <details>
+            <summary class="text-lg font-semibold mb-2">Raw Transaction</summary>
+            <pre><code class="language-json">{{ .Transaction | PrettyPrintJSON }}</code></pre>
+          </details>
+        </div>
 </div>
 {{ end }}
 
