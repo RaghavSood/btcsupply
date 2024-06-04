@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE txoutsetinfo (
+CREATE TABLE tx_out_set_info (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     height INTEGER NOT NULL,
     bestblock TEXT NOT NULL,
@@ -20,12 +20,12 @@ CREATE TABLE txoutsetinfo (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(bestblock)
 );
-CREATE INDEX idx_coinstats_height ON txoutsetinfo (height);
-CREATE INDEX idx_coinstats_bestblock ON txoutsetinfo (bestblock);
+CREATE INDEX idx_coinstats_height ON tx_out_set_info (height);
+CREATE INDEX idx_coinstats_bestblock ON tx_out_set_info (bestblock);
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE txoutsetinfo;
+DROP TABLE tx_out_set_info;
 -- +goose StatementEnd
 

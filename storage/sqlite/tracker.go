@@ -21,7 +21,7 @@ func (d *SqliteBackend) RecordBlockIndexResults(block types.Block, txoutset type
 	}
 
 	// Insert the txoutset record into the txoutset table
-	_, err = tx.Exec("INSERT INTO txoutsetinfo (height, bestblock, txouts, bogosize, muhash, total_amount, total_unspendable_amount, prevout_spent, coinbase, new_outputs_ex_coinbase, unspendable, genesis_block, bip30, scripts, unclaimed_rewards) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", txoutset.Height, txoutset.Bestblock, txoutset.Txouts, txoutset.Bogosize, txoutset.Muhash, txoutset.TotalAmount, txoutset.TotalUnspendableAmount, txoutset.PrevoutSpent, txoutset.Coinbase, txoutset.NewOutputsExCoinbase, txoutset.Unspendable, txoutset.GenesisBlock, txoutset.Bip30, txoutset.Scripts, txoutset.UnclaimedRewards)
+	_, err = tx.Exec("INSERT INTO tx_out_set_info (height, bestblock, txouts, bogosize, muhash, total_amount, total_unspendable_amount, prevout_spent, coinbase, new_outputs_ex_coinbase, unspendable, genesis_block, bip30, scripts, unclaimed_rewards) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", txoutset.Height, txoutset.Bestblock, txoutset.Txouts, txoutset.Bogosize, txoutset.Muhash, txoutset.TotalAmount, txoutset.TotalUnspendableAmount, txoutset.PrevoutSpent, txoutset.Coinbase, txoutset.NewOutputsExCoinbase, txoutset.Unspendable, txoutset.GenesisBlock, txoutset.Bip30, txoutset.Scripts, txoutset.UnclaimedRewards)
 	if err != nil {
 		tx.Rollback()
 		return fmt.Errorf("failed to insert txoutset record: %v", err)
