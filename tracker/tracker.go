@@ -11,6 +11,7 @@ import (
 	"github.com/RaghavSood/btcsupply/bitcoinrpc"
 	btypes "github.com/RaghavSood/btcsupply/bitcoinrpc/types"
 	"github.com/RaghavSood/btcsupply/bloomfilter"
+	"github.com/RaghavSood/btcsupply/electrum"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/types"
 	"github.com/RaghavSood/btcsupply/util"
@@ -20,16 +21,23 @@ import (
 var log = zlog.With().Str("module", "tracker").Logger()
 
 type Tracker struct {
-	db     storage.Storage
-	client *bitcoinrpc.RpcClient
-	bf     *bloomfilter.BloomFilter
+	db      storage.Storage
+	client  *bitcoinrpc.RpcClient
+	bf      *bloomfilter.BloomFilter
+	eclient *electrum.Electrum
 }
 
 func NewTracker(db storage.Storage) *Tracker {
+	eclient, err := electrum.NewElectrum()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to connect to electrum server")
+	}
+
 	return &Tracker{
-		db:     db,
-		client: bitcoinrpc.NewRpcClient(os.Getenv("BITCOIND_HOST"), os.Getenv("BITCOIND_USER"), os.Getenv("BITCOIND_PASS")),
-		bf:     bloomfilter.NewBloomFilter(),
+		db:      db,
+		client:  bitcoinrpc.NewRpcClient(os.Getenv("BITCOIND_HOST"), os.Getenv("BITCOIND_USER"), os.Getenv("BITCOIND_PASS")),
+		bf:      bloomfilter.NewBloomFilter(),
+		eclient: eclient,
 	}
 }
 
