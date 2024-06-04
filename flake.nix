@@ -31,11 +31,12 @@
 
                   packages = with pkgs; [
                     goose
+                    air
                     tailwindcss
                   ];
 
                   enterShell = ''
-                    btcsupply shell started!
+                    echo "btcsupply shell started!"
                   '';
                 }
               ];
