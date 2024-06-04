@@ -26,26 +26,17 @@ func NewElectrum() (*Electrum, error) {
 		return nil, err
 	}
 
-	// Ping the server every 60 seconds to keep the connection alive
-	go func() {
-		for {
-			if err := client.Ping(context.TODO()); err != nil {
-				log.Fatal().
-					Err(err).
-					Msg("Failed to ping server")
-			}
-			time.Sleep(60 * time.Second)
-		}
-	}()
-
-	// Making sure we declare to the server what protocol we want to use
-	serverVer, protocolVer, err := client.ServerVersion(context.TODO())
-	if err != nil {
-		log.Fatal().Err(err).Msg("Failed to get server version")
-	}
-
 	e := &Electrum{
 		client: client,
+	}
+
+	// Ping the server every 60 seconds to keep the connection alive
+	go e.Ping()
+
+	// Making sure we declare to the server what protocol we want to use
+	serverVer, protocolVer, err := e.client.ServerVersion(context.TODO())
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to get server version")
 	}
 
 	// Subscribe to header updates so we can keep track of the current height
@@ -57,6 +48,17 @@ func NewElectrum() (*Electrum, error) {
 		Msg("Connected to Electrum server")
 
 	return e, nil
+}
+
+func (e *Electrum) Ping() {
+	for {
+		if err := e.client.Ping(context.TODO()); err != nil {
+			log.Fatal().
+				Err(err).
+				Msg("Failed to ping server")
+		}
+		time.Sleep(10 * time.Second)
+	}
 }
 
 func (e *Electrum) MonitorHeaders() {
