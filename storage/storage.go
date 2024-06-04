@@ -9,6 +9,7 @@ type Storage interface {
 	GetRecentLosses(limit int) ([]types.Loss, error)
 	GetBlockLosses(hash string) ([]types.Loss, error)
 	GetTransactionLosses(hash string) ([]types.Loss, error)
+	GetIndexStatistics() (types.IndexStatistics, error)
 
 	GetLossyBlocks(limit int) ([]types.Block, error)
 	GetBlock(hash string) (types.Block, error)
