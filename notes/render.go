@@ -6,13 +6,13 @@ import (
 	"io/fs"
 	"strings"
 
+	"github.com/RaghavSood/btcsupply/btclogger"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
-	zlog "github.com/rs/zerolog/log"
 )
 
-var log = zlog.With().Str("module", "notes").Logger()
+var log = btclogger.NewLogger("electrum")
 
 func RenderNote(content string) string {
 	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
