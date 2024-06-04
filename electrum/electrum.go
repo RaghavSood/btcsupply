@@ -2,6 +2,7 @@ package electrum
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/RaghavSood/btcsupply/btclogger"
@@ -49,5 +50,29 @@ func NewElectrum() (*Electrum, error) {
 
 	return &Electrum{
 		client: client,
-	}, err
+	}, nil
+}
+
+func (e *Electrum) GetScriptHistory(script string) ([]string, error) {
+	electrumHash, err := ScriptToElectrumScript(script)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert script to electrum hash: %w", err)
+	}
+
+	history, err := e.client.GetHistory(context.TODO(), electrumHash)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get script history: %w", err)
+	}
+
+	var txids []string
+	for _, entry := range history {
+		log.Debug().
+			Str("txid", entry.Hash).
+			Int32("height", entry.Height).
+			Uint32("fee", entry.Fee).
+			Msg("Found transaction")
+		txids = append(txids, entry.Hash)
+	}
+
+	return txids, nil
 }
