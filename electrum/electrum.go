@@ -107,25 +107,35 @@ func (e *Electrum) GetScriptHistory(script string) ([]string, error) {
 	return txids, nil
 }
 
-func (e *Electrum) GetScriptUnspents(script string) ([]string, error) {
+func (e *Electrum) GetScriptUnspents(script string) ([]string, []int64, error) {
 	electrumHash, err := ScriptToElectrumScript(script)
 	if err != nil {
-		return nil, fmt.Errorf("failed to convert script to electrum hash: %w", err)
+		return nil, nil, fmt.Errorf("failed to convert script to electrum hash: %w", err)
 	}
 
 	unspents, err := e.client.ListUnspent(context.TODO(), electrumHash)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get script unspents: %w", err)
+		return nil, nil, fmt.Errorf("failed to get script unspents: %w", err)
 	}
 
-	var txids []string
+	var unspentTxids []string
+	var unspentHeights []int64
+	seen := make(map[string]bool)
 	for _, entry := range unspents {
 		log.Debug().
 			Str("txid", entry.Hash).
 			Uint32("height", entry.Height).
 			Msg("Found unspent transaction")
-		txids = append(txids, entry.Hash)
+
+		if seen[entry.Hash] {
+			continue
+		}
+
+		unspentTxids = append(unspentTxids, entry.Hash)
+		unspentHeights = append(unspentHeights, int64(entry.Height))
+
+		seen[entry.Hash] = true
 	}
 
-	return txids, nil
+	return unspentTxids, unspentHeights, nil
 }
