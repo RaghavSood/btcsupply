@@ -131,8 +131,13 @@ func (e *Electrum) GetScriptUnspents(script string) ([]string, []int64, error) {
 			continue
 		}
 
-		unspentTxids = append(unspentTxids, entry.Hash)
-		unspentHeights = append(unspentHeights, int64(entry.Height))
+		// Block heights 0 and -1 indicate unconfirmed transactions
+		// These will be picked up by our node indexing normally once they
+		// are confirmed
+		if entry.Height > 0 {
+			unspentTxids = append(unspentTxids, entry.Hash)
+			unspentHeights = append(unspentHeights, int64(entry.Height))
+		}
 
 		seen[entry.Hash] = true
 	}
