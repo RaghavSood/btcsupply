@@ -1,6 +1,50 @@
 {{ define "content" }}
 <div class="container mx-auto p-4">
-    <h2 class="text-xl font-bold mb-4">Recent BTC Burns</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div class="bg-gray-200">
+        <div class="p-4 bg-green-100">
+          <p class="text-2xl font-bold">{{ .Stats.PlannedSupply.SatoshisToBTC }} BTC</p>
+          <h3 class="text-xs mb-4">Planned Supply</h3>
+        </div>
+        <div class="p-4">
+          <p class="text-2xl font-bold">{{ .Stats.CirculatingSupply.SatoshisToBTC }} BTC</p>
+          <h3 class="text-xs mb-4">Circulating Supply</h3>
+        </div>
+        <div class="p-4">
+          <p class="text-2xl font-bold">{{ .Stats.BurnedSupply.SatoshisToBTC }} BTC</p>
+          <h3 class="text-xs mb-4">Burned Supply</h3>
+        </div>
+      </div>
+      <div class="bg-gray-200">
+        <div class="p-4 bg-green-100">
+          <p class="text-2xl font-bold">{{ .Stats.LastBlockHeight }}</p>
+          <h3 class="text-xs mb-4">Last Block</h3>
+        </div>
+        <div class="p-4">
+          <p class="text-2xl font-bold">{{ .Stats.BurnOutputCount }}</p>
+          <h3 class="text-xs mb-4">Burned Outputs</h3>
+        </div>
+        <div class="p-4">
+          <p class="text-2xl font-bold">{{ .Stats.BurnScriptsCount }}</p>
+          <h3 class="text-xs mb-4">Burn Scripts Indexed</h3>
+        </div>
+      </div>
+      <div class="bg-gray-200">
+        <div class="p-4 bg-green-100">
+          <p class="text-2xl font-bold">{{ .Stats.CurrentPrice  }}</p>
+          <h3 class="text-xs mb-4">Reference Price</h3>
+        </div>
+        <div class="p-4">
+          <p class="text-2xl font-bold">{{ .Stats.AdjustedPrice }}</p>
+          <h3 class="text-xs mb-4">Adjusted Fair Value</h3>
+        </div>
+        <div class="p-4">
+          <p class="text-2xl font-bold">+{{ .Stats.PriceChange }}</p>
+          <h3 class="text-xs mb-4">Burn Value Redistributed</h3>
+        </div>
+      </div>
+    </div>
+    <h2 class="text-xl font-bold mb-4 mt-4">Recent BTC Burns</h2>
     <table class="min-w-full bg-white border border-gray-200">
         <thead>
             <tr>

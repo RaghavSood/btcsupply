@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+
+	"github.com/RaghavSood/btcsupply/types"
 )
 
 func Int64ToBTC(sats int64) string {
@@ -24,4 +26,10 @@ func PrettyPrintJSON(data interface{}) (string, error) {
 		return "", fmt.Errorf("failed to marshal JSON: %w", err)
 	}
 	return string(b), nil
+}
+
+func RevaluePriceWithAdjustedSupply(expectedSupply, circulatingSupply *types.BigInt, currentPrice float64) float64 {
+	expectedSupplyFloat, _ := expectedSupply.BigFloat().Float64()
+	circulatingSupplyFloat, _ := circulatingSupply.BigFloat().Float64()
+	return currentPrice * (expectedSupplyFloat / circulatingSupplyFloat)
 }
