@@ -12,7 +12,7 @@ import (
 	zlog "github.com/rs/zerolog/log"
 )
 
-var log = zlog.With().Str("module", "tracker").Logger()
+var log = zlog.With().Str("module", "notes").Logger()
 
 func RenderNote(content string) string {
 	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock

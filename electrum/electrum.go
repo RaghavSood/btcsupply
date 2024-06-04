@@ -4,11 +4,11 @@ import (
 	"context"
 	"time"
 
+	"github.com/RaghavSood/btcsupply/btclogger"
 	electrumx "github.com/checksum0/go-electrum/electrum"
-	zlog "github.com/rs/zerolog/log"
 )
 
-var log = zlog.With().Str("module", "electrum").Logger()
+var log = btclogger.NewLogger("electrum")
 
 type Electrum struct {
 	client *electrumx.Client

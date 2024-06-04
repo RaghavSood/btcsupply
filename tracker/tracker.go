@@ -11,14 +11,14 @@ import (
 	"github.com/RaghavSood/btcsupply/bitcoinrpc"
 	btypes "github.com/RaghavSood/btcsupply/bitcoinrpc/types"
 	"github.com/RaghavSood/btcsupply/bloomfilter"
+	"github.com/RaghavSood/btcsupply/btclogger"
 	"github.com/RaghavSood/btcsupply/electrum"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/types"
 	"github.com/RaghavSood/btcsupply/util"
-	zlog "github.com/rs/zerolog/log"
 )
 
-var log = zlog.With().Str("module", "tracker").Logger()
+var log = btclogger.NewLogger("tracker")
 
 type Tracker struct {
 	db      storage.Storage
