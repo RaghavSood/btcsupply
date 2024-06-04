@@ -13,6 +13,7 @@ var log = btclogger.NewLogger("electrum")
 
 type Electrum struct {
 	client *electrumx.Client
+	Height int64
 }
 
 func NewElectrum() (*Electrum, error) {
@@ -43,14 +44,41 @@ func NewElectrum() (*Electrum, error) {
 		log.Fatal().Err(err).Msg("Failed to get server version")
 	}
 
+	e := &Electrum{
+		client: client,
+	}
+
+	// Subscribe to header updates so we can keep track of the current height
+	go e.MonitorHeaders()
+
 	log.Info().
 		Str("server_version", serverVer).
 		Str("protocol_version", protocolVer).
 		Msg("Connected to Electrum server")
 
-	return &Electrum{
-		client: client,
-	}, nil
+	return e, nil
+}
+
+func (e *Electrum) MonitorHeaders() {
+	sub, err := e.client.SubscribeHeaders(context.Background())
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Failed to subscribe to headers")
+	}
+
+	log.Info().Msg("Subscribed to headers")
+
+	for {
+		select {
+		case header := <-sub:
+			height := int64(header.Height)
+			log.Info().
+				Int64("height", height).
+				Msg("New block height")
+			e.Height = height
+		}
+	}
 }
 
 func (e *Electrum) GetScriptHistory(script string) ([]string, error) {
