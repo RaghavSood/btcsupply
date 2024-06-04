@@ -53,3 +53,10 @@ type Vin struct {
 	Coinbase    string    `json:"coinbase,omitempty"`
 	Sequence    int64     `json:"sequence"`
 }
+
+func ScriptPubKeyDisplay(scriptPubKey ScriptPubKey) string {
+	if scriptPubKey.Address != "" {
+		return scriptPubKey.Address
+	}
+	return scriptPubKey.Hex
+}

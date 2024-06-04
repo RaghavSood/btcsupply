@@ -6,6 +6,7 @@ import (
 	"io"
 	"time"
 
+	"github.com/RaghavSood/btcsupply/types"
 	"github.com/RaghavSood/btcsupply/util"
 )
 
@@ -18,10 +19,11 @@ type Template struct {
 
 func New() *Template {
 	funcMap := template.FuncMap{
-		"now":             func() interface{} { return time.Now() },
-		"Int64ToBTC":      util.Int64ToBTC,
-		"NoEscape":        util.NoEscapeHTML,
-		"PrettyPrintJSON": util.PrettyPrintJSON,
+		"now":                 func() interface{} { return time.Now() },
+		"Int64ToBTC":          util.Int64ToBTC,
+		"NoEscape":            util.NoEscapeHTML,
+		"PrettyPrintJSON":     util.PrettyPrintJSON,
+		"ScriptPubKeyDisplay": types.ScriptPubKeyDisplay,
 	}
 
 	templates := template.Must(template.New("").Funcs(funcMap).ParseFS(Templates, "footer.tmpl", "header.tmpl", "base.tmpl"))

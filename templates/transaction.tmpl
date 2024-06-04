@@ -36,7 +36,7 @@
                       <td class="px-4 py-2 border-b">{{ .Coinbase }}</td>
                       <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
                       {{ else }}
-                      <td class="px-4 py-2 border-b">{{ .Txid }}:{{ .Vout }}</td>
+                        <td class="px-4 py-2 border-b">{{ .Prevout.ScriptPubKey | ScriptPubKeyDisplay }}</td>
                       <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
                       {{ end }}
                     </tr>
@@ -61,7 +61,7 @@
                     <tr>
                         <td class="px-4 py-2 border-b">{{ $index }}</td>
                         <td class="px-4 py-2 border-b">{{ $vout.Value }}</td>
-                        <td class="px-4 py-2 border-b">{{ $vout.ScriptPubKey.Hex }}</td>
+                        <td class="px-4 py-2 border-b">{{ $vout.ScriptPubKey | ScriptPubKeyDisplay }}</td>
                     </tr>
                     {{ end }}
                 </tbody>
