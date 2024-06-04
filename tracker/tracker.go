@@ -89,7 +89,11 @@ func (t *Tracker) Run() {
 				Int64("current_block", info.Blocks).
 				Msg("Checking for new blocks")
 
-			for i := latestBlock.BlockHeight + 1; i <= info.Blocks; i++ {
+			// We limit ourselves to batch processing 10 blocks at a time
+			// so that other indexing jobs also run often enough
+			target := min(latestBlock.BlockHeight+1+10, info.Blocks)
+
+			for i := latestBlock.BlockHeight + 1; i <= target; i++ {
 				err = t.processBlock(i)
 				if err != nil {
 					log.Error().Err(err).Int64("block_height", i).Msg("Failed to process block")
