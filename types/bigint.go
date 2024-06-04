@@ -5,8 +5,6 @@ import (
 	"errors"
 	"math/big"
 	"strconv"
-
-	"github.com/RaghavSood/btcsupply/util"
 )
 
 // TODO: Fix pointer/non-pointer issues
@@ -19,13 +17,17 @@ func FromMathBigInt(i *big.Int) *BigInt {
 }
 
 func FromBTCFloat64(f float64) *BigInt {
-	i64sats := util.FloatBTCToSats(f)
+	i64sats := int64(f * 1e8)
 	i := new(big.Int).SetInt64(i64sats)
 	return &BigInt{*i}
 }
 
 func (b *BigInt) BigInt() *big.Int {
 	return &b.Int
+}
+
+func (b *BigInt) BigFloat() *big.Float {
+	return new(big.Float).SetInt(b.BigInt())
 }
 
 func (b *BigInt) Scan(src interface{}) error {
