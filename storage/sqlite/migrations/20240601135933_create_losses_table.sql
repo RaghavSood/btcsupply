@@ -7,8 +7,7 @@ CREATE TABLE losses (
     vout INTEGER NOT NULL,
     amount INTEGER NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(tx_id, vout),
-    FOREIGN KEY (block_hash) REFERENCES blocks(block_hash) ON DELETE CASCADE
+    UNIQUE(tx_id, vout)
 );
 CREATE INDEX idx_tx_id ON losses (tx_id);
 CREATE INDEX idx_amount ON losses (amount);
