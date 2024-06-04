@@ -76,3 +76,26 @@ func (e *Electrum) GetScriptHistory(script string) ([]string, error) {
 
 	return txids, nil
 }
+
+func (e *Electrum) GetScriptUnspents(script string) ([]string, error) {
+	electrumHash, err := ScriptToElectrumScript(script)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert script to electrum hash: %w", err)
+	}
+
+	unspents, err := e.client.ListUnspent(context.TODO(), electrumHash)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get script unspents: %w", err)
+	}
+
+	var txids []string
+	for _, entry := range unspents {
+		log.Debug().
+			Str("txid", entry.Hash).
+			Uint32("height", entry.Height).
+			Msg("Found unspent transaction")
+		txids = append(txids, entry.Hash)
+	}
+
+	return txids, nil
+}
