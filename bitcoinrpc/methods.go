@@ -67,12 +67,12 @@ func (rpc *RpcClient) GetBlock(hash string) (types.Block, error) {
 func (rpc *RpcClient) GetTransaction(txid string) (types.TransactionDetail, error) {
 	result, err := rpc.Do("getrawtransaction", []interface{}{txid, 2})
 	if err != nil {
-		return types.Transaction{}, err
+		return types.TransactionDetail{}, err
 	}
 
-	var tx types.Transaction
+	var tx types.TransactionDetail
 	if err := json.Unmarshal(result, &tx); err != nil {
-		return types.Transaction{}, fmt.Errorf("failed to unmarshal getrawtransaction response: %v", err)
+		return types.TransactionDetail{}, fmt.Errorf("failed to unmarshal getrawtransaction response: %v", err)
 	}
 
 	return tx, nil
