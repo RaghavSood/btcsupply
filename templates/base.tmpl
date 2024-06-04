@@ -3,6 +3,8 @@
 <head>
     <title>{{ .Title }}</title>
     <link href="/static/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body class="bg-white text-black flex flex-col min-h-screen">
     {{ template "header" . }}
@@ -10,6 +12,7 @@
         {{ block "content" . }}{{ end }}
     </main>
     {{ template "footer" . }}
+    <script>hljs.highlightAll();</script>
 </body>
 </html>
 
