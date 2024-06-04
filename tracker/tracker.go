@@ -243,7 +243,7 @@ func (t *Tracker) processBlock(height int64) error {
 			TxID:      block.Tx[0].Txid,
 			BlockHash: block.Hash,
 			Vout:      -1,
-			Amount:    *types.FromMathBigInt(big.NewInt(expectedCoinbase - coinbaseMinted)),
+			Amount:    types.FromMathBigInt(big.NewInt(expectedCoinbase - coinbaseMinted)),
 		})
 
 		jsonTx, err := json.Marshal(block.Tx[0])

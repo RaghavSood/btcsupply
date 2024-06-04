@@ -3,21 +3,21 @@ package types
 import btypes "github.com/RaghavSood/btcsupply/bitcoinrpc/types"
 
 type TxOutSetInfo struct {
-	Height                 int64  `json:"height"`
-	Bestblock              string `json:"bestblock"`
-	Txouts                 int    `json:"txouts"`
-	Bogosize               int64  `json:"bogosize"`
-	Muhash                 string `json:"muhash"`
-	TotalAmount            BigInt `json:"total_amount"`
-	TotalUnspendableAmount BigInt `json:"total_unspendable_amount"`
-	GenesisBlock           BigInt `json:"genesis_block"`
-	Bip30                  BigInt `json:"bip30"`
-	Scripts                BigInt `json:"scripts"`
-	UnclaimedRewards       BigInt `json:"unclaimed_rewards"`
-	PrevoutSpent           BigInt `json:"prevout_spent"`
-	Coinbase               BigInt `json:"coinbase"`
-	NewOutputsExCoinbase   BigInt `json:"new_outputs_ex_coinbase"`
-	Unspendable            BigInt `json:"unspendable"`
+	Height                 int64   `json:"height"`
+	Bestblock              string  `json:"bestblock"`
+	Txouts                 int     `json:"txouts"`
+	Bogosize               int64   `json:"bogosize"`
+	Muhash                 string  `json:"muhash"`
+	TotalAmount            *BigInt `json:"total_amount"`
+	TotalUnspendableAmount *BigInt `json:"total_unspendable_amount"`
+	GenesisBlock           *BigInt `json:"genesis_block"`
+	Bip30                  *BigInt `json:"bip30"`
+	Scripts                *BigInt `json:"scripts"`
+	UnclaimedRewards       *BigInt `json:"unclaimed_rewards"`
+	PrevoutSpent           *BigInt `json:"prevout_spent"`
+	Coinbase               *BigInt `json:"coinbase"`
+	NewOutputsExCoinbase   *BigInt `json:"new_outputs_ex_coinbase"`
+	Unspendable            *BigInt `json:"unspendable"`
 }
 
 func FromRPCTxOutSetInfo(info btypes.TxOutSetInfo) TxOutSetInfo {

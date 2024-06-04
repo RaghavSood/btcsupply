@@ -18,10 +18,10 @@ func FromMathBigInt(i *big.Int) *BigInt {
 	return &BigInt{*i}
 }
 
-func FromBTCFloat64(f float64) BigInt {
+func FromBTCFloat64(f float64) *BigInt {
 	i64sats := util.FloatBTCToSats(f)
 	i := new(big.Int).SetInt64(i64sats)
-	return BigInt{*i}
+	return &BigInt{*i}
 }
 
 func (b *BigInt) BigInt() *big.Int {

@@ -7,6 +7,6 @@ type Loss struct {
 	TxID      string
 	BlockHash string
 	Vout      int
-	Amount    BigInt
+	Amount    *BigInt
 	CreatedAt time.Time
 }
