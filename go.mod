@@ -3,7 +3,7 @@ module github.com/RaghavSood/btcsupply
 go 1.22.3
 
 require (
-	github.com/RaghavSood/blockreward v0.0.0-20240602022227-3963806d10e6
+	github.com/RaghavSood/blockreward v0.3.0
 	github.com/bits-and-blooms/bloom/v3 v3.7.0
 	github.com/checksum0/go-electrum v0.0.0-20220912200153-b862ac442cf9
 	github.com/gin-gonic/gin v1.10.0

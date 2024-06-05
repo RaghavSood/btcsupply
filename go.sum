@@ -1,5 +1,7 @@
-github.com/RaghavSood/blockreward v0.0.0-20240602022227-3963806d10e6 h1:wxCQWka/tcff7+J7S/0GOgYiAIFtr6zmbP0MlKZAKts=
-github.com/RaghavSood/blockreward v0.0.0-20240602022227-3963806d10e6/go.mod h1:ffbvOAyXEDUUZC6WkelOr4pxq7UY3ktANqfKEfC+71c=
+github.com/RaghavSood/blockreward v0.2.0 h1:NLnQsQMdmJ8T4wxeYsoylnKbugnDjCelB/mGYiPj96U=
+github.com/RaghavSood/blockreward v0.2.0/go.mod h1:ffbvOAyXEDUUZC6WkelOr4pxq7UY3ktANqfKEfC+71c=
+github.com/RaghavSood/blockreward v0.3.0 h1:ZrUeWKiyMaLSBqxrpVVw2Z/Kzu5vAuH9fB6L0MvkfVc=
+github.com/RaghavSood/blockreward v0.3.0/go.mod h1:ffbvOAyXEDUUZC6WkelOr4pxq7UY3ktANqfKEfC+71c=
 github.com/aead/siphash v1.0.1/go.mod h1:Nywa3cDsYNNK3gaciGTWPwHt0wlpNV15vwmswBAUSII=
 github.com/bits-and-blooms/bitset v1.10.0 h1:ePXTeiPEazB5+opbv5fr8umg2R/1NlzgDsyepwsSr88=
 github.com/bits-and-blooms/bitset v1.10.0/go.mod h1:7hO7Gc7Pp1vODcmWvKMRA9BNmbv6a/7QIWpPxHddWR8=
