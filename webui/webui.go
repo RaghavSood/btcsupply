@@ -108,9 +108,23 @@ func (w *WebUI) Block(c *gin.Context) {
 		return
 	}
 
-	blockStats, err := w.statsForHeight(block.BlockHeight)
+	indexStats, err := w.statsForHeight(block.BlockHeight)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get block statistics")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	txOutSetInfo, err := w.db.GetTxOutSetInfo(block.BlockHash)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get txoutset info")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	blockStats, err := w.db.GetBlockStats(block.BlockHash)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get block stats")
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
@@ -123,7 +137,9 @@ func (w *WebUI) Block(c *gin.Context) {
 		"Block":              block,
 		"Losses":             losses,
 		"TheoreticalSubsidy": types.FromMathBigInt(big.NewInt(theoreticalSubsidy)),
-		"Stats":              blockStats,
+		"Stats":              indexStats,
+		"CoinStats":          txOutSetInfo,
+		"BlockStats":         blockStats,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")

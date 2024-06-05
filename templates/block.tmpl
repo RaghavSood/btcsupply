@@ -13,6 +13,8 @@
     <div class="p-4">
       <p>Theoretical Subsidy: {{ .TheoreticalSubsidy.SatoshisToBTC }}</p>
       <p>Theoretical Supply: {{ .Stats.PlannedSupply.SatoshisToBTC }}</p>
+      <p>Fees Paid: {{ .BlockStats.Totalfee }}</p>
+      <p>Actual Subsidy: {{ .CoinStats.Coinbase.SatoshisToBTC }}</p>
     </div>
   </div>
     <table class="min-w-full bg-white border border-gray-200">
