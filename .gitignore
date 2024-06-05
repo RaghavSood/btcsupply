@@ -2,5 +2,5 @@
 *.sw*
 .env
 *.sqlite
-static/css/
+static/css/tailwind.css
 tmp/

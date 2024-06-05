@@ -1,0 +1,9 @@
+.note-card {
+  .footnotes ol {
+    list-style: revert;
+    padding: revert;
+    margin: revert;
+    opacity: 0.5;
+  }
+}
+
