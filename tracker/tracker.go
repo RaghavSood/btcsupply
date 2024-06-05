@@ -134,6 +134,16 @@ func (t *Tracker) processTransactionQueue() {
 		}
 
 		losses, txs, spentTxids, spentVouts := t.scanTransactions(txDetails.Blockhash, tx.BlockHeight, []btypes.TransactionDetail{txDetails})
+		log.Info().
+			Str("txid", tx.Txid).
+			Str("blockhash", txDetails.Blockhash).
+			Int64("block_height", tx.BlockHeight).
+			Int("losses", len(losses)).
+			Int("transactions", len(txs)).
+			Int("spent_txids", len(spentTxids)).
+			Int("spent_vouts", len(spentVouts)).
+			Msg("Transaction scan results")
+
 		err = t.db.RecordTransactionIndexResults(losses, txs, spentTxids, spentVouts)
 		if err != nil {
 			log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to record transaction index results")
