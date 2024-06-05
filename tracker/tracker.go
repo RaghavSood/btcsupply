@@ -327,15 +327,18 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 					}
 
 					losses = append(losses, types.Loss{
-						TxID:      tx.Txid,
-						BlockHash: blockhash,
-						Vout:      vout.N,
-						Amount:    types.FromBTCFloat64(vout.Value),
+						TxID:        tx.Txid,
+						BlockHash:   blockhash,
+						BlockHeight: blockHeight,
+						Vout:        vout.N,
+						Amount:      types.FromBTCFloat64(vout.Value),
 					})
 
 					txs = append(txs, types.Transaction{
 						TxID:               tx.Txid,
 						TransactionDetails: string(jsonTx),
+						BlockHeight:        blockHeight,
+						BlockHash:          blockhash,
 					})
 				}
 			}
