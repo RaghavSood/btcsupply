@@ -24,7 +24,7 @@ func RenderNote(content string) string {
 	opts := html.RendererOptions{Flags: htmlFlags}
 	renderer := html.NewRenderer(opts)
 
-	return string(markdown.Render(doc, renderer))
+	return wrapForTailwind(string(markdown.Render(doc, renderer)))
 }
 
 func ReadNoteFile(file fs.File) (string, error) {
