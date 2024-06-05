@@ -40,6 +40,14 @@ func (d *SqliteBackend) GetLatestBlock() (types.Block, error) {
 	return block, nil
 }
 
+func (d *SqliteBackend) GetBlockIdentifiers(identifier string) (string, int64, error) {
+	var blockHash string
+	var blockHeight int64
+	err := d.db.QueryRow("SELECT block_hash, block_height FROM blocks WHERE block_hash = ? OR block_height = ?", identifier, identifier).Scan(&blockHash, &blockHeight)
+
+	return blockHash, blockHeight, err
+}
+
 func scanBlocks(rows *sql.Rows) ([]types.Block, error) {
 	var blocks []types.Block
 	for rows.Next() {

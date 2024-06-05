@@ -33,7 +33,7 @@ func (w *WebUI) Serve() {
 	router.GET("/", w.Index)
 
 	router.GET("/blocks", w.Blocks)
-	router.GET("/block/:hash", w.Block)
+	router.GET("/block/:identifier", w.Block)
 
 	router.GET("/transaction/:hash", w.Transaction)
 
@@ -107,16 +107,26 @@ func (w *WebUI) Blocks(c *gin.Context) {
 }
 
 func (w *WebUI) Block(c *gin.Context) {
-	hash := c.Param("hash")
+	identifier := c.Param("identifier")
 
-	block, err := w.db.GetBlock(hash)
+	blockHash, blockHeight, err := w.db.GetBlockIdentifiers(identifier)
+	if err != nil {
+		log.Error().
+			Err(err).
+			Str("identifier", identifier).
+			Msg("Failed to get block identifiers")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	block, err := w.db.GetBlock(blockHash)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get block")
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 
-	losses, err := w.db.GetBlockLosses(hash)
+	losses, err := w.db.GetBlockLosses(blockHash)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get block losses")
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -125,7 +135,7 @@ func (w *WebUI) Block(c *gin.Context) {
 
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "block.tmpl", map[string]interface{}{
-		"Title":  fmt.Sprintf("Block %d - %s", block.BlockHeight, hash),
+		"Title":  fmt.Sprintf("Block %d - %s", blockHeight, blockHash),
 		"Block":  block,
 		"Losses": losses,
 	})
