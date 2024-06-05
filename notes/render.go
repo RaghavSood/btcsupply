@@ -84,11 +84,12 @@ func ReadNotes(pointers []NotePointer) []Note {
 		renderedContent := RenderNote(content)
 
 		note := Note{
-			NoteID:  fmt.Sprintf("%s/%s", pointer.NoteType, strings.Join(pointer.PathElements, ":")),
-			Type:    pointer.NoteType,
-			Data:    renderedContent,
-			ModTime: stat.ModTime(),
-			Path:    path,
+			NoteID:       fmt.Sprintf("%s/%s", pointer.NoteType, strings.Join(pointer.PathElements, ":")),
+			Type:         pointer.NoteType,
+			Data:         renderedContent,
+			ModTime:      stat.ModTime(),
+			Path:         path,
+			PathElements: pointer.PathElements,
 		}
 
 		notes = append(notes, note)
