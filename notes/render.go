@@ -12,7 +12,7 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 )
 
-var log = btclogger.NewLogger("electrum")
+var log = btclogger.NewLogger("notes")
 
 func RenderNote(content string) string {
 	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
