@@ -16,6 +16,8 @@ type Storage interface {
 	GetLatestBlock() (types.Block, error)
 	GetBlockIdentifiers(identifier string) (string, int64, error)
 
+	GetTxOutSetInfo(identifier string) (types.TxOutSetInfo, error)
+
 	GetTransactionDetail(hash string) (types.TransactionDetail, error)
 
 	RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats, losses []types.Loss, transactions []types.Transaction, spentTxids []string, spentVouts []int) error
