@@ -15,7 +15,7 @@ import (
 var log = btclogger.NewLogger("notes")
 
 func RenderNote(content string) string {
-	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock | parser.Footnotes
 	p := parser.NewWithExtensions(extensions)
 	doc := p.Parse([]byte(content))
 

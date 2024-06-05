@@ -3,7 +3,7 @@
   {{ if eq .Type "script" }}
     {{ $bgcolour = "green" }}
   {{ end }}
-  <div class="grid grid-cols-1 bg-{{ $bgcolour }}-100 p-4 mb-2 gap-y-3">
+  <div class="note-card grid grid-cols-1 bg-{{ $bgcolour }}-100 p-4 mb-2 gap-y-3">
     <p><strong>Note ID:</strong> {{ .NoteID }}</p>
     <p>{{ .Data | NoEscape }}</p>
     <a href="https://github.com/RaghavSood/btcsupply/blame/master/notes/{{ .Path }}" target="_BLANK" class="text-sm text-gray-400 hover:text-gray-800">View revision history</a>
