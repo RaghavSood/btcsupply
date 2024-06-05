@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"html/template"
 
+	"github.com/RaghavSood/btcsupply/notes"
 	"github.com/RaghavSood/btcsupply/types"
+	"github.com/rs/zerolog/log"
 )
 
 func Int64ToBTC(sats int64) string {
@@ -32,4 +34,17 @@ func RevaluePriceWithAdjustedSupply(expectedSupply, circulatingSupply *types.Big
 	expectedSupplyFloat, _ := expectedSupply.BigFloat().Float64()
 	circulatingSupplyFloat, _ := circulatingSupply.BigFloat().Float64()
 	return currentPrice * (expectedSupplyFloat / circulatingSupplyFloat)
+}
+
+func IsScriptInNotes(script string, noteList []notes.Note) bool {
+	for _, note := range noteList {
+		log.Debug().
+			Strs("pathElements", note.PathElements).
+			Str("script", script).
+			Msg("Checking note")
+		if note.PathElements[0] == script {
+			return true
+		}
+	}
+	return false
 }

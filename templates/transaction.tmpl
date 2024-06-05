@@ -10,83 +10,59 @@
             <p><strong>Time:</strong> {{ .Transaction.Time }}</p>
         </div>
 
-        <!-- Transaction Inputs -->
-        <div class="mb-4">
-            <h3 class="text-lg font-semibold mb-2">Inputs</h3>
-            <table class="min-w-full bg-white border border-gray-200">
-              {{ if (index .Transaction.Vin 0).Coinbase }}
-                <thead>
-                    <tr>
-                        <th class="px-4 py-2 border-b">Coinbase</th>
-                        <th class="px-4 py-2 border-b">Sequence</th>
-                    </tr>
-                </thead>
-              {{ else }}
-                <thead>
-                    <tr>
-                        <th class="px-4 py-2 border-b">Previous Output</th>
-                        <th class="px-4 py-2 border-b">Sequence</th>
-                    </tr>
-                </thead>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Transaction Inputs -->
+          <div>
+            <span class="text-xl font-semibold mb-4">Inputs</span>
+            {{ range .Transaction.Vin }}
+              <div class="bg-gray-100 p-4 mb-4">
+                {{ if .Coinbase }}
+                  <p class="break-words"><strong>Coinbase:</strong> {{ .Coinbase }}</p>
+                {{ else }}
+                  <div class="flex flex-row gap-x-2 text-wrap font-medium">
+                    <span class="basis-9/12 break-words min-w-0">{{ .Prevout.ScriptPubKey | ScriptPubKeyDisplay }}</span>
+                    <span class="text-right ml-auto">{{ .Prevout.Value }} BTC</span>
+                  </div>
+                  <div class="flex gap-x-2 text-wrap text-sm text-gray-400 hover:text-gray-800">
+                    <span class="basis-9/12 break-words min-w-0">{{ .Prevout.ScriptPubKey.Asm }}</span>
+                    <span class="text-right ml-auto">{{ .Prevout.ScriptPubKey.Type }}</span>
+                  </div>
+                {{ end }}
+              </div>
+            {{ end }}
+          </div>
+          <!-- Transaction Outputs -->
+          <div>
+            <span class="text-xl font-semibold mb-4">Outputs</span>
+            {{ range .Transaction.Vout }}
+              {{ $bgc := "bg-gray-100" }}
+              {{ $burnText := "" }}
+              {{ if IsScriptInNotes .ScriptPubKey.Hex $.Notes }}
+                {{ $bgc = "bg-red-100" }}
+                {{ $burnText = "🔥" }}
               {{ end }}
-                <tbody>
-                    {{ range .Transaction.Vin }}
-                    <tr>
-                      {{ if .Coinbase }}
-                      <td class="px-4 py-2 border-b">{{ .Coinbase }}</td>
-                      <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
-                      {{ else }}
-                        <td class="px-4 py-2 border-b">{{ .Prevout.ScriptPubKey | ScriptPubKeyDisplay }}</td>
-                        <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
-                      {{ end }}
-                    </tr>
-                    {{ end }}
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Transaction Outputs -->
-        <div class="mb-4">
-            <h3 class="text-lg font-semibold mb-2">Outputs</h3>
-            <table class="min-w-full bg-white border border-gray-200">
-                <thead>
-                    <tr>
-                        <th class="px-4 py-2 border-b">Index</th>
-                        <th class="px-4 py-2 border-b">Value (BTC)</th>
-                        <th class="px-4 py-2 border-b">Script Pub Key</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{ range $index, $vout := .Transaction.Vout }}
-                      <tr>
-                        <td class="px-4 py-2 border-b">{{ $index }}</td>
-                        <td class="px-4 py-2 border-b">{{ $vout.Value }}</td>
-                        <td class="px-4 py-2 border-b">{{ $vout.ScriptPubKey | ScriptPubKeyDisplay }}</td>
-                      </tr>
-                    {{ end }}
-                </tbody>
-            </table>
+              <div class="{{ $bgc }} p-4 mb-4 font-mono">
+                <div class="flex flex-row gap-x-2 text-wrap font-medium">
+                  <span class="basis-9/12 break-words min-w-0">{{ .ScriptPubKey | ScriptPubKeyDisplay }}</span>
+                  <span class="text-right ml-auto">{{ $burnText }}{{ .Value }} BTC{{ $burnText }}</span>
+                </div>
+                <div class="flex gap-x-2 text-wrap text-sm text-gray-400 hover:text-gray-800">
+                  <span class="basis-9/12 break-words min-w-0">{{ .ScriptPubKey.Asm }}</span>
+                  <span class="text-right ml-auto">{{ .ScriptPubKey.Type }}</span>
+                </div>
+              </div>
+            {{ end }}
+          </div>
         </div>
 
         <!-- Transaction-specific Notes -->
+        <h3 class="text-lg font-semibold mb-2">How did this transaction burn BTC?</h3>
         <div class="mb-4">
-            <h3 class="text-lg font-semibold mb-2">Transaction-specific Notes</h3>
             {{ range .Notes }}
-                {{ if eq .Type "output" }}
                   {{ template "note" . }}
-                {{ end }}
             {{ end }}
         </div>
 
-        <!-- Address-specific Notes -->
-        <div class="mb-4">
-            <h3 class="text-lg font-semibold mb-2">Address-specific Notes</h3>
-            {{ range .Notes }}
-                {{ if eq .Type "script" }}
-                  {{ template "note" . }}
-                {{ end }}
-            {{ end }}
-        </div>
         <div class="mb-4">
           <details>
             <summary class="text-lg font-semibold mb-2">Raw Transaction</summary>
