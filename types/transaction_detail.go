@@ -1,21 +1,20 @@
 package types
 
 type TransactionDetail struct {
-	Txid          string  `json:"txid"`
-	Hash          string  `json:"hash"`
-	Version       int     `json:"version"`
-	Size          int     `json:"size"`
-	Vsize         int     `json:"vsize"`
-	Weight        int     `json:"weight"`
-	Locktime      int     `json:"locktime"`
-	Vin           []Vin   `json:"vin"`
-	Vout          []Vout  `json:"vout"`
-	Fee           float64 `json:"fee"`
-	Hex           string  `json:"hex"`
-	Blockhash     string  `json:"blockhash,omitempty"`
-	Confirmations int     `json:"confirmations,omitempty"`
-	Time          int     `json:"time,omitempty"`
-	Blocktime     int     `json:"blocktime,omitempty"`
+	Txid      string  `json:"txid"`
+	Hash      string  `json:"hash"`
+	Version   int     `json:"version"`
+	Size      int     `json:"size"`
+	Vsize     int     `json:"vsize"`
+	Weight    int     `json:"weight"`
+	Locktime  int     `json:"locktime"`
+	Vin       []Vin   `json:"vin"`
+	Vout      []Vout  `json:"vout"`
+	Fee       float64 `json:"fee"`
+	Hex       string  `json:"hex"`
+	Blockhash string  `json:"blockhash,omitempty"`
+	Time      int     `json:"time,omitempty"`
+	Blocktime int     `json:"blocktime,omitempty"`
 }
 
 type ScriptSig struct {
