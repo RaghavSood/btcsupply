@@ -6,9 +6,9 @@ import (
 	"github.com/RaghavSood/btcsupply/types"
 )
 
-func (d *SqliteBackend) GetBlock(hash string) (types.Block, error) {
+func (d *SqliteBackend) GetBlock(identifier string) (types.Block, error) {
 	var block types.Block
-	err := d.db.QueryRow("SELECT * FROM blocks WHERE block_hash = ?", hash).Scan(&block.ID, &block.BlockHeight, &block.BlockHash, &block.BlockTimestamp, &block.ParentBlockHash, &block.NumTransactions, &block.CreatedAt)
+	err := d.db.QueryRow("SELECT * FROM blocks WHERE block_hash = ? OR block_height = ?", identifier, identifier).Scan(&block.ID, &block.BlockHeight, &block.BlockHash, &block.BlockTimestamp, &block.ParentBlockHash, &block.NumTransactions, &block.CreatedAt)
 	if err != nil {
 		return types.Block{}, err
 	}

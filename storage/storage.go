@@ -12,7 +12,7 @@ type Storage interface {
 	GetIndexStatistics(height int64) (types.IndexStatistics, error)
 
 	GetLossyBlocks(limit int) ([]types.Block, error)
-	GetBlock(hash string) (types.Block, error)
+	GetBlock(identifier string) (types.Block, error)
 	GetLatestBlock() (types.Block, error)
 	GetBlockIdentifiers(identifier string) (string, int64, error)
 

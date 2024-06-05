@@ -94,35 +94,36 @@ func (w *WebUI) Blocks(c *gin.Context) {
 func (w *WebUI) Block(c *gin.Context) {
 	identifier := c.Param("identifier")
 
-	blockHash, blockHeight, err := w.db.GetBlockIdentifiers(identifier)
-	if err != nil {
-		log.Error().
-			Err(err).
-			Str("identifier", identifier).
-			Msg("Failed to get block identifiers")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
-
-	block, err := w.db.GetBlock(blockHash)
+	block, err := w.db.GetBlock(identifier)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get block")
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 
-	losses, err := w.db.GetBlockLosses(blockHash)
+	losses, err := w.db.GetBlockLosses(block.BlockHash)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get block losses")
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 
+	blockStats, err := w.statsForHeight(block.BlockHeight)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get block statistics")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	theoreticalSubsidy := blockreward.SubsidyAtHeight(blockreward.BitcoinMainnet, block.BlockHeight)
+
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "block.tmpl", map[string]interface{}{
-		"Title":  fmt.Sprintf("Block %d - %s", blockHeight, blockHash),
-		"Block":  block,
-		"Losses": losses,
+		"Title":              fmt.Sprintf("Block %d - %s", block.BlockHeight, block.BlockHash),
+		"Block":              block,
+		"Losses":             losses,
+		"TheoreticalSubsidy": types.FromMathBigInt(big.NewInt(theoreticalSubsidy)),
+		"Stats":              blockStats,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")

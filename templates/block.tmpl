@@ -1,19 +1,31 @@
 {{ define "content" }}
 <div class="container mx-auto p-4">
-  <h2 class="text-xl font-bold mb-4">Burns in Block #{{ .Block.BlockHeight }}</h2>
+  <div class="grid grid-cols-1">
+    {{ $titlebg := "bg-green-100" }}
+    {{ if .Losses }}
+      {{ $titlebg = "bg-red-100" }}
+    {{ end }}
+    <div class="{{ $titlebg }} p-4">
+      <h1 class="text-3xl font-semibold">Block #{{ .Block.BlockHeight }}</h1>
+      <h3 class="text-lg font-mono break-words select-all">{{ .Block.BlockHash }}</h3>
+      <h3 class="text-md font-mono mb-4">{{ .Block.BlockTimestamp.UTC }}</h3>
+    </div>
+    <div class="p-4">
+      <p>Theoretical Subsidy: {{ .TheoreticalSubsidy.SatoshisToBTC }}</p>
+      <p>Theoretical Supply: {{ .Stats.PlannedSupply.SatoshisToBTC }}</p>
+    </div>
+  </div>
     <table class="min-w-full bg-white border border-gray-200">
         <thead>
             <tr>
                 <th class="px-4 py-2 border-b">Transaction ID</th>
-                <th class="px-4 py-2 border-b">Block Hash</th>
                 <th class="px-4 py-2 border-b">Amount</th>
             </tr>
         </thead>
         <tbody>
             {{ range .Losses }}
             <tr>
-                <td class="px-4 py-2 border-b">{{ .TxID }}</td>
-                <td class="px-4 py-2 border-b">{{ .BlockHash }}</td>
+                <td class="px-4 py-2 border-b"><a href="/transaction/{{ .TxID }}">{{ .TxID }}</a></td>
                 <td class="px-4 py-2 border-b">{{ .Amount.SatoshisToBTC }} BTC</td>
             </tr>
             {{ else }}
