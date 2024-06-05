@@ -88,6 +88,7 @@ func ReadNotes(pointers []NotePointer) []Note {
 			Type:    pointer.NoteType,
 			Data:    renderedContent,
 			ModTime: stat.ModTime(),
+			Path:    path,
 		}
 
 		notes = append(notes, note)

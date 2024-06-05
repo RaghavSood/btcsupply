@@ -7,4 +7,5 @@ type Note struct {
 	Type    NoteType  `json:"type"`
 	Data    string    `json:"data"`
 	ModTime time.Time `json:"mod_time"`
+	Path    string    `json:"path"`
 }
