@@ -66,11 +66,7 @@ func (w *WebUI) Index(c *gin.Context) {
 		return
 	}
 
-	lastBlockBigInt := types.FromMathBigInt(big.NewInt(indexStats.LastBlockHeight))
-	indexStats.PlannedSupply = types.FromMathBigInt(lastBlockBigInt.Mul(
-		lastBlockBigInt.BigInt(),
-		big.NewInt(blockreward.SubsidyAtHeight(blockreward.BitcoinMainnet, indexStats.LastBlockHeight)),
-	))
+	indexStats.PlannedSupply = types.FromMathBigInt(big.NewInt(blockreward.SupplyAtHeight(blockreward.BitcoinMainnet, indexStats.LastBlockHeight)))
 	indexStats.CirculatingSupply = types.FromMathBigInt(big.NewInt(0).Sub(indexStats.PlannedSupply.BigInt(), indexStats.BurnedSupply.BigInt()))
 	indexStats.CurrentPrice = btcPrice
 	indexStats.AdjustedPrice = util.RevaluePriceWithAdjustedSupply(indexStats.PlannedSupply, indexStats.CirculatingSupply, btcPrice)
