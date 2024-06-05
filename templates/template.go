@@ -26,7 +26,7 @@ func New() *Template {
 		"ScriptPubKeyDisplay": types.ScriptPubKeyDisplay,
 	}
 
-	templates := template.Must(template.New("").Funcs(funcMap).ParseFS(Templates, "footer.tmpl", "header.tmpl", "base.tmpl"))
+	templates := template.Must(template.New("").Funcs(funcMap).ParseFS(Templates, "footer.tmpl", "header.tmpl", "base.tmpl", "note.tmpl"))
 	return &Template{
 		templates: templates,
 	}

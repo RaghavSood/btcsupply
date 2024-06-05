@@ -37,7 +37,7 @@
                       <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
                       {{ else }}
                         <td class="px-4 py-2 border-b">{{ .Prevout.ScriptPubKey | ScriptPubKeyDisplay }}</td>
-                      <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
+                        <td class="px-4 py-2 border-b">{{ .Sequence }}</td>
                       {{ end }}
                     </tr>
                     {{ end }}
@@ -58,11 +58,11 @@
                 </thead>
                 <tbody>
                     {{ range $index, $vout := .Transaction.Vout }}
-                    <tr>
+                      <tr>
                         <td class="px-4 py-2 border-b">{{ $index }}</td>
                         <td class="px-4 py-2 border-b">{{ $vout.Value }}</td>
                         <td class="px-4 py-2 border-b">{{ $vout.ScriptPubKey | ScriptPubKeyDisplay }}</td>
-                    </tr>
+                      </tr>
                     {{ end }}
                 </tbody>
             </table>
@@ -73,10 +73,7 @@
             <h3 class="text-lg font-semibold mb-2">Transaction-specific Notes</h3>
             {{ range .Notes }}
                 {{ if eq .Type "output" }}
-                <div class="bg-yellow-100 p-4 mb-2">
-                    <p><strong>Note ID:</strong> {{ .NoteID }}</p>
-                    <p>{{ .Data | NoEscape }}</p>
-                </div>
+                  {{ template "note" . }}
                 {{ end }}
             {{ end }}
         </div>
@@ -86,10 +83,7 @@
             <h3 class="text-lg font-semibold mb-2">Address-specific Notes</h3>
             {{ range .Notes }}
                 {{ if eq .Type "script" }}
-                <div class="bg-green-100 p-4 mb-2">
-                    <p><strong>Script:</strong> {{ .NoteID }}</p>
-                    <p>{{ .Data | NoEscape }}</p>
-                </div>
+                  {{ template "note" . }}
                 {{ end }}
             {{ end }}
         </div>
