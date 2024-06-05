@@ -8,7 +8,7 @@ import (
 
 func (d *SqliteBackend) GetTransactionDetail(hash string) (types.TransactionDetail, error) {
 	var transaction types.Transaction
-	err := d.db.QueryRow("SELECT * FROM transactions WHERE tx_id = ?", hash).Scan(&transaction.TxID, &transaction.TransactionDetails)
+	err := d.db.QueryRow("SELECT * FROM transactions WHERE tx_id = ?", hash).Scan(&transaction.TxID, &transaction.TransactionDetails, &transaction.BlockHash, &transaction.BlockHeight)
 	if err != nil {
 		return types.TransactionDetail{}, err
 	}

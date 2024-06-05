@@ -58,7 +58,7 @@ func (t *Tracker) Run() {
 		log.Info().Int("count", len(burnScripts)).Msg("Burn scripts loaded")
 	}
 
-	ticker := time.NewTicker(1 * time.Minute)
+	ticker := time.NewTicker(10 * time.Second)
 	defer ticker.Stop()
 
 	for {
@@ -133,7 +133,7 @@ func (t *Tracker) processTransactionQueue() {
 			continue
 		}
 
-		losses, txs, spentTxids, spentVouts := t.scanTransactions(txDetails.Blockhash, []btypes.TransactionDetail{txDetails})
+		losses, txs, spentTxids, spentVouts := t.scanTransactions(txDetails.Blockhash, tx.BlockHeight, []btypes.TransactionDetail{txDetails})
 		err = t.db.RecordTransactionIndexResults(losses, txs, spentTxids, spentVouts)
 		if err != nil {
 			log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to record transaction index results")
@@ -261,7 +261,7 @@ func (t *Tracker) processBlock(height int64) error {
 		log.Warn().Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).Msg("Unspendable scripts")
 	}
 
-	txLosses, txTransactions, spentTxids, spentVouts := t.scanTransactions(block.Hash, block.Tx)
+	txLosses, txTransactions, spentTxids, spentVouts := t.scanTransactions(block.Hash, block.Height, block.Tx)
 
 	losses = append(losses, txLosses...)
 	transactions = append(transactions, txTransactions...)
@@ -274,7 +274,7 @@ func (t *Tracker) processBlock(height int64) error {
 	return nil
 }
 
-func (t *Tracker) scanTransactions(blockhash string, transactions []btypes.TransactionDetail) ([]types.Loss, []types.Transaction, []string, []int) {
+func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transactions []btypes.TransactionDetail) ([]types.Loss, []types.Transaction, []string, []int) {
 	var losses []types.Loss
 	var txs []types.Transaction
 	var spentTxids []string
