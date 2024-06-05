@@ -1,14 +1,25 @@
 package sqlite
 
 import (
+	"fmt"
+
 	"github.com/RaghavSood/btcsupply/types"
 )
 
-func (d *SqliteBackend) GetIndexStatistics() (types.IndexStatistics, error) {
+func (d *SqliteBackend) GetIndexStatistics(height int64) (types.IndexStatistics, error) {
 	var stats types.IndexStatistics
-	lastBlock, err := d.GetLatestBlock()
-	if err != nil {
-		return stats, err
+	var lastBlock types.Block
+	var err error
+	if height < 0 {
+		lastBlock, err = d.GetLatestBlock()
+		if err != nil {
+			return stats, err
+		}
+	} else {
+		lastBlock, err = d.GetBlock(fmt.Sprintf("%d", height))
+		if err != nil {
+			return stats, err
+		}
 	}
 
 	stats.LastBlockHeight = lastBlock.BlockHeight
