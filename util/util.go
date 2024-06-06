@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"time"
 
 	"github.com/RaghavSood/btcsupply/notes"
 	"github.com/RaghavSood/btcsupply/types"
@@ -47,4 +48,29 @@ func IsScriptInNotes(script string, noteList []notes.Note) bool {
 		}
 	}
 	return false
+}
+
+func FutureBlock(height int64, lastBlock int64) types.Block {
+	blocksTill := height - lastBlock
+	timeToMine := blocksTill * 10 * int64(time.Minute)
+	durationToMine := time.Duration(timeToMine)
+	estimatedMineTime := time.Now().Add(time.Duration(durationToMine))
+
+	return types.Block{
+		BlockHeight:    height,
+		BlockHash:      "Unknown",
+		BlockTimestamp: estimatedMineTime,
+	}
+}
+
+func BlockHeightString(height int64) string {
+	return fmt.Sprintf("%d", height)
+}
+
+func TimeDisclaimer(target time.Time) string {
+	if target.After(time.Now()) {
+		duration := target.Sub(time.Now()).Round(time.Minute)
+		return fmt.Sprintf(" (Estimated to be mined in %s)", duration.String())
+	}
+	return ""
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/RaghavSood/btcsupply/types"
+	"github.com/RaghavSood/btcsupply/util"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
@@ -172,6 +173,13 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		return
 	}
 
+	block, err := w.getBlockOrFutureBlock(util.BlockHeightString(rawTransaction.BlockHeight))
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get block")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
 	var notePointers []notes.NotePointer
 	for _, loss := range losses {
 		notePointers = append(notePointers, notes.NotePointer{
@@ -196,6 +204,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		"Losses":      losses,
 		"Transaction": transaction,
 		"Notes":       notes,
+		"Block":       block,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")
