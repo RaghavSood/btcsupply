@@ -11,7 +11,7 @@ type Block struct {
 	Mediantime        int                 `json:"mediantime"`
 	Nonce             int                 `json:"nonce"`
 	Bits              string              `json:"bits"`
-	Difficulty        int                 `json:"difficulty"`
+	Difficulty        float64             `json:"difficulty"`
 	Chainwork         string              `json:"chainwork"`
 	NTx               int                 `json:"nTx"`
 	Previousblockhash string              `json:"previousblockhash"`
