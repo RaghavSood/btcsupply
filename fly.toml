@@ -1,0 +1,30 @@
+# fly.toml app configuration file generated for btcsupply on 2024-06-06T21:23:35+08:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'btcsupply'
+primary_region = 'cdg'
+
+[env]
+  PORT = '8080'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '4gb'
+  cpu_kind = 'shared'
+  cpus = 2
+
+[mounts]
+  source = "btcsupply_data"
+  destination = "/data"
+  auto_extend_size_increment = "5GB"
+  auto_extend_size_limit = "100GB"
+  auto_extend_size_threshold = 80

@@ -1,0 +1,816 @@
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/!raghav!sood/blockreward@v0.0.0-20240602022227-3963806d10e6/.gitignore
+.devenv/state/go/pkg/mod/github.com/!raghav!sood/blockreward@v0.0.0-20240602022227-3963806d10e6/**/.devenv
+.devenv/state/go/pkg/mod/github.com/!raghav!sood/blockreward@v0.0.0-20240602022227-3963806d10e6/**/*.sw*
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/!raghav!sood/blockreward@v0.2.0/.gitignore
+.devenv/state/go/pkg/mod/github.com/!raghav!sood/blockreward@v0.2.0/**/.devenv
+.devenv/state/go/pkg/mod/github.com/!raghav!sood/blockreward@v0.2.0/**/*.sw*
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/!raghav!sood/blockreward@v0.3.0/.gitignore
+.devenv/state/go/pkg/mod/github.com/!raghav!sood/blockreward@v0.3.0/**/.devenv
+.devenv/state/go/pkg/mod/github.com/!raghav!sood/blockreward@v0.3.0/**/*.sw*
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/*.o
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/*.a
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/_obj
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/*.exe
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/*.test
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/*.prof
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bitset@v1.10.0/**/target
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/*.o
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/*.a
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/_obj
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/*.exe
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/*.test
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/*.prof
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/target
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom/v3@v3.7.0/**/.idea
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/*.o
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/*.a
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/_obj
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/*.exe
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/*.test
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/*.prof
+
+.devenv/state/go/pkg/mod/github.com/bits-and-blooms/bloom@v2.0.3+incompatible/**/target
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/.gitignore
+# Temp files
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*~
+
+# Databases
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/btcd.db
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*-shm
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*-wal
+
+# Log files
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*.log
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*.o
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*.a
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/_obj
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/_test
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/vendor
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/*.exe
+
+# Code coverage files
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/profile.tmp
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/profile.cov
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/coverage.txt
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/btcec/coverage.txt
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/btcutil/coverage.txt
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/**/btcutil/psbt/coverage.txt
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/docs/.gitignore
+.devenv/state/go/pkg/mod/github.com/btcsuite/btcd@v0.23.1/docs/_build
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/.gitignore
+# Temp files
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/*~
+
+# Log files
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/*.log
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/*.o
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/*.a
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/_obj
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/btcsuite/btclog@v0.0.0-20170628155309-84c8d2346e9f/**/*.exe
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/.gitignore
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.o
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.swp
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.swm
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.swn
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.a
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.so
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/_obj
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/_test
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/[568vq].out
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/_cgo_export.*
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/_testmain.go
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.exe
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.exe~
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.test
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.prof
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.rar
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.zip
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.gz
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.psd
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.bmd
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.cfg
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.pptx
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.log
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*nohup.out
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*settings.pyc
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.sublime-project
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.sublime-workspace
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/.DS_Store
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/.idea
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/.vscode
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/output
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/vendor
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/Gopkg.lock
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/Gopkg.toml
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/coverage.html
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/coverage.out
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/coverage.xml
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/junit.xml
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.profile
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.svg
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*.out
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/ast/test.out
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/ast/bench.sh
+
+!.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/testdata/*.json.gz
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/fuzz/testdata
+.devenv/state/go/pkg/mod/github.com/bytedance/sonic@v1.11.6/**/*__debug_bin
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/checksum0/go-electrum@v0.0.0-20220912200153-b862ac442cf9/.gitignore
+.devenv/state/go/pkg/mod/github.com/checksum0/go-electrum@v0.0.0-20220912200153-b862ac442cf9/**/.idea
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/.gitignore
+# Binaries for programs and plugins
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/*.exe
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/*.exe~
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/*.dll
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/*.so
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/*.dylib
+
+# Test binary, built with `go test -c`
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# the result of the go build
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/output*
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/output/*
+
+# Files generated by IDEs
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/.idea
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/*.iml
+
+# Vim swap files
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/*.swp
+
+# Vscode files
+.devenv/state/go/pkg/mod/github.com/cloudwego/base64x@v0.1.4/**/.vscode
+
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/.gitignore
+# Binaries for programs and plugins
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/*.exe
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/*.exe~
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/*.dll
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/*.so
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/*.dylib
+
+# Test binary, built with `go test -c`
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# the result of the go build
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/output*
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/output/*
+
+# Files generated by IDEs
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/.idea
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/*.iml
+
+# Vim swap files
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/*.swp
+
+# Vscode files
+.devenv/state/go/pkg/mod/github.com/cloudwego/iasm@v0.2.0/**/.vscode
+
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/*.o
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/*.a
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/_obj
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/davecgh/go-spew@v1.1.1/**/*.exe
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/.gitignore
+.devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/**/vendor/*
+!.devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/**/vendor/vendor.json
+.devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/**/coverage.out
+.devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/**/count.out
+.devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/**/test
+.devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/**/profile.out
+.devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/**/tmp.out
+
+# Develop tools
+.devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/**/.idea
+.devenv/state/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/**/.vscode
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/*.o
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/*.a
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/_obj
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/*.exe
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/*.test
+.devenv/state/go/pkg/mod/github.com/go-playground/assert/v2@v2.2.0/**/*.prof
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/*.o
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/*.a
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/_obj
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/*.exe
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/*.test
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/**/*.prof
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/cmd/data/.gitignore
+# Ignore everything in this directory
+.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/cmd/data/**/*
+# Except this file
+!.devenv/state/go/pkg/mod/github.com/go-playground/locales@v0.14.1/cmd/data/**/.gitignore
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.o
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.a
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/_obj
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.exe
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.test
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.prof
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/**/*.coverprofile
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/.gitignore
+.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/**/*
+
+!.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/**/.gitignore
+!.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/**/*
+!.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/**/bad-translation1.json
+!.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/**/bad-translation2.json
+!.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/**/bad-translation3.json
+!.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/**/bad-translation4.json
+!.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/**/bad-translation5.json
+!.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/**/bad-translation6.json
+!.devenv/state/go/pkg/mod/github.com/go-playground/universal-translator@v0.18.1/testdata/nested1/**
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.o
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.a
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/_obj
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/_test
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/bin
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.exe
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.test
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.prof
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.test
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.out
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.txt
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/*.DS_Store
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/cover.html
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/README.html
+.devenv/state/go/pkg/mod/github.com/go-playground/validator/v10@v10.20.0/**/.idea
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/goccy/go-json@v0.10.2/.gitignore
+.devenv/state/go/pkg/mod/github.com/goccy/go-json@v0.10.2/**/cover.html
+.devenv/state/go/pkg/mod/github.com/goccy/go-json@v0.10.2/**/cover.out
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/.gitignore
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/*.out
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/*.swp
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/*.8
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/*.6
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/_obj
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/_test*
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/markdown
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/tags
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/fuzz-workdir
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/markdown-fuzz.zip
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/coverage.txt
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/testdata/*_got.md
+.devenv/state/go/pkg/mod/github.com/gomarkdown/markdown@v0.0.0-20240419095408-642f0ee99ae2/**/testdata/*_ast.txt
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/*.o
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/*.a
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/_obj
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/*.exe
+.devenv/state/go/pkg/mod/github.com/hashicorp/golang-lru/v2@v2.0.7/**/*.test
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/json-iterator/go@v1.1.12/.gitignore
+.devenv/state/go/pkg/mod/github.com/json-iterator/go@v1.1.12/vendor
+.devenv/state/go/pkg/mod/github.com/json-iterator/go@v1.1.12/bug_test.go
+.devenv/state/go/pkg/mod/github.com/json-iterator/go@v1.1.12/coverage.txt
+.devenv/state/go/pkg/mod/github.com/json-iterator/go@v1.1.12/.idea
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/*.o
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/*.a
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/_obj
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/*.exe
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/*.test
+.devenv/state/go/pkg/mod/github.com/klauspost/cpuid/v2@v2.2.7/**/*.prof
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/.gitignore
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/**/*.exe
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/**/*.dll
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/**/*.so
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/**/*.dylib
+
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/**/*.test
+
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/**/*.out
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/**/*.txt
+
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/**/vendor
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/removecomments
+.devenv/state/go/pkg/mod/github.com/leodido/go-urn@v1.4.0/snake2camel
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/mattn/go-sqlite3@v1.14.22/.gitignore
+.devenv/state/go/pkg/mod/github.com/mattn/go-sqlite3@v1.14.22/**/*.db
+.devenv/state/go/pkg/mod/github.com/mattn/go-sqlite3@v1.14.22/**/*.exe
+.devenv/state/go/pkg/mod/github.com/mattn/go-sqlite3@v1.14.22/**/*.dll
+.devenv/state/go/pkg/mod/github.com/mattn/go-sqlite3@v1.14.22/**/*.o
+
+# VSCode
+.devenv/state/go/pkg/mod/github.com/mattn/go-sqlite3@v1.14.22/**/.vscode
+
+# Exclude from upgrade
+.devenv/state/go/pkg/mod/github.com/mattn/go-sqlite3@v1.14.22/**/upgrade/*.c
+.devenv/state/go/pkg/mod/github.com/mattn/go-sqlite3@v1.14.22/**/upgrade/*.h
+
+# Exclude upgrade binary
+.devenv/state/go/pkg/mod/github.com/mattn/go-sqlite3@v1.14.22/**/upgrade/upgrade
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/modern-go/concurrent@v0.0.0-20180306012644-bacd9c7ef1dd/.gitignore
+.devenv/state/go/pkg/mod/github.com/modern-go/concurrent@v0.0.0-20180306012644-bacd9c7ef1dd/coverage.txt
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/modern-go/reflect2@v1.0.2/.gitignore
+.devenv/state/go/pkg/mod/github.com/modern-go/reflect2@v1.0.2/vendor
+.devenv/state/go/pkg/mod/github.com/modern-go/reflect2@v1.0.2/coverage.txt
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/ncruces/go-strftime@v0.1.9/.gitignore
+# Binaries for programs and plugins
+.devenv/state/go/pkg/mod/github.com/ncruces/go-strftime@v0.1.9/**/*.exe
+.devenv/state/go/pkg/mod/github.com/ncruces/go-strftime@v0.1.9/**/*.exe~
+.devenv/state/go/pkg/mod/github.com/ncruces/go-strftime@v0.1.9/**/*.dll
+.devenv/state/go/pkg/mod/github.com/ncruces/go-strftime@v0.1.9/**/*.so
+.devenv/state/go/pkg/mod/github.com/ncruces/go-strftime@v0.1.9/**/*.dylib
+
+# Test binary, built with `go test -c`
+.devenv/state/go/pkg/mod/github.com/ncruces/go-strftime@v0.1.9/**/*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+.devenv/state/go/pkg/mod/github.com/ncruces/go-strftime@v0.1.9/**/*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/pelletier/go-toml/v2@v2.2.2/.gitignore
+.devenv/state/go/pkg/mod/github.com/pelletier/go-toml/v2@v2.2.2/**/test_program/test_program_bin
+.devenv/state/go/pkg/mod/github.com/pelletier/go-toml/v2@v2.2.2/**/fuzz
+.devenv/state/go/pkg/mod/github.com/pelletier/go-toml/v2@v2.2.2/**/cmd/tomll/tomll
+.devenv/state/go/pkg/mod/github.com/pelletier/go-toml/v2@v2.2.2/**/cmd/tomljson/tomljson
+.devenv/state/go/pkg/mod/github.com/pelletier/go-toml/v2@v2.2.2/**/cmd/tomltestgen/tomltestgen
+.devenv/state/go/pkg/mod/github.com/pelletier/go-toml/v2@v2.2.2/**/dist
+.devenv/state/go/pkg/mod/github.com/pelletier/go-toml/v2@v2.2.2/**/tests
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/.gitignore
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/.idea
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/.vscode
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/.DS_Store
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/*.swp
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/*.test
+
+# Files output by tests
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/bin
+
+# Local testing
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/.envrc
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/*.FAIL
+
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/dist
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/release_notes.txt
+
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/go.work
+.devenv/state/go/pkg/mod/github.com/pressly/goose/v3@v3.20.0/**/go.work.sum
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/pressly/goose@v2.7.0+incompatible/.gitignore
+.devenv/state/go/pkg/mod/github.com/pressly/goose@v2.7.0+incompatible/**/.idea
+.devenv/state/go/pkg/mod/github.com/pressly/goose@v2.7.0+incompatible/**/.DS_Store
+.devenv/state/go/pkg/mod/github.com/pressly/goose@v2.7.0+incompatible/**/*.swp
+.devenv/state/go/pkg/mod/github.com/pressly/goose@v2.7.0+incompatible/**/*.test
+
+# Files output by tests
+.devenv/state/go/pkg/mod/github.com/pressly/goose@v2.7.0+incompatible/bin
+.devenv/state/go/pkg/mod/github.com/pressly/goose@v2.7.0+incompatible/*.db
+
+# We don't want to switch to Go modules, until we release v3.0.0 or later.
+.devenv/state/go/pkg/mod/github.com/pressly/goose@v2.7.0+incompatible/go.mod
+.devenv/state/go/pkg/mod/github.com/pressly/goose@v2.7.0+incompatible/go.sum
+
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/*.o
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/*.a
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/_obj
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/_test
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/tmp
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/*.exe
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/*.test
+.devenv/state/go/pkg/mod/github.com/rs/zerolog@v1.33.0/**/*.prof
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/*.o
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/*.a
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/_obj
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/*.exe
+
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.7.0/**/.DS_Store
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/*.o
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/*.a
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/*.so
+
+# Folders
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/_obj
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/_test
+
+# Architecture specific extensions/prefixes
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/*.[568vq]
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/[568vq].out
+
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/*.cgo1.go
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/*.cgo2.c
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/_cgo_defun.c
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/_cgo_gotypes.go
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/_cgo_export.*
+
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/_testmain.go
+
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/*.exe
+
+.devenv/state/go/pkg/mod/github.com/stretchr/testify@v1.9.0/**/.DS_Store
+
+# flyctl launch added from .devenv/state/go/pkg/mod/github.com/twmb/murmur3@v1.1.6/.gitignore
+.devenv/state/go/pkg/mod/github.com/twmb/murmur3@v1.1.6/**/*.swp
+
+# flyctl launch added from .devenv/state/go/pkg/mod/go.uber.org/multierr@v1.11.0/.gitignore
+.devenv/state/go/pkg/mod/go.uber.org/multierr@v1.11.0/vendor
+.devenv/state/go/pkg/mod/go.uber.org/multierr@v1.11.0/**/cover.html
+.devenv/state/go/pkg/mod/go.uber.org/multierr@v1.11.0/**/cover.out
+.devenv/state/go/pkg/mod/go.uber.org/multierr@v1.11.0/bin
+
+# flyctl launch added from .devenv/state/go/pkg/mod/golang.org/x/arch@v0.8.0/x86/x86spec/.gitignore
+.devenv/state/go/pkg/mod/golang.org/x/arch@v0.8.0/x86/x86spec/**/x86manual.pdf
+
+# flyctl launch added from .devenv/state/go/pkg/mod/golang.org/x/crypto@v0.23.0/.gitignore
+# Add no patterns to .gitignore except for files generated by the build.
+.devenv/state/go/pkg/mod/golang.org/x/crypto@v0.23.0/**/last-change
+
+# flyctl launch added from .devenv/state/go/pkg/mod/golang.org/x/net@v0.25.0/.gitignore
+# Add no patterns to .gitignore except for files generated by the build.
+.devenv/state/go/pkg/mod/golang.org/x/net@v0.25.0/**/last-change
+
+# flyctl launch added from .devenv/state/go/pkg/mod/golang.org/x/net@v0.25.0/http2/.gitignore
+.devenv/state/go/pkg/mod/golang.org/x/net@v0.25.0/http2/**/*~
+.devenv/state/go/pkg/mod/golang.org/x/net@v0.25.0/http2/**/h2i/h2i
+
+# flyctl launch added from .devenv/state/go/pkg/mod/golang.org/x/sys@v0.18.0/.gitignore
+# Add no patterns to .gitignore except for files generated by the build.
+.devenv/state/go/pkg/mod/golang.org/x/sys@v0.18.0/**/last-change
+
+# flyctl launch added from .devenv/state/go/pkg/mod/golang.org/x/sys@v0.18.0/unix/.gitignore
+.devenv/state/go/pkg/mod/golang.org/x/sys@v0.18.0/unix/**/_obj
+.devenv/state/go/pkg/mod/golang.org/x/sys@v0.18.0/unix/**/unix.test
+
+# flyctl launch added from .devenv/state/go/pkg/mod/golang.org/x/sys@v0.20.0/.gitignore
+# Add no patterns to .gitignore except for files generated by the build.
+.devenv/state/go/pkg/mod/golang.org/x/sys@v0.20.0/**/last-change
+
+# flyctl launch added from .devenv/state/go/pkg/mod/golang.org/x/sys@v0.20.0/unix/.gitignore
+.devenv/state/go/pkg/mod/golang.org/x/sys@v0.20.0/unix/**/_obj
+.devenv/state/go/pkg/mod/golang.org/x/sys@v0.20.0/unix/**/unix.test
+
+# flyctl launch added from .devenv/state/go/pkg/mod/golang.org/x/text@v0.15.0/.gitignore
+# Add no patterns to .gitignore except for files generated by the build.
+.devenv/state/go/pkg/mod/golang.org/x/text@v0.15.0/**/last-change
+.devenv/state/go/pkg/mod/golang.org/x/text@v0.15.0/DATA
+# This file is rather large and the tests really only need to be run
+# after generation.
+.devenv/state/go/pkg/mod/golang.org/x/text@v0.15.0/unicode/norm/data_test.go
+
+# flyctl launch added from .devenv/state/go/pkg/mod/google.golang.org/protobuf@v1.34.1/.gitignore
+.devenv/state/go/pkg/mod/google.golang.org/protobuf@v1.34.1/.cache
+.devenv/state/go/pkg/mod/google.golang.org/protobuf@v1.34.1/.gocache
+.devenv/state/go/pkg/mod/google.golang.org/protobuf@v1.34.1/bin
+.devenv/state/go/pkg/mod/google.golang.org/protobuf@v1.34.1/vendor
+
+# This file includes artifacts of the system test that should not be checked in.
+# For files created by specific development environment (e.g. editor),
+# use alternative ways to exclude files from git.
+# For example, set up .git/info/exclude or use a global .gitignore.
+
+# flyctl launch added from .devenv/state/go/pkg/mod/gopkg.in/check.v1@v0.0.0-20161208181325-20d25e280405/.gitignore
+.devenv/state/go/pkg/mod/gopkg.in/check.v1@v0.0.0-20161208181325-20d25e280405/**/_*
+.devenv/state/go/pkg/mod/gopkg.in/check.v1@v0.0.0-20161208181325-20d25e280405/**/*.swp
+.devenv/state/go/pkg/mod/gopkg.in/check.v1@v0.0.0-20161208181325-20d25e280405/**/*.[568]
+.devenv/state/go/pkg/mod/gopkg.in/check.v1@v0.0.0-20161208181325-20d25e280405/**/[568].out
+
+# flyctl launch added from .devenv/state/go/pkg/mod/modernc.org/libc@v1.41.0/musl/.gitignore
+.devenv/state/go/pkg/mod/modernc.org/libc@v1.41.0/musl/**/*.o
+.devenv/state/go/pkg/mod/modernc.org/libc@v1.41.0/musl/**/*.lo
+.devenv/state/go/pkg/mod/modernc.org/libc@v1.41.0/musl/**/*.a
+.devenv/state/go/pkg/mod/modernc.org/libc@v1.41.0/musl/**/*.so
+.devenv/state/go/pkg/mod/modernc.org/libc@v1.41.0/musl/**/*.so.1
+.devenv/state/go/pkg/mod/modernc.org/libc@v1.41.0/musl/**/config.mak
+.devenv/state/go/pkg/mod/modernc.org/libc@v1.41.0/musl/**/lib/musl-gcc.specs
+.devenv/state/go/pkg/mod/modernc.org/libc@v1.41.0/musl/obj
+
+# flyctl launch added from .devenv/state/go/pkg/mod/modernc.org/mathutil@v1.6.0/example/.gitignore
+.devenv/state/go/pkg/mod/modernc.org/mathutil@v1.6.0/example/**/example
+.devenv/state/go/pkg/mod/modernc.org/mathutil@v1.6.0/example/**/Makefile
+
+# flyctl launch added from .devenv/state/go/pkg/mod/modernc.org/mathutil@v1.6.0/example2/.gitignore
+.devenv/state/go/pkg/mod/modernc.org/mathutil@v1.6.0/example2/**/example2
+.devenv/state/go/pkg/mod/modernc.org/mathutil@v1.6.0/example2/**/Makefile
+
+# flyctl launch added from .devenv/state/go/pkg/mod/modernc.org/mathutil@v1.6.0/example3/.gitignore
+.devenv/state/go/pkg/mod/modernc.org/mathutil@v1.6.0/example3/**/example3
+.devenv/state/go/pkg/mod/modernc.org/mathutil@v1.6.0/example3/**/Makefile
+
+# flyctl launch added from .devenv/state/go/pkg/mod/modernc.org/sqlite@v1.29.6/testdata/.gitignore
+.devenv/state/go/pkg/mod/modernc.org/sqlite@v1.29.6/testdata/**/sqlite-*
+.devenv/state/go/pkg/mod/modernc.org/sqlite@v1.29.6/testdata/**/SQLite-*
+
+# flyctl launch added from .gitignore
+**/.devenv
+**/*.sw*
+**/.env
+**/*.sqlite
+**/tmp
+fly.toml
