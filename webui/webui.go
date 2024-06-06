@@ -109,10 +109,26 @@ func (w *WebUI) Transaction(c *gin.Context) {
 
 	}
 
+	hasNulldata := false
 	for _, vout := range transaction.Vout {
+		noteType := notes.Script
+
+		if vout.ScriptPubKey.Type == "nulldata" {
+			hasNulldata = true
+			noteType = notes.NullData
+		}
+
 		notePointers = append(notePointers, notes.NotePointer{
-			NoteType:     notes.Script,
+			NoteType:     noteType,
 			PathElements: []string{vout.ScriptPubKey.Hex},
+		})
+	}
+
+	// Ensure the common nulldata note shows on every nulldata tx page
+	if hasNulldata {
+		notePointers = append(notePointers, notes.NotePointer{
+			NoteType:     notes.NullData,
+			PathElements: []string{"nulldata"},
 		})
 	}
 
