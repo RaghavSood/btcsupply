@@ -33,12 +33,6 @@ func New() *Template {
 	}
 }
 
-// func (t *Template) Render(w io.Writer, name string, data interface{}) error {
-// 	tmpl := template.Must(t.templates.Clone())
-// 	tmpl = template.Must(tmpl.ParseFS(Templates, name))
-// 	return tmpl.ExecuteTemplate(w, name, data)
-// }
-
 func (t *Template) Render(w io.Writer, contentTemplate string, data interface{}) error {
 	tmpl, err := t.templates.Clone()
 	if err != nil {
