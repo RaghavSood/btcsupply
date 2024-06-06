@@ -1,10 +1,10 @@
 {{ define "content" }}
 <div class="container mx-auto p-4">
-  <h2 class="text-xl font-bold mb-4">Transaction {{ .Transaction.Txid }}</h2>
+  <h2 class="text-xl font-semibold mb-4">Transaction {{ .Transaction.Txid }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           <!-- Transaction Inputs -->
           <div>
-            <span class="text-xl font-semibold mb-4">Inputs</span>
+            <span class="text-xl font-medium mb-4">Inputs</span>
             {{ range .Transaction.Vin }}
               <div class="bg-gray-100 p-4 mb-4">
                 {{ if .Coinbase }}
@@ -24,7 +24,7 @@
           </div>
           <!-- Transaction Outputs -->
           <div>
-            <span class="text-xl font-semibold mb-4">Outputs</span>
+            <span class="text-xl font-medium mb-4">Outputs</span>
             {{ range .Transaction.Vout }}
               {{ $bgc := "bg-gray-100" }}
               {{ $burnText := "" }}
@@ -47,7 +47,7 @@
         </div>
 
         <!-- Transaction-specific Notes -->
-        <h3 class="text-lg font-semibold mb-2">How did this transaction burn BTC?</h3>
+        <h3 class="text-lg font-medium mb-2">How did this transaction burn BTC?</h3>
         <div class="mb-4">
             {{ range .Notes }}
                   {{ template "note" . }}
