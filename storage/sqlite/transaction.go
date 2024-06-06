@@ -1,6 +1,8 @@
 package sqlite
 
 import (
+	"database/sql"
+
 	"github.com/RaghavSood/btcsupply/types"
 )
 
@@ -24,10 +26,29 @@ func (d *SqliteBackend) GetTransactionLossSummary(limit int) ([]types.Transactio
 
 	defer rows.Close()
 
+	summaries, err := scanTransactionLossSummaries(rows)
+	return summaries, err
+}
+
+func (d *SqliteBackend) GetTransactionLossSummaryForBlock(identifier string) ([]types.TransactionLossSummary, error) {
+	query := `SELECT tx_id, sum(amount), block_height, block_hash FROM losses WHERE block_hash = ? OR block_height = ? GROUP BY tx_id`
+
+	rows, err := d.db.Query(query, identifier, identifier)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	summaries, err := scanTransactionLossSummaries(rows)
+	return summaries, err
+}
+
+func scanTransactionLossSummaries(rows *sql.Rows) ([]types.TransactionLossSummary, error) {
 	var summaries []types.TransactionLossSummary
 	for rows.Next() {
 		var summary types.TransactionLossSummary
-		err = rows.Scan(&summary.Txid, &summary.TotalLoss, &summary.BlockHeight, &summary.BlockHash)
+		err := rows.Scan(&summary.Txid, &summary.TotalLoss, &summary.BlockHeight, &summary.BlockHash)
 		if err != nil {
 			return nil, err
 		}
