@@ -45,7 +45,7 @@ func (w *WebUI) Serve() {
 }
 
 func (w *WebUI) Index(c *gin.Context) {
-	losses, err := w.db.GetRecentLosses(10)
+	losses, err := w.db.GetTransactionLossSummary(50)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get recent losses")
 		c.AbortWithError(http.StatusInternalServerError, err)
