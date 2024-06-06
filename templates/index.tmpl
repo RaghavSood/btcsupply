@@ -57,7 +57,7 @@
             {{ range .Losses }}
             <tr>
                 <td class="px-4 py-2 border-b"><a href="/transaction/{{ .TxID }}">{{ .TxID }}</a></td>
-                <td class="px-4 py-2 border-b"><a href="/block/{{ .BlockHash }}">{{ .BlockHeight }}</a></td>
+                <td class="px-4 py-2 border-b"><a href="/block/{{ .BlockHeight }}">{{ .BlockHeight }}</a></td>
                 <td class="px-4 py-2 border-b">{{ .Amount.SatoshisToBTC true }} BTC</td>
             </tr>
             {{ else }}

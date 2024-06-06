@@ -11,8 +11,8 @@
         <tbody>
             {{ range .Blocks }}
             <tr>
-                <td class="px-4 py-2 border-b">{{ .BlockHeight }}</td>
-                <td class="px-4 py-2 border-b"><a href="/block/{{ .BlockHash }}">{{ .BlockHash }}</a></td>
+                <td class="px-4 py-2 border-b"><a href="/block/{{ .BlockHeight }}">{{ .BlockHeight }}</a></td>
+                <td class="px-4 py-2 border-b"><a href="/block/{{ .BlockHeight }}">{{ .BlockHash }}</a></td>
             </tr>
             {{ else }}
             <tr>
