@@ -271,10 +271,16 @@ func (t *Tracker) processBlock(height int64) error {
 		log.Warn().Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).Msg("Unspendable scripts")
 	}
 
-	txLosses, txTransactions, spentTxids, spentVouts := t.scanTransactions(block.Hash, block.Height, block.Tx)
+	// The Genesis block has a unique case where the funds are lost both because
+	// they are sent to Satoshi's keys AND an underlying bug in the code
+	//
+	// We don't want to double count it, so we skip this step for the genesis block
+	if block.Height > 0 {
+		txLosses, txTransactions, spentTxids, spentVouts := t.scanTransactions(block.Hash, block.Height, block.Tx)
 
-	losses = append(losses, txLosses...)
-	transactions = append(transactions, txTransactions...)
+		losses = append(losses, txLosses...)
+		transactions = append(transactions, txTransactions...)
+	}
 
 	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), types.FromRPCTxOutSetInfo(coinStats), blockStats, losses, transactions, spentTxids, spentVouts)
 	if err != nil {
