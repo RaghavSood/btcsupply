@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/androidstudio.min.css">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.js"></script>
+    <link rel="stylesheet" href="/static/css/hljs-copy.css"/>
 </head>
 <body class="bg-slate-900 text-slate-400 flex flex-col min-h-screen font-mono">
     {{ template "header" . }}
@@ -14,7 +16,10 @@
         {{ block "content" . }}{{ end }}
     </main>
     {{ template "footer" . }}
-    <script>hljs.highlightAll();</script>
+    <script>
+      hljs.addPlugin(new CopyButtonPlugin());
+      hljs.highlightAll();
+    </script>
 </body>
 </html>
 
