@@ -158,9 +158,16 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		return
 	}
 
-	transaction, err := w.db.GetTransactionDetail(hash)
+	rawTransaction, err := w.db.GetTransaction(hash)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get transaction")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	transaction, err := rawTransaction.TransactionDetail()
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to parse transaction")
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
