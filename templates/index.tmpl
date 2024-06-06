@@ -3,15 +3,15 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <div class="bg-gray-200">
         <div class="p-4 bg-green-100">
-          <p class="text-2xl font-bold">{{ .Stats.PlannedSupply.SatoshisToBTC }} BTC</p>
+          <p class="text-2xl font-bold">{{ .Stats.PlannedSupply.SatoshisToBTC true }} BTC</p>
           <h3 class="text-xs mb-4">Planned Supply</h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-bold">{{ .Stats.CirculatingSupply.SatoshisToBTC }} BTC</p>
+          <p class="text-2xl font-bold">{{ .Stats.CirculatingSupply.SatoshisToBTC true }} BTC</p>
           <h3 class="text-xs mb-4">Circulating Supply</h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-bold">{{ .Stats.BurnedSupply.SatoshisToBTC }} BTC</p>
+          <p class="text-2xl font-bold">{{ .Stats.BurnedSupply.SatoshisToBTC true }} BTC</p>
           <h3 class="text-xs mb-4">Burned Supply</h3>
         </div>
       </div>
@@ -58,7 +58,7 @@
             <tr>
                 <td class="px-4 py-2 border-b"><a href="/transaction/{{ .TxID }}">{{ .TxID }}</a></td>
                 <td class="px-4 py-2 border-b"><a href="/block/{{ .BlockHash }}">{{ .BlockHeight }}</a></td>
-                <td class="px-4 py-2 border-b">{{ .Amount.SatoshisToBTC }} BTC</td>
+                <td class="px-4 py-2 border-b">{{ .Amount.SatoshisToBTC true }} BTC</td>
             </tr>
             {{ else }}
             <tr>

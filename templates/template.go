@@ -25,6 +25,7 @@ func New() *Template {
 		"PrettyPrintJSON":     util.PrettyPrintJSON,
 		"ScriptPubKeyDisplay": types.ScriptPubKeyDisplay,
 		"IsScriptInNotes":     util.IsScriptInNotes,
+		"ValueToBigInt":       types.ValueToBigInt,
 	}
 
 	templates := template.Must(template.New("").Funcs(funcMap).ParseFS(Templates, "footer.tmpl", "header.tmpl", "base.tmpl", "note.tmpl"))

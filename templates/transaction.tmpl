@@ -12,7 +12,7 @@
                 {{ else }}
                   <div class="flex flex-row gap-x-2 text-wrap font-medium">
                     <span class="basis-9/12 break-words min-w-0">{{ .Prevout.ScriptPubKey | ScriptPubKeyDisplay }}</span>
-                    <span class="text-right ml-auto">{{ .Prevout.Value }} BTC</span>
+                    <span class="text-right ml-auto">{{ (.Prevout.Value | ValueToBigInt).SatoshisToBTC true }} BTC</span>
                   </div>
                   <div class="flex gap-x-2 text-wrap text-sm text-gray-400 hover:text-gray-800">
                     <span class="basis-9/12 break-words min-w-0">{{ .Prevout.ScriptPubKey.Asm }}</span>
@@ -35,7 +35,7 @@
               <div class="{{ $bgc }} p-4 mb-4 font-mono">
                 <div class="flex flex-row gap-x-2 text-wrap font-medium">
                   <span class="basis-9/12 break-words min-w-0">{{ .ScriptPubKey | ScriptPubKeyDisplay }}</span>
-                  <span class="text-right ml-auto">{{ $burnText }}{{ .Value }} BTC{{ $burnText }}</span>
+                  <span class="text-right ml-auto">{{ $burnText }}{{ (.Value | ValueToBigInt).SatoshisToBTC true }} BTC{{ $burnText }}</span>
                 </div>
                 <div class="flex gap-x-2 text-wrap text-sm text-gray-400 hover:text-gray-800">
                   <span class="basis-9/12 break-words min-w-0">{{ .ScriptPubKey.Asm }}</span>

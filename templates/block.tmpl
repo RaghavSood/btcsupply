@@ -11,10 +11,10 @@
       <h3 class="text-md font-mono mb-4">{{ .Block.BlockTimestamp.UTC }}</h3>
     </div>
     <div class="p-4">
-      <p>Theoretical Subsidy: {{ .TheoreticalSubsidy.SatoshisToBTC }}</p>
-      <p>Theoretical Supply: {{ .Stats.PlannedSupply.SatoshisToBTC }}</p>
+      <p>Theoretical Subsidy: {{ .TheoreticalSubsidy.SatoshisToBTC true }}</p>
+      <p>Theoretical Supply: {{ .Stats.PlannedSupply.SatoshisToBTC true }}</p>
       <p>Fees Paid: {{ .BlockStats.Totalfee }}</p>
-      <p>Actual Subsidy: {{ .CoinStats.Coinbase.SatoshisToBTC }}</p>
+      <p>Actual Subsidy: {{ .CoinStats.Coinbase.SatoshisToBTC true }}</p>
     </div>
   </div>
     <table class="min-w-full bg-white border border-gray-200">
