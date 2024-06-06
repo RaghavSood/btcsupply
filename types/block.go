@@ -25,3 +25,7 @@ func FromRPCBlock(block btypes.Block) Block {
 		NumTransactions: block.NTx,
 	}
 }
+
+func (b Block) IsFutureBlock() bool {
+	return time.Now().Before(b.BlockTimestamp)
+}

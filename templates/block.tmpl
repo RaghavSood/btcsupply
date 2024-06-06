@@ -6,13 +6,13 @@
       {{ $titlebg = "bg-red-100" }}
     {{ end }}
     <div class="{{ $titlebg }} p-4">
-      <h1 class="text-3xl font-semibold">Block #{{ .Block.BlockHeight }}</h1>
+      <h1 class="text-2xl font-semibold">Block #{{ .Block.BlockHeight }}</h1>
       <h3 class="text-lg font-mono break-words select-all">{{ .Block.BlockHash }}</h3>
-      <h3 class="text-md font-mono mb-4">{{ .Block.BlockTimestamp.UTC }}</h3>
+      <h3 class="text-md font-mono mb-4">{{ .Block.BlockTimestamp.UTC }}{{ .Block.BlockTimestamp.UTC | TimeDisclaimer }}</h3>
     </div>
     <div class="p-4">
       <p>Theoretical Subsidy: {{ .TheoreticalSubsidy.SatoshisToBTC true }}</p>
-      <p>Theoretical Supply: {{ .Stats.PlannedSupply.SatoshisToBTC true }}</p>
+      <p>Theoretical Supply: {{ .TheoreticalSupply.SatoshisToBTC true }}</p>
       <p>Fees Paid: {{ .BlockStats.Totalfee }}</p>
       <p>Actual Subsidy: {{ .CoinStats.Coinbase.SatoshisToBTC true }}</p>
     </div>
@@ -20,15 +20,15 @@
     <table class="min-w-full bg-white border border-gray-200">
         <thead>
             <tr>
-                <th class="px-4 py-2 border-b">Transaction ID</th>
-                <th class="px-4 py-2 border-b">Amount</th>
+                <th class="text-start px-4 py-2 border-b">Transaction ID</th>
+                <th class="text-start px-4 py-2 border-b">Amount</th>
             </tr>
         </thead>
         <tbody>
             {{ range .Losses }}
             <tr>
                 <td class="px-4 py-2 border-b"><a href="/transaction/{{ .TxID }}">{{ .TxID }}</a></td>
-                <td class="px-4 py-2 border-b">{{ .Amount.SatoshisToBTC }} BTC</td>
+                <td class="px-4 py-2 border-b">{{ .Amount.SatoshisToBTC true }} BTC</td>
             </tr>
             {{ else }}
             <tr>
