@@ -3,51 +3,51 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <div class="border rounded-lg border-slate-700 bg-slate-950/30">
         <div class="p-4 bg-emerald-800/30">
-          <p class="text-2xl font-bold">{{ .Stats.PlannedSupply.SatoshisToBTC true }} BTC</p>
+          <p class="text-2xl font-medium">{{ .Stats.PlannedSupply.SatoshisToBTC true }} BTC</p>
           <h3 class="text-xs mb-4">Planned Supply</h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-bold">{{ .Stats.CirculatingSupply.SatoshisToBTC true }} BTC</p>
+          <p class="text-2xl font-medium">{{ .Stats.CirculatingSupply.SatoshisToBTC true }} BTC</p>
           <h3 class="text-xs mb-4">Circulating Supply</h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-bold">{{ .Stats.BurnedSupply.SatoshisToBTC true }} BTC</p>
+          <p class="text-2xl font-medium">{{ .Stats.BurnedSupply.SatoshisToBTC true }} BTC</p>
           <h3 class="text-xs mb-4">Burned Supply</h3>
         </div>
       </div>
       <div class="border rounded-lg border-slate-700 bg-slate-950/30">
         <div class="p-4 bg-emerald-800/30">
-          <p class="text-2xl font-bold">{{ .Stats.LastBlockHeight }}</p>
+          <p class="text-2xl font-medium">{{ .Stats.LastBlockHeight }}</p>
           <h3 class="text-xs mb-4">Last Block</h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-bold">{{ .Stats.BurnOutputCount }}</p>
+          <p class="text-2xl font-medium">{{ .Stats.BurnOutputCount }}</p>
           <h3 class="text-xs mb-4">Burned Outputs</h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-bold">{{ .Stats.BurnScriptsCount }}</p>
+          <p class="text-2xl font-medium">{{ .Stats.BurnScriptsCount }}</p>
           <h3 class="text-xs mb-4">Burn Scripts Indexed</h3>
         </div>
       </div>
       <div class="border rounded-lg border-slate-700 bg-slate-950/30">
         <div class="p-4 bg-emerald-800/30">
-          <p class="text-2xl font-bold">{{ .Stats.CurrentPrice  }}</p>
+          <p class="text-2xl font-medium">{{ .Stats.CurrentPrice  }}</p>
           <h3 class="text-xs mb-4 has-tooltip">
             <span class="tooltip rounded shadow-lg p-2 bg-black text-slate-200 mt-6">Recent BTCUSD Price from Kraken</span>
             Reference Price
           </h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-bold">{{ .Stats.AdjustedPrice }}</p>
+          <p class="text-2xl font-medium">{{ .Stats.AdjustedPrice }}</p>
           <h3 class="text-xs mb-4">Adjusted Fair Value</h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-bold">+{{ .Stats.PriceChange }}</p>
+          <p class="text-2xl font-medium">+{{ .Stats.PriceChange }}</p>
           <h3 class="text-xs mb-4">Burn Value Redistributed</h3>
         </div>
       </div>
     </div>
-    <h2 class="text-xl font-bold mb-4 mt-4">Recent BTC Burns</h2>
+    <h2 class="text-xl font-medium mb-4 mt-4">Recent BTC Burns</h2>
     <table class="min-w-full bg-slate-950/30 border border-slate-700">
         <thead>
             <tr>
