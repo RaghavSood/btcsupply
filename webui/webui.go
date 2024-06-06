@@ -36,6 +36,10 @@ func (w *WebUI) Serve() {
 	router.GET("/schedule", w.HalvingSchedule)
 
 	router.StaticFS("/static", http.FS(static.Static))
+	// Serve /favicon.ico from the root
+	router.GET("/favicon.ico", func(c *gin.Context) {
+		c.FileFromFS("favicon.ico", http.FS(static.Static))
+	})
 
 	router.Run(":8080")
 }
