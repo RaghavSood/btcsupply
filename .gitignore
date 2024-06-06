@@ -4,3 +4,4 @@
 *.sqlite
 static/css/tailwind.css
 tmp/
+result
