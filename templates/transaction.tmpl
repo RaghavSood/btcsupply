@@ -19,7 +19,7 @@
                     <span class="basis-9/12 break-words min-w-0">{{ .Prevout.ScriptPubKey | ScriptPubKeyDisplay }}</span>
                     <span class="text-right ml-auto">{{ (.Prevout.Value | ValueToBigInt).SatoshisToBTC true }} BTC</span>
                   </div>
-                  <div class="flex gap-x-2 text-wrap text-sm text-gray-600 hover:text-gray-300">
+                  <div class="flex gap-x-2 text-wrap text-sm text-gray-600">
                     <span class="basis-9/12 break-words min-w-0">{{ .Prevout.ScriptPubKey.Asm }}</span>
                     <span class="text-right ml-auto">{{ .Prevout.ScriptPubKey.Type }}</span>
                   </div>
@@ -32,20 +32,17 @@
             <div class="mb-4"><span class="text-xl font-medium">Outputs</span></div>
             {{ range .Transaction.Vout }}
               {{ $bgc := "bg-slate-950/30" }}
-              {{ $maintextc := "text-gray-300" }}
-              {{ $secondtextc := "text-gray-600" }}
-              {{ $secondtexthoverc := "text-gray-300" }}
               {{ $burnText := "" }}
               {{ if IsScriptInNotes .ScriptPubKey.Hex $.Notes }}
                 {{ $bgc = "bg-red-900/30" }}
                 {{ $burnText = "🔥" }}
               {{ end }}
               <div class="border rounded-lg border-slate-700 {{ $bgc }} p-4 mb-4 font-mono">
-                <div class="flex flex-row gap-x-2 text-wrap font-medium {{ $maintextc }}">
+                <div class="flex flex-row gap-x-2 text-wrap font-medium">
                   <span class="basis-9/12 break-words min-w-0">{{ .ScriptPubKey | ScriptPubKeyDisplay }}</span>
                   <span class="text-right ml-auto">{{ $burnText }}{{ (.Value | ValueToBigInt).SatoshisToBTC true }} BTC{{ $burnText }}</span>
                 </div>
-                <div class="flex gap-x-2 text-wrap text-sm {{ $secondtextc }}">
+                <div class="flex gap-x-2 text-wrap text-sm text-gray-600">
                   <span class="basis-9/12 break-words min-w-0">{{ .ScriptPubKey.Asm }}</span>
                   <span class="text-right ml-auto">{{ .ScriptPubKey.Type }}</span>
                 </div>
