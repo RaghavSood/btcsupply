@@ -16,17 +16,23 @@ func (d *SqliteBackend) GetBlock(identifier string) (types.Block, error) {
 	return block, nil
 }
 
-func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.Block, error) {
+func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.BlockLossSummary, error) {
 	query := `
-        SELECT b.*
-        FROM blocks b
-        INNER JOIN (
-            SELECT block_height
-            FROM losses
-            GROUP BY block_height
-            HAVING SUM(amount) > 0
-        ) l ON b.block_height = l.block_height
-        ORDER BY b.block_height DESC
+        SELECT 
+            b.block_height, 
+            b.block_hash, 
+            COUNT(l.tx_id) AS loss_tx_count, 
+            SUM(l.amount) AS sum_of_losses
+        FROM 
+            blocks b
+        INNER JOIN 
+            losses l ON b.block_height = l.block_height
+        GROUP BY 
+            b.block_height, b.block_hash
+        HAVING 
+            SUM(l.amount) > 0
+        ORDER BY 
+            b.block_height DESC
         LIMIT ?`
 
 	rows, err := d.db.Query(query, limit)
@@ -35,12 +41,17 @@ func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.Block, error) {
 	}
 	defer rows.Close()
 
-	blocks, err := scanBlocks(rows)
-	if err != nil {
-		return nil, err
+	var summaries []types.BlockLossSummary
+	for rows.Next() {
+		var summary types.BlockLossSummary
+		if err := rows.Scan(
+			&summary.BlockHeight, &summary.BlockHash, &summary.LossOutputs, &summary.TotalLost); err != nil {
+			return nil, err
+		}
+		summaries = append(summaries, summary)
 	}
 
-	return blocks, nil
+	return summaries, nil
 }
 
 func (d *SqliteBackend) GetLatestBlock() (types.Block, error) {

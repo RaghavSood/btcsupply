@@ -6,6 +6,8 @@
             <tr>
                 <th class="text-start px-4 py-2 border-b border-slate-700">Block Height</th>
                 <th class="text-start px-4 py-2 border-b border-slate-700">Block Hash</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Lossy Outputs</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Total Lost</th>
             </tr>
         </thead>
         <tbody>
@@ -13,6 +15,8 @@
             <tr>
                 <td class="px-4 py-2 border-b border-slate-700"><a href="/block/{{ .BlockHeight }}">{{ .BlockHeight }}</a></td>
                 <td class="px-4 py-2 border-b border-slate-700"><a href="/block/{{ .BlockHeight }}">{{ .BlockHash }}</a></td>
+                <td class="px-4 py-2 border-b border-slate-700">{{ .LossOutputs }}</td>
+                <td class="px-4 py-2 border-b border-slate-700">{{ .TotalLost.SatoshisToBTC true }} BTC</td>
             </tr>
             {{ else }}
             <tr>
