@@ -5,6 +5,7 @@ import (
 	"errors"
 	"math/big"
 	"strconv"
+	"strings"
 )
 
 // TODO: Fix pointer/non-pointer issues
@@ -70,7 +71,7 @@ func (b *BigInt) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (b *BigInt) SatoshisToBTC() string {
+func (b *BigInt) SatoshisToBTC(strip bool) string {
 	if b == nil {
 		return "0"
 	}
@@ -78,5 +79,12 @@ func (b *BigInt) SatoshisToBTC() string {
 	// 1 BTC = 100,000,000 Satoshis
 	// 1 Satoshi = 0.00000001 BTC
 	btc := new(big.Float).Quo(new(big.Float).SetInt(b.BigInt()), big.NewFloat(100000000))
-	return btc.Text('f', 8) // 8 decimal places for BTC
+	formatted := btc.Text('f', 8) // 8 decimal places for BTC
+
+	if strip {
+		formatted = strings.TrimRight(formatted, "0")
+		formatted = strings.TrimRight(formatted, ".")
+	}
+
+	return formatted
 }
