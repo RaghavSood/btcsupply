@@ -329,15 +329,10 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 			}
 		}
 
+		atLeastOneBurn := false
 		for _, vout := range tx.Vout {
 			if vout.ScriptPubKey.Type == "nulldata" {
 				log.Info().Str("script", vout.ScriptPubKey.Hex).Msg("Null data output")
-
-				jsonTx, err := json.Marshal(tx)
-				if err != nil {
-					log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to marshal transaction")
-					continue
-				}
 
 				losses = append(losses, types.Loss{
 					TxID:        tx.Txid,
@@ -347,12 +342,7 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 					Amount:      types.FromBTCFloat64(vout.Value),
 				})
 
-				txs = append(txs, types.Transaction{
-					TxID:               tx.Txid,
-					TransactionDetails: string(jsonTx),
-					BlockHeight:        blockHeight,
-					BlockHash:          blockhash,
-				})
+				atLeastOneBurn = true
 			} else if t.bf.TestString(vout.ScriptPubKey.Hex) {
 				exists, err := t.db.BurnScriptExists(vout.ScriptPubKey.Hex)
 				if err != nil {
@@ -363,12 +353,6 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 				log.Info().Str("script", vout.ScriptPubKey.Hex).Bool("exists", exists).Msg("Burn script identified")
 
 				if exists {
-					jsonTx, err := json.Marshal(tx)
-					if err != nil {
-						log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to marshal transaction")
-						continue
-					}
-
 					losses = append(losses, types.Loss{
 						TxID:        tx.Txid,
 						BlockHash:   blockhash,
@@ -377,15 +361,26 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 						Amount:      types.FromBTCFloat64(vout.Value),
 					})
 
-					txs = append(txs, types.Transaction{
-						TxID:               tx.Txid,
-						TransactionDetails: string(jsonTx),
-						BlockHeight:        blockHeight,
-						BlockHash:          blockhash,
-					})
+					atLeastOneBurn = true
 				}
 			}
 		}
+
+		if atLeastOneBurn {
+			jsonTx, err := json.Marshal(tx)
+			if err != nil {
+				log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to marshal transaction")
+				continue
+			}
+
+			txs = append(txs, types.Transaction{
+				TxID:               tx.Txid,
+				TransactionDetails: string(jsonTx),
+				BlockHeight:        blockHeight,
+				BlockHash:          blockhash,
+			})
+		}
+
 	}
 
 	return losses, txs, spentTxids, spentVouts
