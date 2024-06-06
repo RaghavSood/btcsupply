@@ -17,10 +17,23 @@ func (d *SqliteBackend) GetBlock(identifier string) (types.Block, error) {
 }
 
 func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.Block, error) {
-	rows, err := d.db.Query("SELECT * FROM blocks ORDER BY block_height DESC LIMIT ?", limit)
+	query := `
+        SELECT b.*
+        FROM blocks b
+        INNER JOIN (
+            SELECT block_height
+            FROM losses
+            GROUP BY block_height
+            HAVING SUM(amount) > 0
+        ) l ON b.block_height = l.block_height
+        ORDER BY b.block_height DESC
+        LIMIT ?`
+
+	rows, err := d.db.Query(query, limit)
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
 	blocks, err := scanBlocks(rows)
 	if err != nil {
