@@ -5,10 +5,11 @@
       <h3 class="text-lg text-gray-400 font-mono"><a href="/block/{{ .Block.BlockHeight }}">Block #{{ .Block.BlockHeight }}</a></h3>
       <h3 class="text-md text-gray-400 font-mono mb-4">{{ .Block.BlockTimestamp.UTC }}{{ .Block.BlockTimestamp.UTC | TimeDisclaimer }}</h3>
     </div>
+    <br />
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           <!-- Transaction Inputs -->
           <div>
-            <span class="text-xl font-medium mb-4">Inputs</span>
+            <div class="mb-4"><span class="text-xl font-medium">Inputs</span></div>
             {{ range .Transaction.Vin }}
               <div class="bg-gray-100 p-4 mb-4">
                 {{ if .Coinbase }}
@@ -28,7 +29,7 @@
           </div>
           <!-- Transaction Outputs -->
           <div>
-            <span class="text-xl font-medium mb-4">Outputs</span>
+            <div class="mb-4"><span class="text-xl font-medium">Outputs</span></div>
             {{ range .Transaction.Vout }}
               {{ $bgc := "bg-gray-100" }}
               {{ $burnText := "" }}
