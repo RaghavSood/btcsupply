@@ -43,5 +43,34 @@
               ];
             };
           });
+      packages = forEachSystem
+        (system:
+          let
+            pkgs = nixpkgs.legacyPackages.${system};
+          in
+          {
+            default = pkgs.buildGoModule {
+              name = "btcsupply";
+
+              src = ./.;
+              vendorHash = "sha256-qknO1yBfbx3DFgaGFGSfqweZO4rhSigWTAJlB378jJc=";
+
+              buildInputs = with pkgs; [
+                go
+                tailwindcss
+                git
+              ];
+
+              subPackages = [ "cmd/btcsupply" ];
+
+              preBuild = ''
+                substituteInPlace main.go --replace-fail tailwindcss ${pkgs.tailwindcss}/bin/tailwindcss
+                go generate main.go
+              '';
+
+              doCheck = false;
+
+            };
+          });
     };
 }
