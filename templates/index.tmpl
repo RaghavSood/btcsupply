@@ -32,7 +32,10 @@
       <div class="border rounded-lg border-slate-700 bg-slate-950/30">
         <div class="p-4 bg-emerald-800/30">
           <p class="text-2xl font-bold">{{ .Stats.CurrentPrice  }}</p>
-          <h3 class="text-xs mb-4">Reference Price</h3>
+          <h3 class="text-xs mb-4 has-tooltip">
+            <span class="tooltip rounded shadow-lg p-2 bg-black text-slate-200 mt-6">Recent BTCUSD Price from Kraken</span>
+            Reference Price
+          </h3>
         </div>
         <div class="p-4">
           <p class="text-2xl font-bold">{{ .Stats.AdjustedPrice }}</p>
