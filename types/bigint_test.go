@@ -8,7 +8,7 @@ import (
 func TestSatoshisToBTC(t *testing.T) {
 	mInt := big.NewInt(100000000)
 	amount := FromMathBigInt(mInt)
-	btcamount := amount.SatoshisToBTC()
+	btcamount := amount.SatoshisToBTC(false)
 
 	if btcamount != "1.00000000" {
 		t.Errorf("Expected 1.00000000, got %s", btcamount)
