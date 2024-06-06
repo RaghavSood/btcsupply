@@ -1,7 +1,7 @@
 {{ define "note" }}
   {{ $bgcolour := "bg-sky-800/30" }}
   {{ if eq .Type "script" }}
-    {{ $bgcolour = "bg-emerald-800/30" }}
+    {{ $bgcolour = "bg-red-900/30" }}
   {{ else if eq .Type "nulldata" }}
     {{ $bgcolour = "bg-yellow-700/30" }}
   {{ end }}
