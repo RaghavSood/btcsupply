@@ -1,8 +1,8 @@
 {{ define "content" }}
 <div class="container mx-auto p-4">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <div class="bg-gray-200">
-        <div class="p-4 bg-green-100">
+      <div class="border rounded-lg border-slate-700 bg-slate-950/30">
+        <div class="p-4 bg-emerald-800/30">
           <p class="text-2xl font-bold">{{ .Stats.PlannedSupply.SatoshisToBTC true }} BTC</p>
           <h3 class="text-xs mb-4">Planned Supply</h3>
         </div>
@@ -15,8 +15,8 @@
           <h3 class="text-xs mb-4">Burned Supply</h3>
         </div>
       </div>
-      <div class="bg-gray-200">
-        <div class="p-4 bg-green-100">
+      <div class="border rounded-lg border-slate-700 bg-slate-950/30">
+        <div class="p-4 bg-emerald-800/30">
           <p class="text-2xl font-bold">{{ .Stats.LastBlockHeight }}</p>
           <h3 class="text-xs mb-4">Last Block</h3>
         </div>
@@ -29,8 +29,8 @@
           <h3 class="text-xs mb-4">Burn Scripts Indexed</h3>
         </div>
       </div>
-      <div class="bg-gray-200">
-        <div class="p-4 bg-green-100">
+      <div class="border rounded-lg border-slate-700 bg-slate-950/30">
+        <div class="p-4 bg-emerald-800/30">
           <p class="text-2xl font-bold">{{ .Stats.CurrentPrice  }}</p>
           <h3 class="text-xs mb-4">Reference Price</h3>
         </div>
@@ -45,24 +45,24 @@
       </div>
     </div>
     <h2 class="text-xl font-bold mb-4 mt-4">Recent BTC Burns</h2>
-    <table class="min-w-full bg-white border border-gray-200">
+    <table class="min-w-full bg-slate-950/30 border border-slate-700">
         <thead>
             <tr>
-                <th class="text-start px-4 py-2 border-b">Transaction ID</th>
-                <th class="text-start px-4 py-2 border-b">Block Height</th>
-                <th class="text-start px-4 py-2 border-b">Amount</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Transaction ID</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Block Height</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Amount</th>
             </tr>
         </thead>
         <tbody>
             {{ range .Losses }}
             <tr>
-                <td class="px-4 py-2 border-b"><a href="/transaction/{{ .TxID }}">{{ .TxID }}</a></td>
-                <td class="px-4 py-2 border-b"><a href="/block/{{ .BlockHeight }}">{{ .BlockHeight }}</a></td>
-                <td class="px-4 py-2 border-b">{{ .Amount.SatoshisToBTC true }} BTC</td>
+                <td class="px-4 py-2 border-b border-slate-700"><a href="/transaction/{{ .TxID }}">{{ .TxID }}</a></td>
+                <td class="px-4 py-2 border-b border-slate-700"><a href="/block/{{ .BlockHeight }}">{{ .BlockHeight }}</a></td>
+                <td class="px-4 py-2 border-b border-slate-700">{{ .Amount.SatoshisToBTC true }} BTC</td>
             </tr>
             {{ else }}
             <tr>
-                <td colspan="5" class="px-4 py-2 border-b text-center">No recent losses found.</td>
+                <td colspan="5" class="px-4 py-2 border-b border-slate-700 text-center">No recent losses found.</td>
             </tr>
             {{ end }}
         </tbody>

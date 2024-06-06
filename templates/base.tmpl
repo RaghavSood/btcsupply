@@ -4,10 +4,10 @@
     <title>{{ .Title }}</title>
     <link href="/static/css/tailwind.css" rel="stylesheet">
     <link href="/static/css/app.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/androidstudio.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
-<body class="bg-white text-black flex flex-col min-h-screen font-mono">
+<body class="bg-slate-900 text-slate-400 flex flex-col min-h-screen font-mono">
     {{ template "header" . }}
     <main>
         {{ block "content" . }}{{ end }}

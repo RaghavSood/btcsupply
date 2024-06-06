@@ -1,10 +1,10 @@
 {{ define "note" }}
-  {{ $bgcolour := "blue" }}
+  {{ $bgcolour := "bg-sky-800/30" }}
   {{ if eq .Type "script" }}
-    {{ $bgcolour = "green" }}
+    {{ $bgcolour = "bg-emerald-800/30" }}
   {{ end }}
-  <div class="note-card font-sans grid grid-cols-1 bg-{{ $bgcolour }}-100 p-4 mb-2 gap-y-3">
+  <div class="border rounded-lg border-slate-700 note-card font-sans grid grid-cols-1 {{ $bgcolour }} p-4 mb-2 gap-y-3">
     <p>{{ .Data | NoEscape }}</p>
-    <a href="https://github.com/RaghavSood/btcsupply/blame/master/notes/{{ .Path }}" target="_BLANK" class="text-sm text-gray-400 hover:text-gray-800">View revision history</a>
+    <a href="https://github.com/RaghavSood/btcsupply/blame/master/notes/{{ .Path }}" target="_BLANK" class="text-sm text-gray-400 hover:text-gray-200">View revision history</a>
   </div>
 {{ end }}

@@ -1,22 +1,22 @@
 {{ define "content" }}
 <div class="container mx-auto p-4">
     <h2 class="text-xl font-bold mb-4">Blocks with BTC burns</h2>
-    <table class="min-w-full bg-white border border-gray-200">
+    <table class="min-w-full bg-slate-950/30 border border-gray-700">
         <thead>
             <tr>
-                <th class="px-4 py-2 border-b">Block Height</th>
-                <th class="px-4 py-2 border-b">Block Hash</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Block Height</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Block Hash</th>
             </tr>
         </thead>
         <tbody>
             {{ range .Blocks }}
             <tr>
-                <td class="px-4 py-2 border-b"><a href="/block/{{ .BlockHeight }}">{{ .BlockHeight }}</a></td>
-                <td class="px-4 py-2 border-b"><a href="/block/{{ .BlockHeight }}">{{ .BlockHash }}</a></td>
+                <td class="px-4 py-2 border-b border-slate-700"><a href="/block/{{ .BlockHeight }}">{{ .BlockHeight }}</a></td>
+                <td class="px-4 py-2 border-b border-slate-700"><a href="/block/{{ .BlockHeight }}">{{ .BlockHash }}</a></td>
             </tr>
             {{ else }}
             <tr>
-                <td colspan="5" class="px-4 py-2 border-b text-center">No recent losses found.</td>
+                <td colspan="5" class="px-4 py-2 border-b text-center border-slate-700">No recent losses found.</td>
             </tr>
             {{ end }}
         </tbody>
