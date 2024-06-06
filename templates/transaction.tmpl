@@ -37,6 +37,14 @@
                 {{ $bgc = "bg-red-900/30" }}
                 {{ $burnText = "🔥" }}
               {{ end }}
+              {{ if eq .ScriptPubKey.Type "nulldata" }}
+                {{ $bgc = "bg-yellow-700/30" }}
+                {{ if gt .Value 0.0 }}
+                  {{ $burnText = "🔥" }}
+                {{ else }}
+                  {{ $burnText = "" }}
+                {{ end }}
+              {{ end }}
               <div class="border rounded-lg border-slate-700 {{ $bgc }} p-4 mb-4 font-mono">
                 <div class="flex flex-row gap-x-2 text-wrap font-medium">
                   <span class="basis-9/12 break-words min-w-0">{{ .ScriptPubKey | ScriptPubKeyDisplay }}</span>
