@@ -59,3 +59,7 @@ func ScriptPubKeyDisplay(scriptPubKey ScriptPubKey) string {
 	}
 	return scriptPubKey.Hex
 }
+
+func ValueToBigInt(value float64) *BigInt {
+	return FromBTCFloat64(value)
+}
