@@ -330,7 +330,30 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 		}
 
 		for _, vout := range tx.Vout {
-			if t.bf.TestString(vout.ScriptPubKey.Hex) {
+			if vout.ScriptPubKey.Type == "nulldata" {
+				log.Info().Str("script", vout.ScriptPubKey.Hex).Msg("Null data output")
+
+				jsonTx, err := json.Marshal(tx)
+				if err != nil {
+					log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to marshal transaction")
+					continue
+				}
+
+				losses = append(losses, types.Loss{
+					TxID:        tx.Txid,
+					BlockHash:   blockhash,
+					BlockHeight: blockHeight,
+					Vout:        vout.N,
+					Amount:      types.FromBTCFloat64(vout.Value),
+				})
+
+				txs = append(txs, types.Transaction{
+					TxID:               tx.Txid,
+					TransactionDetails: string(jsonTx),
+					BlockHeight:        blockHeight,
+					BlockHash:          blockhash,
+				})
+			} else if t.bf.TestString(vout.ScriptPubKey.Hex) {
 				exists, err := t.db.BurnScriptExists(vout.ScriptPubKey.Hex)
 				if err != nil {
 					log.Error().Err(err).Str("script", vout.ScriptPubKey.Hex).Msg("Failed to check if script exists")
