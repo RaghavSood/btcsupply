@@ -16,9 +16,9 @@ type Transaction struct {
 // This method will return the TransactionDetail struct from the raw JSON.
 func (t Transaction) TransactionDetail() (TransactionDetail, error) {
 	var txDetails TransactionDetail
-	err = json.Unmarshal([]byte(transaction.TransactionDetails), &txDetails)
+	err := json.Unmarshal([]byte(t.TransactionDetails), &txDetails)
 	if err != nil {
-		return types.TransactionDetail{}, err
+		return TransactionDetail{}, err
 	}
 
 	return txDetails, nil
