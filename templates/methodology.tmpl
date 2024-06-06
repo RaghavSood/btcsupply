@@ -1,0 +1,15 @@
+{{ define "content" }}
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-semibold mb-4">Methodology - How does this work?</h1>
+  <div class="text-pretty border rounded-lg border-slate-700 bg-slate-950/30 p-4">
+    <p><a href="/" class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">burned.money</a> is an open source burned coin tracker. All information on this site is indexed directly from the Bicoin Blockchain, with explanations contributed by the community via its <a href="https://github.com/RaghavSood/btcsupply" target="_blank" class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">GitHub repository</a>. The implementation, as well as the database of burn scripts can be reviewed within the GitHub repository by anyone. Contributions are welcome.</p>
+    <h1 class="text-xl font-medium mb-4 mt-4">Protocol Bugs</h1>
+    <p>Some amount of BTC is lost due to implementation issues with the protocol itself. Notably, this includes the <a href="/transaction/4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b" class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">50 BTC from the genesis block</a>, as well as a handful of other cases. The BTC involved in these instances was simply never minted, and thus directly reduces the total supply.</p>
+    <h1 class="text-xl font-medium mb-4 mt-4">Miner Error</h1>
+    <p>On occasion, miners make mistakes which result in the coinbase output of a block minting less than the entitled amount of the block subsidy + transaction fees. This is an irreversible error, and any BTC not claimed by the miners is lost forever.</p>
+    <h1 class="text-xl font-medium mb-4 mt-4">Transactional Burns</h1>
+    <p>BTC sent to OP_RETURN outputs, addresses with lost private keys, or otherwise unspendable addresses also contribute to a reduction in the supply of BTC. These are tracked by indexing OP_RETURN outputs, and maintaining a database of "burn scripts" - scripts which are known to be unspendable or have lost/unknown private keys.</p>
+  </div>
+</div>
+{{ end }}
+

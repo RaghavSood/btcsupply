@@ -31,6 +31,8 @@ func (w *WebUI) Serve() {
 	router.GET("/transactions", w.Transactions)
 	router.GET("/transaction/:hash", w.Transaction)
 
+	router.GET("/why", w.Why)
+	router.GET("/methodology", w.Methodology)
 	router.GET("/schedule", w.HalvingSchedule)
 
 	router.StaticFS("/static", http.FS(static.Static))
@@ -69,4 +71,28 @@ func (w *WebUI) Index(c *gin.Context) {
 		return
 	}
 
+}
+
+func (w *WebUI) Why(c *gin.Context) {
+	tmpl := templates.New()
+	err := tmpl.Render(c.Writer, "why.tmpl", map[string]interface{}{
+		"Title": "Why?",
+	})
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to render template")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+}
+
+func (w *WebUI) Methodology(c *gin.Context) {
+	tmpl := templates.New()
+	err := tmpl.Render(c.Writer, "methodology.tmpl", map[string]interface{}{
+		"Title": "Methodology",
+	})
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to render template")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
 }
