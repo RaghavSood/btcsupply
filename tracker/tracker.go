@@ -275,8 +275,12 @@ func (t *Tracker) processBlock(height int64) error {
 	// they are sent to Satoshi's keys AND an underlying bug in the code
 	//
 	// We don't want to double count it, so we skip this step for the genesis block
+	var txLosses []types.Loss
+	var txTransactions []types.Transaction
+	var spentTxids []string
+	var spentVouts []int
 	if block.Height > 0 {
-		txLosses, txTransactions, spentTxids, spentVouts := t.scanTransactions(block.Hash, block.Height, block.Tx)
+		txLosses, txTransactions, spentTxids, spentVouts = t.scanTransactions(block.Hash, block.Height, block.Tx)
 
 		losses = append(losses, txLosses...)
 		transactions = append(transactions, txTransactions...)
