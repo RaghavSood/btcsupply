@@ -104,6 +104,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		"Losses":      losses,
 		"Transaction": transaction,
 		"Notes":       notes,
+		"BurnScripts": burnScripts,
 		"Block":       block,
 	})
 	if err != nil {

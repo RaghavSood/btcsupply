@@ -33,9 +33,11 @@
             {{ range .Transaction.Vout }}
               {{ $bgc := "bg-slate-950/30" }}
               {{ $burnText := "" }}
-              {{ if IsScriptInNotes .ScriptPubKey.Hex $.Notes }}
+              {{ $linkscript := false }}
+              {{ if IsScriptInBurnScripts .ScriptPubKey.Hex $.BurnScripts }}
                 {{ $bgc = "bg-red-900/30" }}
                 {{ $burnText = "🔥" }}
+                {{ $linkscript = true }}
               {{ end }}
               {{ if eq .ScriptPubKey.Type "nulldata" }}
                 {{ $bgc = "bg-yellow-700/30" }}
@@ -47,7 +49,15 @@
               {{ end }}
               <div class="border rounded-lg border-slate-700 {{ $bgc }} p-4 mb-4 font-mono">
                 <div class="flex flex-row gap-x-2 text-wrap font-medium">
-                  <span class="basis-9/12 break-words min-w-0">{{ .ScriptPubKey | ScriptPubKeyDisplay }}</span>
+                  <span class="basis-9/12 break-words min-w-0">
+                  {{ if $linkscript }}
+                    <a href="/script/{{ .ScriptPubKey.Hex }}" class="break-words text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">
+                  {{ end }}
+                    {{ .ScriptPubKey | ScriptPubKeyDisplay }}
+                  {{ if $linkscript }}
+                    </a>
+                  {{ end }}
+                  </span>
                   <span class="text-right ml-auto">{{ $burnText }}{{ (.Value | ValueToBigInt).SatoshisToBTC true }} BTC{{ $burnText }}</span>
                 </div>
                 <div class="flex gap-x-2 text-wrap text-sm text-gray-600">

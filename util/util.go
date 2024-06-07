@@ -37,12 +37,23 @@ func RevaluePriceWithAdjustedSupply(expectedSupply, circulatingSupply *types.Big
 	return currentPrice * (expectedSupplyFloat / circulatingSupplyFloat)
 }
 
+func IsScriptInBurnScripts(script string, burnScripts []types.BurnScript) bool {
+	for _, burnScript := range burnScripts {
+		if burnScript.Script == script {
+			return true
+		}
+	}
+
+	return false
+}
+
 func IsScriptInNotes(script string, noteList []notes.Note) bool {
 	for _, note := range noteList {
 		if note.PathElements[0] == script {
 			return true
 		}
 	}
+
 	return false
 }
 

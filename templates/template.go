@@ -19,15 +19,16 @@ type Template struct {
 
 func New() *Template {
 	funcMap := template.FuncMap{
-		"now":                 func() interface{} { return time.Now() },
-		"Int64ToBTC":          util.Int64ToBTC,
-		"NoEscape":            util.NoEscapeHTML,
-		"PrettyPrintJSON":     util.PrettyPrintJSON,
-		"ScriptPubKeyDisplay": types.ScriptPubKeyDisplay,
-		"IsScriptInNotes":     util.IsScriptInNotes,
-		"ValueToBigInt":       types.ValueToBigInt,
-		"TimeDisclaimer":      util.TimeDisclaimer,
-		"GitCommit":           util.GitCommit,
+		"now":                   func() interface{} { return time.Now() },
+		"Int64ToBTC":            util.Int64ToBTC,
+		"NoEscape":              util.NoEscapeHTML,
+		"PrettyPrintJSON":       util.PrettyPrintJSON,
+		"ScriptPubKeyDisplay":   types.ScriptPubKeyDisplay,
+		"IsScriptInBurnScripts": util.IsScriptInBurnScripts,
+		"IsScriptInNotes":       util.IsScriptInNotes,
+		"ValueToBigInt":         types.ValueToBigInt,
+		"TimeDisclaimer":        util.TimeDisclaimer,
+		"GitCommit":             util.GitCommit,
 	}
 
 	templates := template.Must(template.New("").Funcs(funcMap).ParseFS(Templates, "footer.tmpl", "header.tmpl", "base.tmpl", "note.tmpl"))
