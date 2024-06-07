@@ -72,19 +72,13 @@ func (w *WebUI) Transaction(c *gin.Context) {
 
 	}
 
-	hasNulldata := false
-	for _, vout := range transaction.Vout {
-		noteType := notes.Script
+	notePointers, hasNulldata, scripts := transaction.NotePointers()
 
-		if vout.ScriptPubKey.Type == "nulldata" {
-			hasNulldata = true
-			noteType = notes.NullData
-		}
-
-		notePointers = append(notePointers, notes.NotePointer{
-			NoteType:     noteType,
-			PathElements: []string{vout.ScriptPubKey.Hex},
-		})
+	burnScripts, err := w.db.GetBurnScriptsByScripts(scripts)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get burn scripts")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
 	}
 
 	// Ensure the common nulldata note shows on every nulldata tx page
@@ -92,6 +86,13 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		notePointers = append(notePointers, notes.NotePointer{
 			NoteType:     notes.NullData,
 			PathElements: []string{"nulldata"},
+		})
+	}
+
+	for _, burnScript := range burnScripts {
+		notePointers = append(notePointers, notes.NotePointer{
+			NoteType:     notes.ScriptGroup,
+			PathElements: []string{burnScript.ScriptGroup},
 		})
 	}
 
