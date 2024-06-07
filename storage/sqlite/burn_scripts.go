@@ -34,7 +34,7 @@ func (d *SqliteBackend) GetBurnScripts() ([]types.BurnScript, error) {
 
 	for rows.Next() {
 		var script types.BurnScript
-		err = rows.Scan(&script.Script, &script.ConfidenceLevel, &script.Provenance, &script.CreatedAt)
+		err = rows.Scan(&script.Script, &script.ConfidenceLevel, &script.Provenance, &script.CreatedAt, &script.ScriptGroup)
 		if err != nil {
 			return nil, err
 		}

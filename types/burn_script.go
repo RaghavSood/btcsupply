@@ -7,4 +7,5 @@ type BurnScript struct {
 	ConfidenceLevel string    `json:"confidence_level"`
 	Provenance      string    `json:"provenance"`
 	CreatedAt       time.Time `json:"created_at"`
+	ScriptGroup     string    `json:"script_group"`
 }
