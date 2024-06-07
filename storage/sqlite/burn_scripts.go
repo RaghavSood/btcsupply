@@ -52,6 +52,42 @@ func (d *SqliteBackend) GetBurnScriptsByScripts(scripts []string) ([]types.BurnS
 	return scanBurnScripts(rows)
 }
 
+func (d *SqliteBackend) GetBurnScriptSummary(limit int) ([]types.BurnScriptSummary, error) {
+	query := `SELECT 
+						    bs.script,
+								bs.confidence_level,
+								bs.provenance,
+								bs.script_group,
+						    SUM(l.amount) AS total_loss
+						FROM 
+						    burn_scripts bs
+						JOIN 
+						    losses l ON bs.script = l.burn_script
+						GROUP BY 
+						    bs.script
+						ORDER BY 
+						    total_loss DESC
+						LIMIT ?;`
+
+	rows, err := d.db.Query(query, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var summaries []types.BurnScriptSummary
+	for rows.Next() {
+		var summary types.BurnScriptSummary
+		err = rows.Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.TotalLoss)
+		if err != nil {
+			return nil, err
+		}
+		summaries = append(summaries, summary)
+	}
+
+	return summaries, nil
+}
+
 func (d *SqliteBackend) BurnScriptExists(script string) (bool, error) {
 	var exists bool
 	err := d.db.QueryRow("SELECT EXISTS(SELECT 1 FROM burn_scripts WHERE script = ?)", script).Scan(&exists)

@@ -1,0 +1,30 @@
+{{ define "content" }}
+<div class="container mx-auto p-4">
+    <h2 class="text-xl font-bold mb-4">Top 500 burn scripts</h2>
+    <table class="min-w-full overflow-hidden bg-slate-950/30 border border-gray-700">
+        <thead>
+            <tr>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Script</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Group</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Confidence Level</th>
+                <th class="text-start px-4 py-2 border-b border-slate-700">Total Lost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range .Scripts }}
+            <tr>
+                <td class="px-4 py-2 border-b border-slate-700 break-all"><a class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200" href="/script/{{ .Script }}">{{ .Script }}</a></td>
+                <td class="px-4 py-2 border-b border-slate-700"><a class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200" href="/scriptgroup/{{ .Group }}">{{ .Group }}</a></td>
+                <td class="px-4 py-2 border-b border-slate-700">{{ .ConfidenceLevel }}</td>
+                <td class="px-4 py-2 border-b border-slate-700">{{ .TotalLoss.SatoshisToBTC true }} BTC</td>
+            </tr>
+            {{ else }}
+            <tr>
+                <td colspan="5" class="px-4 py-2 border-b text-center border-slate-700">No scripts found.</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</div>
+{{ end }}
+
