@@ -1,6 +1,9 @@
 package sqlite
 
 import (
+	"database/sql"
+	"strings"
+
 	"github.com/RaghavSood/btcsupply/types"
 )
 
@@ -25,23 +28,28 @@ func (d *SqliteBackend) GetOnlyBurnScripts() ([]string, error) {
 }
 
 func (d *SqliteBackend) GetBurnScripts() ([]types.BurnScript, error) {
-	var scripts []types.BurnScript
 	rows, err := d.db.Query("SELECT * FROM burn_scripts")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	for rows.Next() {
-		var script types.BurnScript
-		err = rows.Scan(&script.Script, &script.ConfidenceLevel, &script.Provenance, &script.CreatedAt, &script.ScriptGroup)
-		if err != nil {
-			return nil, err
-		}
-		scripts = append(scripts, script)
+	return scanBurnScripts(rows)
+}
+
+func (d *SqliteBackend) GetBurnScriptsByScripts(scripts []string) ([]types.BurnScript, error) {
+	anyScripts := make([]interface{}, len(scripts))
+	for i, script := range scripts {
+		anyScripts[i] = script
 	}
 
-	return scripts, nil
+	rows, err := d.db.Query("SELECT * FROM burn_scripts WHERE script IN (?"+strings.Repeat(",?", len(scripts)-1)+")", anyScripts...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	return scanBurnScripts(rows)
 }
 
 func (d *SqliteBackend) BurnScriptExists(script string) (bool, error) {
@@ -51,4 +59,17 @@ func (d *SqliteBackend) BurnScriptExists(script string) (bool, error) {
 		return false, err
 	}
 	return exists, nil
+}
+
+func scanBurnScripts(rows *sql.Rows) ([]types.BurnScript, error) {
+	var scripts []types.BurnScript
+	for rows.Next() {
+		var script types.BurnScript
+		err := rows.Scan(&script.ID, &script.Script, &script.ConfidenceLevel, &script.Provenance, &script.CreatedAt, &script.ScriptGroup)
+		if err != nil {
+			return nil, err
+		}
+		scripts = append(scripts, script)
+	}
+	return scripts, nil
 }
