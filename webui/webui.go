@@ -3,6 +3,8 @@ package webui
 import (
 	"net/http"
 
+	"github.com/RaghavSood/btcsupply/btclogger"
+	"github.com/RaghavSood/btcsupply/middleware"
 	"github.com/RaghavSood/btcsupply/static"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/templates"
@@ -21,7 +23,10 @@ func NewWebUI(db storage.Storage) *WebUI {
 }
 
 func (w *WebUI) Serve() {
-	router := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.New()
+	router.Use(middleware.StructuredLogger(btclogger.NewLogger("gin-webui")))
+	router.Use(gin.Recovery())
 
 	router.GET("/", w.Index)
 
