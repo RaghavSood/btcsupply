@@ -9,7 +9,6 @@ import (
 
 	"github.com/RaghavSood/btcsupply/notes"
 	"github.com/RaghavSood/btcsupply/types"
-	"github.com/rs/zerolog/log"
 )
 
 func Int64ToBTC(sats int64) string {
@@ -40,10 +39,6 @@ func RevaluePriceWithAdjustedSupply(expectedSupply, circulatingSupply *types.Big
 
 func IsScriptInNotes(script string, noteList []notes.Note) bool {
 	for _, note := range noteList {
-		log.Debug().
-			Strs("pathElements", note.PathElements).
-			Str("script", script).
-			Msg("Checking note")
 		if note.PathElements[0] == script {
 			return true
 		}
