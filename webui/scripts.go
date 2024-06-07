@@ -3,6 +3,7 @@ package webui
 import (
 	"net/http"
 
+	"github.com/RaghavSood/btcsupply/notes"
 	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -39,6 +40,18 @@ func (w *WebUI) Script(c *gin.Context) {
 		return
 	}
 
+	scriptNotePointer := notes.NotePointer{
+		NoteType:     notes.Script,
+		PathElements: []string{script},
+	}
+
+	groupNotePointer := notes.NotePointer{
+		NoteType:     notes.ScriptGroup,
+		PathElements: []string{burnScriptSummary.Group},
+	}
+
+	notes := notes.ReadNotes([]notes.NotePointer{scriptNotePointer, groupNotePointer})
+
 	burnTransactions, err := w.db.GetTransactionLossSummaryForScript(script)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get transactions for script")
@@ -51,6 +64,7 @@ func (w *WebUI) Script(c *gin.Context) {
 		"Title":         "Script",
 		"ScriptSummary": burnScriptSummary,
 		"Transactions":  burnTransactions,
+		"Notes":         notes,
 	})
 
 	if err != nil {

@@ -3,6 +3,7 @@ package webui
 import (
 	"net/http"
 
+	"github.com/RaghavSood/btcsupply/notes"
 	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -25,11 +26,19 @@ func (w *WebUI) ScriptGroup(c *gin.Context) {
 		return
 	}
 
+	groupNotePointer := notes.NotePointer{
+		NoteType:     notes.ScriptGroup,
+		PathElements: []string{scriptGroup},
+	}
+
+	notes := notes.ReadNotes([]notes.NotePointer{groupNotePointer})
+
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "scriptgroup.tmpl", map[string]interface{}{
 		"Title":            "Script Group",
 		"BurnTransactions": burnScriptSummaries,
 		"GroupSummary":     groupSummary,
+		"Notes":            notes,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")
