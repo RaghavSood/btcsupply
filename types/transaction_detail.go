@@ -1,5 +1,10 @@
 package types
 
+import (
+	"github.com/RaghavSood/btcsupply/notes"
+	"golang.org/x/exp/maps"
+)
+
 type TransactionDetail struct {
 	Txid      string  `json:"txid"`
 	Hash      string  `json:"hash"`
@@ -51,6 +56,31 @@ type Vin struct {
 	Prevout     Prevout   `json:"prevout"`
 	Coinbase    string    `json:"coinbase,omitempty"`
 	Sequence    int64     `json:"sequence"`
+}
+
+func (t *TransactionDetail) NotePointers() ([]notes.NotePointer, bool, []string) {
+	hasNulldata := false
+	scriptsSeen := make(map[string]bool)
+	notePointers := make([]notes.NotePointer, 0)
+
+	for _, vout := range t.Vout {
+		noteType := notes.Script
+
+		if vout.ScriptPubKey.Type == "nulldata" {
+			hasNulldata = true
+			noteType = notes.NullData
+		}
+
+		notePointers = append(notePointers, notes.NotePointer{
+			NoteType:     noteType,
+			PathElements: []string{vout.ScriptPubKey.Hex},
+		})
+
+		scriptsSeen[vout.ScriptPubKey.Hex] = true
+	}
+
+	scripts := maps.Keys(scriptsSeen)
+	return notePointers, hasNulldata, scripts
 }
 
 func ScriptPubKeyDisplay(scriptPubKey ScriptPubKey) string {
