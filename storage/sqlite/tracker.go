@@ -36,7 +36,7 @@ func (d *SqliteBackend) RecordBlockIndexResults(block types.Block, txoutset type
 
 	// Insert the losses records into the losses table
 	for _, loss := range losses {
-		_, err = tx.Exec("INSERT INTO losses (tx_id, block_hash, block_height, vout, amount) VALUES (?, ?, ?, ?, ?) ON CONFLICT DO NOTHING", loss.TxID, loss.BlockHash, loss.BlockHeight, loss.Vout, loss.Amount)
+		_, err = tx.Exec("INSERT INTO losses (tx_id, block_hash, block_height, vout, amount, burn_script) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (tx_id, vout) DO UPDATE SET block_hash=excluded.block_hash, block_height=excluded.block_height, vout=excluded.vout, amount=excluded.amount, burn_script=excluded.burn_script", loss.TxID, loss.BlockHash, loss.BlockHeight, loss.Vout, loss.Amount, loss.BurnScript)
 		if err != nil {
 			tx.Rollback()
 			return fmt.Errorf("failed to insert loss record: %v", err)
@@ -74,7 +74,7 @@ func (d *SqliteBackend) RecordTransactionIndexResults(losses []types.Loss, trans
 
 	// Insert the losses records into the losses table
 	for _, loss := range losses {
-		_, err = tx.Exec("INSERT INTO losses (tx_id, block_hash, block_height, vout, amount) VALUES (?, ?, ?, ?, ?) ON CONFLICT (tx_id, vout) DO NOTHING", loss.TxID, loss.BlockHash, loss.BlockHeight, loss.Vout, loss.Amount)
+		_, err = tx.Exec("INSERT INTO losses (tx_id, block_hash, block_height, vout, amount, burn_script) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (tx_id, vout) DO UPDATE SET block_hash=excluded.block_hash, block_height=excluded.block_height, vout=excluded.vout, amount=excluded.amount, burn_script=excluded.burn_script", loss.TxID, loss.BlockHash, loss.BlockHeight, loss.Vout, loss.Amount, loss.BurnScript)
 		if err != nil {
 			tx.Rollback()
 			return fmt.Errorf("failed to insert loss record: %v", err)

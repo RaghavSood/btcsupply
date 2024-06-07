@@ -340,6 +340,7 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 					BlockHeight: blockHeight,
 					Vout:        vout.N,
 					Amount:      types.FromBTCFloat64(vout.Value),
+					BurnScript:  vout.ScriptPubKey.Hex,
 				})
 
 				atLeastOneBurn = true
@@ -359,6 +360,7 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 						BlockHeight: blockHeight,
 						Vout:        vout.N,
 						Amount:      types.FromBTCFloat64(vout.Value),
+						BurnScript:  vout.ScriptPubKey.Hex,
 					})
 
 					atLeastOneBurn = true

@@ -10,4 +10,5 @@ type Loss struct {
 	Vout        int
 	Amount      *BigInt
 	CreatedAt   time.Time
+	BurnScript  string
 }

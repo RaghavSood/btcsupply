@@ -52,7 +52,7 @@ func scanLosses(rows *sql.Rows) ([]types.Loss, error) {
 	var losses []types.Loss
 	for rows.Next() {
 		var loss types.Loss
-		err := rows.Scan(&loss.ID, &loss.TxID, &loss.BlockHash, &loss.BlockHeight, &loss.Vout, &loss.Amount, &loss.CreatedAt)
+		err := rows.Scan(&loss.ID, &loss.TxID, &loss.BlockHash, &loss.BlockHeight, &loss.Vout, &loss.Amount, &loss.CreatedAt, &loss.BurnScript)
 		if err != nil {
 			return nil, err
 		}
