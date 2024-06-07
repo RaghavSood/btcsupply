@@ -1,8 +1,10 @@
 {{ define "content" }}
 <div class="container mx-auto p-4">
     <div class="border rounded-lg border-slate-700 bg-slate-950/30 p-4">
-      <h1 class="text-2xl font-semibold break-words">Script Group <span class="select-all">{{ .ScriptSummary.Script }}</span></h1>
-      <h3 class="text-lg text-gray-400 font-mono">Total Lost {{ .ScriptSummary.TotalLoss.SatoshisToBTC true }} BTC</a></h3>
+      <h1 class="text-2xl font-semibold break-words">Script Group <span class="select-all">{{ .GroupSummary.ScriptGroup }}</span></h1>
+      <h3 class="text-lg text-gray-400 font-mono">Total Lost: {{ .GroupSummary.TotalLoss.SatoshisToBTC true }} BTC</a></h3>
+      <h3 class="text-lg text-gray-400 font-mono">Transactions: {{ .GroupSummary.Transactions }}</a></h3>
+      <h3 class="text-lg text-gray-400 font-mono">Scripts: {{ .GroupSummary.Scripts }}</a></h3>
     </div>
         <table class="min-w-full bg-slate-950/30 border border-slate-700">
         <thead>

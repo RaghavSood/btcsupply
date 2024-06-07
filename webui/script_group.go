@@ -11,6 +11,13 @@ import (
 func (w *WebUI) ScriptGroup(c *gin.Context) {
 	scriptGroup := c.Param("scriptgroup")
 
+	groupSummary, err := w.db.GetScriptGroupSummary(scriptGroup)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get script group summary")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
 	burnScriptSummaries, err := w.db.GetBurnScriptSummariesForGroup(scriptGroup)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get script summaries for group")
@@ -22,6 +29,7 @@ func (w *WebUI) ScriptGroup(c *gin.Context) {
 	err = tmpl.Render(c.Writer, "scriptgroup.tmpl", map[string]interface{}{
 		"Title":            "Script Group",
 		"BurnTransactions": burnScriptSummaries,
+		"GroupSummary":     groupSummary,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")
