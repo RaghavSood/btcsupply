@@ -9,7 +9,7 @@ import (
 )
 
 func (w *WebUI) Scripts(c *gin.Context) {
-	topScripts, err := w.db.GetBurnScriptSummary(500)
+	topScripts, err := w.db.GetBurnScriptSummaries(500)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get top scripts")
 		c.AbortWithError(http.StatusInternalServerError, err)

@@ -52,7 +52,7 @@ func (d *SqliteBackend) GetBurnScriptsByScripts(scripts []string) ([]types.BurnS
 	return scanBurnScripts(rows)
 }
 
-func (d *SqliteBackend) GetBurnScriptSummary(limit int) ([]types.BurnScriptSummary, error) {
+func (d *SqliteBackend) GetBurnScriptSummaries(limit int) ([]types.BurnScriptSummary, error) {
 	query := `SELECT 
 						    bs.script,
 								bs.confidence_level,

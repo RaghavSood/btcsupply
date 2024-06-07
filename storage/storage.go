@@ -32,7 +32,7 @@ type Storage interface {
 	GetBurnScripts() ([]types.BurnScript, error)
 	BurnScriptExists(script string) (bool, error)
 	GetBurnScriptsByScripts(scripts []string) ([]types.BurnScript, error)
-	GetBurnScriptSummary(limit int) ([]types.BurnScriptSummary, error)
+	GetBurnScriptSummaries(limit int) ([]types.BurnScriptSummary, error)
 
 	GetScriptQueue() ([]types.ScriptQueue, error)
 	IncrementScriptQueueTryCount(scriptID int) error
