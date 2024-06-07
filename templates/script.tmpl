@@ -5,7 +5,7 @@
       <h3 class="text-lg text-gray-400 font-mono">Total Lost: {{ .ScriptSummary.TotalLoss.SatoshisToBTC true }} BTC</a></h3>
       <h3 class="text-lg text-gray-400 font-mono">Transactions: {{ .ScriptSummary.Transactions }}</a></h3>
     </div>
-        <h3 class="text-lg font-medium mb-2">How did this Script burn BTC?</h3>
+        <h3 class="text-lg font-medium mb-2">How did this script burn BTC?</h3>
         <div class="mb-4">
             {{ range .Notes }}
                   {{ template "note" . }}
