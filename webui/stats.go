@@ -3,12 +3,44 @@ package webui
 import (
 	"fmt"
 	"math/big"
+	"net/http"
 
 	"github.com/RaghavSood/blockreward"
 	"github.com/RaghavSood/btcsupply/prices"
+	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/RaghavSood/btcsupply/types"
 	"github.com/RaghavSood/btcsupply/util"
+	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 )
+
+func (w *WebUI) Stats(c *gin.Context) {
+	heightLossSummary, err := w.db.GetHeightLossSummary()
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get height loss summary")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	theoreticalSupplySummary := make([]types.HeightLossSummary, len(heightLossSummary))
+	for i, summary := range heightLossSummary {
+		theoreticalSupplySummary[i].BlockHeight = summary.BlockHeight
+		theoreticalSupplySummary[i].TotalLoss = types.FromMathBigInt(big.NewInt(blockreward.SupplyAtHeight(blockreward.BitcoinMainnet, summary.BlockHeight)))
+	}
+
+	tmpl := templates.New()
+	err = tmpl.Render(c.Writer, "stats.tmpl", map[string]interface{}{
+		"Title":             "Stats",
+		"HeightLossSummary": heightLossSummary,
+		"TheoreticalSupply": theoreticalSupplySummary,
+	})
+
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to render template")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+}
 
 func (w *WebUI) statsForHeight(height int64) (types.IndexStatistics, error) {
 	indexStats, err := w.db.GetIndexStatistics(height)

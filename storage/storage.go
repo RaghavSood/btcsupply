@@ -47,4 +47,6 @@ type Storage interface {
 	RecordScriptUnspents(script types.ScriptQueue, unspentTxids []string, unspentHeights []int64) error
 
 	GetTransactionQueue() ([]types.TransactionQueue, error)
+
+	GetHeightLossSummary() ([]types.HeightLossSummary, error)
 }
