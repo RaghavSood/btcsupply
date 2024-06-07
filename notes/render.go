@@ -79,6 +79,7 @@ func ReadNotes(pointers []NotePointer) []Note {
 
 		log.Info().
 			Str("path", path).
+			Str("noteType", string(pointer.NoteType)).
 			Msg("Read note")
 
 		renderedContent := RenderNote(content)
