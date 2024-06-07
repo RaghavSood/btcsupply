@@ -36,7 +36,10 @@ type Storage interface {
 	GetBurnScriptsByScripts(scripts []string) ([]types.BurnScript, error)
 
 	GetBurnScriptSummaries(limit int) ([]types.BurnScriptSummary, error)
+	GetBurnScriptSummariesForGroup(group string) ([]types.BurnScriptSummary, error)
 	GetBurnScriptSummary(script string) (types.BurnScriptSummary, error)
+
+	GetScriptGroupSummaries(limit int) ([]types.ScriptGroupSummary, error)
 
 	GetScriptQueue() ([]types.ScriptQueue, error)
 	IncrementScriptQueueTryCount(scriptID int) error

@@ -80,6 +80,42 @@ func (d *SqliteBackend) GetBurnScriptSummary(script string) (types.BurnScriptSum
 	return summary, err
 }
 
+func (d *SqliteBackend) GetBurnScriptSummariesForGroup(group string) ([]types.BurnScriptSummary, error) {
+	query := `SELECT
+						  bs.script,
+							bs.confidence_level,
+							bs.provenance,
+							bs.script_group,
+							SUM(l.amount) AS total_loss
+						FROM
+						  burn_scripts bs
+						JOIN
+						  losses l ON bs.script = l.burn_script
+						WHERE
+							bs.script_group = ?
+						GROUP BY
+						bs.script;`
+
+	rows, err := d.db.Query(query, group)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var summaries []types.BurnScriptSummary
+	for rows.Next() {
+		var summary types.BurnScriptSummary
+		err = rows.Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.TotalLoss)
+		if err != nil {
+			return nil, err
+		}
+		summaries = append(summaries, summary)
+	}
+
+	return summaries, nil
+}
+
 func (d *SqliteBackend) GetBurnScriptSummaries(limit int) ([]types.BurnScriptSummary, error) {
 	query := `SELECT 
 						    bs.script,
