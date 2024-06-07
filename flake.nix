@@ -53,7 +53,7 @@
               name = "btcsupply";
 
               src = ./.;
-              vendorHash = "sha256-qknO1yBfbx3DFgaGFGSfqweZO4rhSigWTAJlB378jJc=";
+              vendorHash = "sha256-X8af9u2tTWYqMXpdVYYmXUFVmN7WYut7anGmDF6cKz8=";
 
               buildInputs = with pkgs; [
                 go

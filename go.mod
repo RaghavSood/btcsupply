@@ -11,6 +11,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/pressly/goose/v3 v3.20.0
 	github.com/rs/zerolog v1.33.0
+	golang.org/x/exp v0.0.0-20240325151524-a685a6edb6d8
 )
 
 require (
