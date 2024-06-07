@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"runtime/debug"
 	"time"
 
 	"github.com/RaghavSood/btcsupply/notes"
@@ -73,4 +74,18 @@ func TimeDisclaimer(target time.Time) string {
 		return fmt.Sprintf(" (Estimated to be mined in %s)", duration.String())
 	}
 	return ""
+}
+
+func GitCommit() string {
+	buildInfo, ok := debug.ReadBuildInfo()
+	if ok {
+		settings := buildInfo.Settings
+		for _, s := range settings {
+			if s.Key == "vcs.revision" {
+				return s.Value
+			}
+		}
+	}
+
+	return "unknown"
 }
