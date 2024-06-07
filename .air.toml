@@ -5,7 +5,7 @@ tmp_dir = "tmp"
 [build]
   args_bin = []
   bin = "./tmp/main $INDEX"
-  cmd = "go generate main.go && go build -o ./tmp/main ./cmd/btcsupply/main.go"
+  cmd = "go generate main.go && go build -o ./tmp/main ./cmd/btcsupply"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []
