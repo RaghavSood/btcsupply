@@ -10,9 +10,10 @@ import (
 type NoteType string
 
 const (
-	Output   NoteType = "output"
-	Script   NoteType = "script"
-	NullData NoteType = "nulldata"
+	Output      NoteType = "output"
+	Script      NoteType = "script"
+	NullData    NoteType = "nulldata"
+	ScriptGroup NoteType = "scriptgroup"
 )
 
 func DeriveNotePath(noteType NoteType, elements ...string) (string, error) {
@@ -29,6 +30,10 @@ func DeriveNotePath(noteType NoteType, elements ...string) (string, error) {
 	case NullData:
 		if len(elements) != 1 {
 			return "", fmt.Errorf("nulldata note requires one element")
+		}
+	case ScriptGroup:
+		if len(elements) != 1 {
+			return "", fmt.Errorf("scriptgroup note requires one element")
 		}
 	default:
 		return "", fmt.Errorf("invalid note type: %s", noteType)
