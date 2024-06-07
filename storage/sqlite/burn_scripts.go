@@ -65,6 +65,7 @@ func (d *SqliteBackend) GetBurnScriptSummary(script string) (types.BurnScriptSum
 								bs.confidence_level,
 								bs.provenance,
 								bs.script_group,
+							  COUNT(DISTINCT(l.tx_id)) AS transactions,
 						    SUM(l.amount) AS total_loss
 						FROM 
 						    burn_scripts bs
@@ -75,7 +76,7 @@ func (d *SqliteBackend) GetBurnScriptSummary(script string) (types.BurnScriptSum
 						    bs.script`
 
 	var summary types.BurnScriptSummary
-	err := d.db.QueryRow(query, script).Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.TotalLoss)
+	err := d.db.QueryRow(query, script).Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.Transactions, &summary.TotalLoss)
 
 	return summary, err
 }
@@ -86,6 +87,7 @@ func (d *SqliteBackend) GetBurnScriptSummariesForGroup(group string) ([]types.Bu
 							bs.confidence_level,
 							bs.provenance,
 							bs.script_group,
+							COUNT(DISTINCT(l.tx_id)) AS transactions,
 							SUM(l.amount) AS total_loss
 						FROM
 						  burn_scripts bs
@@ -103,17 +105,9 @@ func (d *SqliteBackend) GetBurnScriptSummariesForGroup(group string) ([]types.Bu
 
 	defer rows.Close()
 
-	var summaries []types.BurnScriptSummary
-	for rows.Next() {
-		var summary types.BurnScriptSummary
-		err = rows.Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.TotalLoss)
-		if err != nil {
-			return nil, err
-		}
-		summaries = append(summaries, summary)
-	}
+	summaries, err := scanBurnScriptSummaries(rows)
 
-	return summaries, nil
+	return summaries, err
 }
 
 func (d *SqliteBackend) GetBurnScriptSummaries(limit int) ([]types.BurnScriptSummary, error) {
@@ -122,6 +116,7 @@ func (d *SqliteBackend) GetBurnScriptSummaries(limit int) ([]types.BurnScriptSum
 								bs.confidence_level,
 								bs.provenance,
 								bs.script_group,
+							  COUNT(DISTINCT(l.tx_id)) AS transactions,
 						    SUM(l.amount) AS total_loss
 						FROM 
 						    burn_scripts bs
@@ -139,17 +134,9 @@ func (d *SqliteBackend) GetBurnScriptSummaries(limit int) ([]types.BurnScriptSum
 	}
 	defer rows.Close()
 
-	var summaries []types.BurnScriptSummary
-	for rows.Next() {
-		var summary types.BurnScriptSummary
-		err = rows.Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.TotalLoss)
-		if err != nil {
-			return nil, err
-		}
-		summaries = append(summaries, summary)
-	}
+	summaries, err := scanBurnScriptSummaries(rows)
 
-	return summaries, nil
+	return summaries, err
 }
 
 func (d *SqliteBackend) BurnScriptExists(script string) (bool, error) {
@@ -159,6 +146,20 @@ func (d *SqliteBackend) BurnScriptExists(script string) (bool, error) {
 		return false, err
 	}
 	return exists, nil
+}
+
+func scanBurnScriptSummaries(rows *sql.Rows) ([]types.BurnScriptSummary, error) {
+	var summaries []types.BurnScriptSummary
+	for rows.Next() {
+		var summary types.BurnScriptSummary
+		err := rows.Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.Transactions, &summary.TotalLoss)
+		if err != nil {
+			return nil, err
+		}
+		summaries = append(summaries, summary)
+	}
+
+	return summaries, nil
 }
 
 func scanBurnScripts(rows *sql.Rows) ([]types.BurnScript, error) {
