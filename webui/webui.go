@@ -37,6 +37,7 @@ func (w *WebUI) Serve() {
 	router.GET("/transaction/:hash", w.Transaction)
 
 	router.GET("/scripts", w.Scripts)
+	router.GET("/script/:script", w.Script)
 
 	router.GET("/why", w.Why)
 	router.GET("/methodology", w.Methodology)

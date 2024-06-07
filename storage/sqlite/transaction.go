@@ -44,6 +44,20 @@ func (d *SqliteBackend) GetTransactionLossSummaryForBlock(identifier string) ([]
 	return summaries, err
 }
 
+func (d *SqliteBackend) GetTransactionLossSummaryForScript(script string) ([]types.TransactionLossSummary, error) {
+	query := `SELECT tx_id, sum(amount), block_height, block_hash FROM losses WHERE burn_script = ? GROUP BY tx_id`
+
+	rows, err := d.db.Query(query, script)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	summaries, err := scanTransactionLossSummaries(rows)
+	return summaries, err
+}
+
 func scanTransactionLossSummaries(rows *sql.Rows) ([]types.TransactionLossSummary, error) {
 	var summaries []types.TransactionLossSummary
 	for rows.Next() {

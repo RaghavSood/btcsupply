@@ -13,6 +13,7 @@ type Storage interface {
 
 	GetTransactionLossSummary(limit int) ([]types.TransactionLossSummary, error)
 	GetTransactionLossSummaryForBlock(identifier string) ([]types.TransactionLossSummary, error)
+	GetTransactionLossSummaryForScript(script string) ([]types.TransactionLossSummary, error)
 
 	GetLossyBlocks(limit int) ([]types.BlockLossSummary, error)
 	GetBlock(identifier string) (types.Block, error)
@@ -30,9 +31,12 @@ type Storage interface {
 
 	GetOnlyBurnScripts() ([]string, error)
 	GetBurnScripts() ([]types.BurnScript, error)
+	GetBurnScript(script string) (types.BurnScript, error)
 	BurnScriptExists(script string) (bool, error)
 	GetBurnScriptsByScripts(scripts []string) ([]types.BurnScript, error)
+
 	GetBurnScriptSummaries(limit int) ([]types.BurnScriptSummary, error)
+	GetBurnScriptSummary(script string) (types.BurnScriptSummary, error)
 
 	GetScriptQueue() ([]types.ScriptQueue, error)
 	IncrementScriptQueueTryCount(scriptID int) error

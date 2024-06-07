@@ -37,6 +37,13 @@ func (d *SqliteBackend) GetBurnScripts() ([]types.BurnScript, error) {
 	return scanBurnScripts(rows)
 }
 
+func (d *SqliteBackend) GetBurnScript(script string) (types.BurnScript, error) {
+	var burnScript types.BurnScript
+	err := d.db.QueryRow("SELECT * FROM burn_scripts WHERE script = ?", script).Scan(&burnScript.ID, &burnScript.Script, &burnScript.ConfidenceLevel, &burnScript.Provenance, &burnScript.CreatedAt, &burnScript.ScriptGroup)
+
+	return burnScript, err
+}
+
 func (d *SqliteBackend) GetBurnScriptsByScripts(scripts []string) ([]types.BurnScript, error) {
 	anyScripts := make([]interface{}, len(scripts))
 	for i, script := range scripts {
@@ -50,6 +57,27 @@ func (d *SqliteBackend) GetBurnScriptsByScripts(scripts []string) ([]types.BurnS
 	defer rows.Close()
 
 	return scanBurnScripts(rows)
+}
+
+func (d *SqliteBackend) GetBurnScriptSummary(script string) (types.BurnScriptSummary, error) {
+	query := `SELECT 
+						    bs.script,
+								bs.confidence_level,
+								bs.provenance,
+								bs.script_group,
+						    SUM(l.amount) AS total_loss
+						FROM 
+						    burn_scripts bs
+						JOIN 
+						    losses l ON bs.script = l.burn_script
+						WHERE l.burn_script = ?
+						GROUP BY 
+						    bs.script`
+
+	var summary types.BurnScriptSummary
+	err := d.db.QueryRow(query, script).Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.TotalLoss)
+
+	return summary, err
 }
 
 func (d *SqliteBackend) GetBurnScriptSummaries(limit int) ([]types.BurnScriptSummary, error) {
