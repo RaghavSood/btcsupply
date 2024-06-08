@@ -1,19 +1,46 @@
 {{ define "header" }}
-<header class="">
-<nav class="p-4 flex items-center justify-between">
-        <div class="flex items-center space-x-3">
+<header class="bg-gray-800 text-white">
+    <nav class="flex items-center justify-between">
+        <div class="pt-4 pb-4 pl-4 flex items-center space-x-3">
             <a class="text-2xl font-medium" href="/">🔥<span class="text-xl">burned.money</span></a>
         </div>
-        <div class="flex-grow flex items-center justify-center space-x-4">
+        <div class="pt-4 pb-4 pr-4 flex items-center space-x-3 lg:hidden">
+            <button id="menu-toggle" class="focus:outline-none">
+                <svg class="w-6 h-6 text-sky-400/70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="hidden pb-4 pt-4 lg:flex lg:items-center lg:justify-center lg:space-x-4" id="nav-links">
             <a href="/blocks" class="hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Blocks</a>
             <a href="/scripts" class="hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Burn Scripts</a>
             <a href="/transactions" class="hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Transactions</a>
             <a href="/schedule" class="hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Emission Schedule</a>
         </div>
-        <div class="flex items-center space-x-3">
+        <div class="hidden pb-4 pt-4 pr-4 lg:flex lg:items-center lg:justify-center lg:space-x-4" id="nav-links">
             <a href="/why" class="hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Why?</a>
             <a href="/methodology" class="hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">How?</a>
         </div>
     </nav>
+    <div class="hidden flex-col space-y-2 p-4 lg:hidden" id="mobile-menu">
+        <a href="/blocks" class="block hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Blocks</a>
+        <a href="/scripts" class="block hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Burn Scripts</a>
+        <a href="/transactions" class="block hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Transactions</a>
+        <a href="/schedule" class="block hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Emission Schedule</a>
+        <a href="/why" class="block hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">Why?</a>
+        <a href="/methodology" class="block hover:underline hover:text-slate-200 text-sky-400/70 hover:decoration-dotted nav-link">How?</a>
+    </div>
 </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+    });
+});
+</script>
 {{ end }}
+
