@@ -4,6 +4,7 @@
     padding: revert;
     margin: revert;
     opacity: 0.5;
+    word-break: break-all;
   }
 }
 
