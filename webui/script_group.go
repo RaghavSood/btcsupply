@@ -1,6 +1,7 @@
 package webui
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/RaghavSood/btcsupply/notes"
@@ -35,7 +36,7 @@ func (w *WebUI) ScriptGroup(c *gin.Context) {
 
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "scriptgroup.tmpl", map[string]interface{}{
-		"Title":            "Script Group",
+		"Title":            fmt.Sprintf("Script Group %s", scriptGroup),
 		"BurnTransactions": burnScriptSummaries,
 		"GroupSummary":     groupSummary,
 		"Notes":            notes,

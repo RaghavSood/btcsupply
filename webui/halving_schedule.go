@@ -28,7 +28,7 @@ func (w *WebUI) HalvingSchedule(c *gin.Context) {
 
 	tmpl := templates.New()
 	err := tmpl.Render(c.Writer, "halving_schedule.tmpl", map[string]interface{}{
-		"Title":    "Halving Schedule",
+		"Title":    "Bitcoin Halving Schedule",
 		"Schedule": schedule,
 		"Curve": map[string]interface{}{
 			"Heights": emissionCurveHeights,

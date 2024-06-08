@@ -1,6 +1,7 @@
 package webui
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/RaghavSood/btcsupply/notes"
@@ -19,7 +20,7 @@ func (w *WebUI) Scripts(c *gin.Context) {
 
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "scripts.tmpl", map[string]interface{}{
-		"Title":   "Top Scripts",
+		"Title":   "Bitcoin Burn Scripts",
 		"Scripts": topScripts,
 	})
 
@@ -61,7 +62,7 @@ func (w *WebUI) Script(c *gin.Context) {
 
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "script.tmpl", map[string]interface{}{
-		"Title":         "Script",
+		"Title":         fmt.Sprintf("Burn Script %s", script),
 		"ScriptSummary": burnScriptSummary,
 		"Transactions":  burnTransactions,
 		"Notes":         notes,

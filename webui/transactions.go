@@ -21,7 +21,7 @@ func (w *WebUI) Transactions(c *gin.Context) {
 
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "transactions.tmpl", map[string]interface{}{
-		"Title":        "Transactions",
+		"Title":        "Burn Transactions",
 		"Transactions": recentTransactions,
 	})
 
@@ -100,7 +100,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "transaction.tmpl", map[string]interface{}{
-		"Title":       "Transaction",
+		"Title":       fmt.Sprintf("Transaction %s", hash),
 		"Losses":      losses,
 		"Transaction": transaction,
 		"Notes":       notes,
