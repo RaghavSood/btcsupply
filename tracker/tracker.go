@@ -58,7 +58,7 @@ func (t *Tracker) Run() {
 		log.Info().Int("count", len(burnScripts)).Msg("Burn scripts loaded")
 	}
 
-	ticker := time.NewTicker(10 * time.Second)
+	ticker := time.NewTicker(5 * time.Second)
 	defer ticker.Stop()
 
 	for {
@@ -92,9 +92,9 @@ func (t *Tracker) Run() {
 			t.processScriptQueue()
 			t.processTransactionQueue()
 
-			// We limit ourselves to batch processing 10 blocks at a time
+			// We limit ourselves to batch processing 25 blocks at a time
 			// so that other indexing jobs also run often enough
-			target := min(latestBlock.BlockHeight+1+10, info.Blocks)
+			target := min(latestBlock.BlockHeight+1+25, info.Blocks)
 
 			for i := latestBlock.BlockHeight + 1; i <= target; i++ {
 				err = t.processBlock(i)
