@@ -13,9 +13,6 @@ RUN nix \
 RUN mkdir /tmp/nix-store-closure
 RUN cp -R $(nix-store -qR result/) /tmp/nix-store-closure
 
-RUN ls -la /tmp/nix-store-closure
-RUN ls -la result
-
 FROM alpine:3.6 as alpine
 
 RUN apk add -U --no-cache ca-certificates
