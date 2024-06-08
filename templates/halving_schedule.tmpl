@@ -1,6 +1,114 @@
 {{ define "content" }}
 <div class="container mx-auto p-4">
-  <h2 class="text-xl font-bold mb-4">Bitcoin Halving Schedule</h2>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.3.3/echarts.min.js"></script>
+  <h2 class="text-xl font-semibold mb-4">Bitcoin Halving Schedule</h2>
+  <div id="main" class="mb-4" style="width: 100%; height: 600px;"></div>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+      var chartDom = document.getElementById('main');
+      var myChart = echarts.init(chartDom, 'dark');
+      var option;
+
+      var blocks = {{ .Curve.Heights }};
+      var supply = {{ .Curve.Supply }};
+      var subsidy = {{ .Curve.Rewards }};
+      var halvingDataLines = [];
+
+      for (var i = 0; i < blocks.length; i++) {
+        supply[i] = supply[i]/100000000.0;
+        subsidy[i] = subsidy[i]/100000000.0;
+        if (i > 0 && blocks[i] % 210000 == 0 && blocks[i] < 7000000) {
+          halvingDataLines.push({
+            xAxis: i,
+          });
+        }
+      }
+
+      option = {
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['Block Subsidy', 'Theoretical Supply']
+        },
+        xAxis: {
+          type: 'category',
+          data: blocks
+        },
+        yAxis: [
+          {
+            type: 'value',
+            name: 'Subsidy (BTC)',
+            position: 'left',
+            axisLabel: {
+              formatter: '{value} BTC'
+            }
+          },
+          {
+            type: 'value',
+            name: 'Supply (BTC)',
+            position: 'right',
+            axisLabel: {
+              formatter: '{value} BTC'
+            }
+          }
+        ],
+        dataZoom: [
+          {
+            type: 'slider',
+            show: true,
+            xAxisIndex: [0],
+            start: 0,
+            end: 20
+          },
+          {
+           type: 'inside',
+           xAxisIndex: [0],
+           start: 0,
+           end: 100
+          }
+        ],
+        series: [
+          {
+            name: 'Block Subsidy',
+            type: 'line',
+            yAxisIndex: 0,
+            data: subsidy,
+            markLine: {
+              symbol: ['none', 'none'],
+              label: { show: false },
+              lineStyle: {
+                opacity: 0.5
+              },
+              data: halvingDataLines
+            }
+          },
+          {
+            name: 'Theoretical Supply',
+            type: 'line',
+            yAxisIndex: 1,
+            data: supply,
+            markLine: {
+              symbol: 'none',
+              lineStyle: {
+                opacity: 0.5
+              },
+              data: [
+                {
+                  name: 'Maximum Supply',
+                  yAxis: 21000000
+                }
+              ]
+            }
+          }
+        ]
+      };
+
+      option && myChart.setOption(option);
+    });
+  </script>
+
   <table class="min-w-full bg-slate-950/30 border border-slate-700">
       <thead>
           <tr>
