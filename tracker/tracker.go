@@ -265,6 +265,8 @@ func (t *Tracker) processBlock(height int64) error {
 		transactions = append(transactions, types.Transaction{
 			TxID:               block.Tx[0].Txid,
 			TransactionDetails: string(jsonTx),
+			BlockHeight:        block.Height,
+			BlockHash:          block.Hash,
 		})
 	}
 
