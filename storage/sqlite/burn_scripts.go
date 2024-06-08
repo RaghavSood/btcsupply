@@ -39,7 +39,7 @@ func (d *SqliteBackend) GetBurnScripts() ([]types.BurnScript, error) {
 
 func (d *SqliteBackend) GetBurnScript(script string) (types.BurnScript, error) {
 	var burnScript types.BurnScript
-	err := d.db.QueryRow("SELECT * FROM burn_scripts WHERE script = ?", script).Scan(&burnScript.ID, &burnScript.Script, &burnScript.ConfidenceLevel, &burnScript.Provenance, &burnScript.CreatedAt, &burnScript.ScriptGroup)
+	err := d.db.QueryRow("SELECT * FROM burn_scripts WHERE script = ?", script).Scan(&burnScript.ID, &burnScript.Script, &burnScript.ConfidenceLevel, &burnScript.Provenance, &burnScript.CreatedAt, &burnScript.ScriptGroup, &burnScript.DecodeScript)
 
 	return burnScript, err
 }
@@ -166,7 +166,7 @@ func scanBurnScripts(rows *sql.Rows) ([]types.BurnScript, error) {
 	var scripts []types.BurnScript
 	for rows.Next() {
 		var script types.BurnScript
-		err := rows.Scan(&script.ID, &script.Script, &script.ConfidenceLevel, &script.Provenance, &script.CreatedAt, &script.ScriptGroup)
+		err := rows.Scan(&script.ID, &script.Script, &script.ConfidenceLevel, &script.Provenance, &script.CreatedAt, &script.ScriptGroup, &script.DecodeScript)
 		if err != nil {
 			return nil, err
 		}

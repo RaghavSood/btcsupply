@@ -9,4 +9,5 @@ type BurnScript struct {
 	Provenance      string    `json:"provenance"`
 	CreatedAt       time.Time `json:"created_at"`
 	ScriptGroup     string    `json:"script_group"`
+	DecodeScript    string    `json:"decodescript"`
 }
