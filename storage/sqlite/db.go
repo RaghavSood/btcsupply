@@ -11,7 +11,7 @@ import (
 	"github.com/pressly/goose/v3"
 )
 
-//go:embed migrations/*.sql
+//go:embed migrations/*
 var embeddedMigrations embed.FS
 
 var log = btclogger.NewLogger("sqlite")
@@ -38,6 +38,11 @@ func NewSqliteBackend() (*SqliteBackend, error) {
 	backend := &SqliteBackend{db: db}
 	if err := backend.Migrate(); err != nil {
 		return nil, fmt.Errorf("failed to migrate database: %w", err)
+	}
+
+	err = backend.seedBurnScriptsFromCSV()
+	if err != nil {
+		return nil, fmt.Errorf("failed to seed burn scripts: %w", err)
 	}
 
 	return backend, nil
