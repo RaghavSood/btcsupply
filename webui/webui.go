@@ -74,7 +74,7 @@ func (w *WebUI) Index(c *gin.Context) {
 
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "index.tmpl", map[string]interface{}{
-		"Title":  "Track Bitcoin Supply | burned.money",
+		"Title":  "Track Bitcoin Supply",
 		"Losses": losses,
 		"Stats":  indexStats,
 	})
