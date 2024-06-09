@@ -1,7 +1,6 @@
 package notes
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -18,7 +17,6 @@ func wrapForTailwind(content string) string {
 	}
 
 	for k, v := range prefixMatch {
-		fmt.Println(k, v)
 		content = strings.ReplaceAll(content, "<"+k, "<"+k+" class=\""+v+"\"")
 	}
 
