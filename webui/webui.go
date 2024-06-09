@@ -54,6 +54,11 @@ func (w *WebUI) Serve() {
 		c.FileFromFS("favicon.ico", http.FS(static.Static))
 	})
 
+	sitemap := router.Group("/sitemap")
+	{
+		sitemap.GET("/blocks/:index", w.SitemapBlocks)
+	}
+
 	router.Run(":8080")
 }
 
