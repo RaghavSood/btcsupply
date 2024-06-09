@@ -19,7 +19,8 @@ func (d *SqliteBackend) seedBurnScriptsFromCSV() error {
 	}
 
 	tx, err := d.db.Begin()
-	for _, record := range records {
+	// Skip the header row
+	for _, record := range records[1:] {
 		_, err = tx.Exec("INSERT INTO burn_scripts (script, confidence_level, provenance, script_group) VALUES (?, ?, ?, ?) ON CONFLICT (script) DO UPDATE SET confidence_level=excluded.confidence_level, provenance=excluded.provenance, script_group=excluded.script_group", record[0], record[1], record[2], record[3])
 		if err != nil {
 			tx.Rollback()
