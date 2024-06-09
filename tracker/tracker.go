@@ -193,6 +193,7 @@ func (t *Tracker) processScriptQueue() {
 
 func (t *Tracker) processBlock(height int64) error {
 	log.Info().Int64("block_height", height).Msg("Processing block")
+	start := time.Now()
 	blockStats, err := t.client.GetBlockStats(int64(height))
 	if err != nil {
 		return err
@@ -291,6 +292,13 @@ func (t *Tracker) processBlock(height int64) error {
 	if err != nil {
 		return fmt.Errorf("failed to record block index results: %v", err)
 	}
+
+	elapsed := time.Since(start)
+	log.Info().
+		Int64("block_height", height).
+		Stringer("elapsed", elapsed).
+		Int("losses", len(losses)).
+		Msg("Block processed")
 
 	return nil
 }
