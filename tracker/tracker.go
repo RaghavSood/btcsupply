@@ -249,7 +249,7 @@ func (t *Tracker) processBlock(height int64) error {
 			Stringer("coinbase_entitlement", expectedCoinbaseBig).
 			Msg("Coinbase mismatch")
 
-		lostAmount := big.NewInt(0).Sub(coinbaseMinted.BigInt(), expectedCoinbaseBig.BigInt())
+		lostAmount := big.NewInt(0).Sub(expectedCoinbaseBig.BigInt(), coinbaseMinted.BigInt())
 
 		losses = append(losses, types.Loss{
 			TxID:        block.Tx[0].Txid,
