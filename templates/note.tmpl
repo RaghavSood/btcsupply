@@ -12,6 +12,6 @@
 
   <div class="border rounded-lg border-slate-700 note-card font-sans grid grid-cols-1 {{ $bgcolour }} p-4 mb-2 gap-y-3">
     <p>{{ .Data | NoEscape }}</p>
-    <a href="https://github.com/RaghavSood/btcsupply/blame/master/notes/{{ .Path }}" target="_BLANK" class="text-sm text-gray-400 hover:text-gray-200">View revision history</a>
+    <a href="https://github.com/RaghavSood/btcsupply/blame/master/notes/{{ .Path }}" target="_BLANK" class="text-xs text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">View revision history</a>
   </div>
 {{ end }}

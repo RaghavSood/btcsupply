@@ -63,17 +63,21 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		return
 	}
 
-	var notePointers []notes.NotePointer
+	notePointers, hasNulldata, scripts := transaction.NotePointers()
+
 	for _, loss := range losses {
 		notePointers = append(notePointers, notes.NotePointer{
 			NoteType:     notes.Output,
 			PathElements: []string{loss.TxID, fmt.Sprintf("%d", loss.Vout)},
 		})
 
+		if loss.Vout == -1 {
+			notePointers = append(notePointers, notes.NotePointer{
+				NoteType:     notes.Coinbase,
+				PathElements: []string{"coinbase"},
+			})
+		}
 	}
-
-	notePointers, hasNulldata, scripts := transaction.NotePointers()
-
 	burnScripts, err := w.db.GetBurnScriptsByScripts(scripts)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get burn scripts")
