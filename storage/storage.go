@@ -16,6 +16,7 @@ type Storage interface {
 	GetTransactionLossSummaryForScript(script string) ([]types.TransactionLossSummary, error)
 
 	GetLossyBlocks(limit int) ([]types.BlockLossSummary, error)
+	GetBlockLossSummary(identifier string) (types.BlockLossSummary, error)
 	GetBlock(identifier string) (types.Block, error)
 	GetLatestBlock() (types.Block, error)
 	GetBlockIdentifiers(identifier string) (string, int64, error)

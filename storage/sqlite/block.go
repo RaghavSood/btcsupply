@@ -54,6 +54,24 @@ func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.BlockLossSummary, err
 	return summaries, nil
 }
 
+func (d *SqliteBackend) GetBlockLossSummary(identifier string) (types.BlockLossSummary, error) {
+	var summary types.BlockLossSummary
+	err := d.db.QueryRow(`
+				SELECT
+				  block_height,
+				  block_hash,
+				  COUNT(DISTINCT(tx_id)) AS loss_tx_count,
+				  SUM(amount) AS sum_of_losses
+				FROM
+				  losses
+				WHERE
+				  block_hash = ? OR block_height = ?
+				GROUP BY
+				  block_height, block_hash`, identifier, identifier).Scan(&summary.BlockHeight, &summary.BlockHash, &summary.LossOutputs, &summary.TotalLost)
+
+	return summary, err
+}
+
 func (d *SqliteBackend) GetLatestBlock() (types.Block, error) {
 	var block types.Block
 	err := d.db.QueryRow("SELECT * FROM blocks ORDER BY block_height DESC LIMIT 1").Scan(&block.ID, &block.BlockHeight, &block.BlockHash, &block.BlockTimestamp, &block.ParentBlockHash, &block.NumTransactions, &block.CreatedAt)

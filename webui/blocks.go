@@ -33,6 +33,13 @@ func (w *WebUI) Block(c *gin.Context) {
 		return
 	}
 
+	blockSummary, err := w.db.GetBlockLossSummary(identifier)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get block loss summary")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
 	var indexStats types.IndexStatistics
 	var txOutSetInfo types.TxOutSetInfo
 	var blockStats btypes.BlockStats
@@ -66,6 +73,7 @@ func (w *WebUI) Block(c *gin.Context) {
 	err = tmpl.Render(c.Writer, "block.tmpl", map[string]interface{}{
 		"Title":              fmt.Sprintf("Block %d - %s", block.BlockHeight, block.BlockHash),
 		"Block":              block,
+		"BlockSummary":       blockSummary,
 		"Losses":             losses,
 		"TheoreticalSubsidy": types.FromMathBigInt(big.NewInt(theoreticalSubsidy)),
 		"TheoreticalSupply":  types.FromMathBigInt(big.NewInt(theoreticalSupply)),
