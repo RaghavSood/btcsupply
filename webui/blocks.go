@@ -34,7 +34,7 @@ func (w *WebUI) Block(c *gin.Context) {
 	}
 
 	blockSummary, err := w.db.GetBlockLossSummary(identifier)
-	if err != nil {
+	if err != nil && err != sql.ErrNoRows {
 		log.Error().Err(err).Msg("Failed to get block loss summary")
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
