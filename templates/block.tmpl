@@ -17,8 +17,12 @@
     <div class="p-4">
       <p>Theoretical Subsidy: {{ .TheoreticalSubsidy.SatoshisToBTC true }}</p>
       <p>Theoretical Supply: {{ .TheoreticalSupply.SatoshisToBTC true }}</p>
-      <p>Fees Paid: {{ .BlockStats.Totalfee }}</p>
-      <p>Actual Subsidy: {{ .CoinStats.Coinbase.SatoshisToBTC true }}</p>
+      {{ if .Block.IsFutureBlock }}
+        <p>Not mined yet</p>
+      {{ else }}
+        <p>Fees Paid: {{ .BlockStats.Totalfee }}</p>
+        <p>Actual Subsidy: {{ .CoinStats.Coinbase.SatoshisToBTC true }}</p>
+      {{ end }}
     </div>
   </div>
     <table class="min-w-full bg-slate-950/30 border border-slate-700">
