@@ -4,7 +4,7 @@
       {{ $decoded := ParseDecodeScript .ScriptSummary.DecodeScript }}
       {{ if ne $decoded.Type "nonstandard" }}
       <h1 class="text-2xl font-semibold break-words">Address: <span class="select-all">{{ $decoded.DisplayAddress .ScriptSummary.Script }}</span></h1>
-      <h3 class="text-lg text-gray-400 font-mono">Script: {{ .ScriptSummary.Script }}</a></h3>
+      <h3 class="text-lg text-gray-400 font-mono break-words">Script: {{ .ScriptSummary.Script }}</a></h3>
       {{ else }}
       <h1 class="text-2xl font-semibold break-words">Script: <span class="select-all">{{ .ScriptSummary.Script }}</span></h1>
       {{ end }}
