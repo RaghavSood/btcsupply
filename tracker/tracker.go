@@ -125,6 +125,8 @@ func (t *Tracker) decodedBurnScripts() {
 			continue
 		}
 
+		decoded.Script = script.Script
+
 		jsonScript, err := json.Marshal(decoded)
 		if err != nil {
 			log.Error().
