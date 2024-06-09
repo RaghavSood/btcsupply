@@ -88,6 +88,7 @@ func (t *Tracker) Run() {
 				Int64("current_block", info.Blocks).
 				Msg("Checking for new blocks")
 
+			t.decodedBurnScripts()
 			t.processScriptQueue()
 			t.processTransactionQueue()
 
@@ -102,6 +103,43 @@ func (t *Tracker) Run() {
 					break
 				}
 			}
+		}
+	}
+}
+
+func (t *Tracker) decodedBurnScripts() {
+	undecodedBurnScripts, err := t.db.GetUndecodedBurnScripts()
+	if err == sql.ErrNoRows {
+		log.Info().Msg("No undecoded burn scripts found")
+		return
+	}
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get undecoded burn scripts")
+		return
+	}
+
+	for _, script := range undecodedBurnScripts {
+		decoded, err := t.client.DecodeScript(script.Script)
+		if err != nil {
+			log.Error().Err(err).Str("script", script.Script).Msg("Failed to decode script")
+			continue
+		}
+
+		jsonScript, err := json.Marshal(decoded)
+		if err != nil {
+			log.Error().
+				Err(err).
+				Str("script", script.Script).
+				Msg("Failed to marshal decoded script")
+			continue
+		}
+
+		log.Info().Str("script", script.Script).Msg("Decoded script")
+
+		err = t.db.RecordDecodedBurnScript(script.Script, string(jsonScript))
+		if err != nil {
+			log.Error().Err(err).Str("script", script.Script).Msg("Failed to update script decode")
+			continue
 		}
 	}
 }

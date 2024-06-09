@@ -59,6 +59,21 @@ func (d *SqliteBackend) GetBurnScriptsByScripts(scripts []string) ([]types.BurnS
 	return scanBurnScripts(rows)
 }
 
+func (d *SqliteBackend) GetUndecodedBurnScripts() ([]types.BurnScript, error) {
+	rows, err := d.db.Query("SELECT * FROM burn_scripts WHERE decodescript = ''")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	return scanBurnScripts(rows)
+}
+
+func (d *SqliteBackend) RecordDecodedBurnScript(script string, decodeScript string) error {
+	_, err := d.db.Exec("UPDATE burn_scripts SET decodescript = ? WHERE script = ?", decodeScript, script)
+	return err
+}
+
 func (d *SqliteBackend) GetBurnScriptSummary(script string) (types.BurnScriptSummary, error) {
 	query := `SELECT 
 						    bs.script,
