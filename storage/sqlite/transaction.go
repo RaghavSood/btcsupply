@@ -17,7 +17,7 @@ func (d *SqliteBackend) GetTransaction(hash string) (types.Transaction, error) {
 }
 
 func (d *SqliteBackend) GetTransactionLossSummary(limit int) ([]types.TransactionLossSummary, error) {
-	query := `SELECT tx_id, sum(amount), block_height, block_hash FROM losses GROUP BY tx_id ORDER BY block_height DESC LIMIT ?`
+	query := `SELECT tx_id, min(vout), sum(amount), block_height, block_hash FROM losses GROUP BY tx_id ORDER BY block_height DESC LIMIT ?`
 
 	rows, err := d.db.Query(query, limit)
 	if err != nil {
@@ -31,7 +31,7 @@ func (d *SqliteBackend) GetTransactionLossSummary(limit int) ([]types.Transactio
 }
 
 func (d *SqliteBackend) GetTransactionLossSummaryForBlock(identifier string) ([]types.TransactionLossSummary, error) {
-	query := `SELECT tx_id, sum(amount), block_height, block_hash FROM losses WHERE block_hash = ? OR block_height = ? GROUP BY tx_id`
+	query := `SELECT tx_id, min(vout), sum(amount), block_height, block_hash FROM losses WHERE block_hash = ? OR block_height = ? GROUP BY tx_id`
 
 	rows, err := d.db.Query(query, identifier, identifier)
 	if err != nil {
@@ -45,7 +45,7 @@ func (d *SqliteBackend) GetTransactionLossSummaryForBlock(identifier string) ([]
 }
 
 func (d *SqliteBackend) GetTransactionLossSummaryForScript(script string) ([]types.TransactionLossSummary, error) {
-	query := `SELECT tx_id, sum(amount), block_height, block_hash FROM losses WHERE burn_script = ? GROUP BY tx_id ORDER BY block_height DESC`
+	query := `SELECT tx_id, min(vout), sum(amount), block_height, block_hash FROM losses WHERE burn_script = ? GROUP BY tx_id ORDER BY block_height DESC`
 
 	rows, err := d.db.Query(query, script)
 	if err != nil {
@@ -62,7 +62,7 @@ func scanTransactionLossSummaries(rows *sql.Rows) ([]types.TransactionLossSummar
 	var summaries []types.TransactionLossSummary
 	for rows.Next() {
 		var summary types.TransactionLossSummary
-		err := rows.Scan(&summary.Txid, &summary.TotalLoss, &summary.BlockHeight, &summary.BlockHash)
+		err := rows.Scan(&summary.Txid, &summary.Vout, &summary.TotalLoss, &summary.BlockHeight, &summary.BlockHash)
 		if err != nil {
 			return nil, err
 		}
