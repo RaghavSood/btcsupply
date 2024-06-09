@@ -12,6 +12,10 @@ func (b BTCString) String() string {
 }
 
 func (b *BTCString) UnmarshalJSON(data []byte) error {
+	// type switch to handle string and null values
+	if data[0] == '"' && data[len(data)-1] == '"' {
+		data = data[1 : len(data)-1]
+	}
 	*b = BTCString(string(data))
 	return nil
 }
