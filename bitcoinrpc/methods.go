@@ -81,12 +81,12 @@ func (rpc *RpcClient) GetTransaction(txid string) (types.TransactionDetail, erro
 func (rpc *RpcClient) DecodeScript(hexScript string) (types.DecodeScript, error) {
 	result, err := rpc.Do("decodescript", []interface{}{hexScript})
 	if err != nil {
-		return types.Script{}, err
+		return types.DecodeScript{}, err
 	}
 
 	var script types.DecodeScript
 	if err := json.Unmarshal(result, &script); err != nil {
-		return types.Script{}, fmt.Errorf("failed to unmarshal decodescript response: %v", err)
+		return types.DecodeScript{}, fmt.Errorf("failed to unmarshal decodescript response: %v", err)
 	}
 
 	return script, nil
