@@ -5,6 +5,7 @@ type BurnScriptSummary struct {
 	ConfidenceLevel string
 	Provenance      string
 	Group           string
+	DecodeScript    string
 	Transactions    int
 	TotalLoss       *BigInt
 }

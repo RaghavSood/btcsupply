@@ -1,7 +1,13 @@
 {{ define "content" }}
 <div class="lg:container mx-auto p-4">
     <div class="border rounded-lg border-slate-700 bg-slate-950/30 p-4 mb-4">
-      <h1 class="text-2xl font-semibold break-words">Script <span class="select-all">{{ .ScriptSummary.Script }}</span></h1>
+      {{ $decoded := ParseDecodeScript .ScriptSummary.DecodeScript }}
+      {{ if ne $decoded.Type "nonstandard" }}
+      <h1 class="text-2xl font-semibold break-words">Address: <span class="select-all">{{ $decoded.DisplayAddress .ScriptSummary.Script }}</span></h1>
+      <h3 class="text-lg text-gray-400 font-mono">Script: {{ .ScriptSummary.Script }}</a></h3>
+      {{ else }}
+      <h1 class="text-2xl font-semibold break-words">Script: <span class="select-all">{{ .ScriptSummary.Script }}</span></h1>
+      {{ end }}
       <h3 class="text-lg text-gray-400 font-mono">Total Lost: {{ .ScriptSummary.TotalLoss.SatoshisToBTC true }} BTC</a></h3>
       <h3 class="text-lg text-gray-400 font-mono">Transactions: {{ .ScriptSummary.Transactions }}</a></h3>
     </div>

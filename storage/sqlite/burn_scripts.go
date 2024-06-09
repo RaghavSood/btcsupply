@@ -80,6 +80,7 @@ func (d *SqliteBackend) GetBurnScriptSummary(script string) (types.BurnScriptSum
 								bs.confidence_level,
 								bs.provenance,
 								bs.script_group,
+								bs.decodescript,
 							  COUNT(DISTINCT(l.tx_id)) AS transactions,
 						    SUM(l.amount) AS total_loss
 						FROM 
@@ -91,7 +92,7 @@ func (d *SqliteBackend) GetBurnScriptSummary(script string) (types.BurnScriptSum
 						    bs.script`
 
 	var summary types.BurnScriptSummary
-	err := d.db.QueryRow(query, script).Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.Transactions, &summary.TotalLoss)
+	err := d.db.QueryRow(query, script).Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.DecodeScript, &summary.Transactions, &summary.TotalLoss)
 
 	return summary, err
 }
@@ -102,6 +103,7 @@ func (d *SqliteBackend) GetBurnScriptSummariesForGroup(group string) ([]types.Bu
 							bs.confidence_level,
 							bs.provenance,
 							bs.script_group,
+							bs.decodescript,
 							COUNT(DISTINCT(l.tx_id)) AS transactions,
 							SUM(l.amount) AS total_loss
 						FROM
@@ -131,6 +133,7 @@ func (d *SqliteBackend) GetBurnScriptSummaries(limit int) ([]types.BurnScriptSum
 								bs.confidence_level,
 								bs.provenance,
 								bs.script_group,
+								bs.decodescript,
 							  COUNT(DISTINCT(l.tx_id)) AS transactions,
 						    SUM(l.amount) AS total_loss
 						FROM 
@@ -167,7 +170,7 @@ func scanBurnScriptSummaries(rows *sql.Rows) ([]types.BurnScriptSummary, error) 
 	var summaries []types.BurnScriptSummary
 	for rows.Next() {
 		var summary types.BurnScriptSummary
-		err := rows.Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.Transactions, &summary.TotalLoss)
+		err := rows.Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.DecodeScript, &summary.Transactions, &summary.TotalLoss)
 		if err != nil {
 			return nil, err
 		}

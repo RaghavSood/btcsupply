@@ -1,5 +1,7 @@
 package types
 
+import "encoding/json"
+
 type DecodeScript struct {
 	Script  string `json:"script"`
 	Asm     string `json:"asm"`
@@ -17,4 +19,30 @@ type Segwit struct {
 	Address    string `json:"address"`
 	Desc       string `json:"desc"`
 	P2SHSegwit string `json:"p2sh-segwit"`
+}
+
+func (ds DecodeScript) DisplayAddress(fallback string) string {
+	if ds.Address != "" {
+		return ds.Address
+	}
+
+	result := ds.Script
+	if result == "" {
+		result = fallback
+	}
+
+	return result
+}
+
+func ParseDecodeScriptJSON(jsonString string) (DecodeScript, error) {
+	if jsonString == "" {
+		return DecodeScript{}, nil
+	}
+	var ds DecodeScript
+	err := json.Unmarshal([]byte(jsonString), &ds)
+	if err != nil {
+		return ds, err
+	}
+
+	return ds, nil
 }
