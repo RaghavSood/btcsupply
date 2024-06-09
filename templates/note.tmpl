@@ -6,6 +6,8 @@
     {{ $bgcolour = "bg-yellow-700/30" }}
   {{ else if eq .Type "scriptgroup" }}
     {{ $bgcolour = "bg-orange-800/30" }}
+  {{ else if eq .Type "transaction" }}
+    {{ $bgcolour = "bg-lime-800/30" }}
   {{ end }}
 
   <div class="border rounded-lg border-slate-700 note-card font-sans grid grid-cols-1 {{ $bgcolour }} p-4 mb-2 gap-y-3">

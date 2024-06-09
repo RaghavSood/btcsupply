@@ -14,6 +14,7 @@ const (
 	Script      NoteType = "script"
 	NullData    NoteType = "nulldata"
 	ScriptGroup NoteType = "scriptgroup"
+	Transaction NoteType = "transaction"
 )
 
 func DeriveNotePath(noteType NoteType, elements ...string) (string, error) {
@@ -34,6 +35,10 @@ func DeriveNotePath(noteType NoteType, elements ...string) (string, error) {
 	case ScriptGroup:
 		if len(elements) != 1 {
 			return "", fmt.Errorf("scriptgroup note requires one element")
+		}
+	case Transaction:
+		if len(elements) != 1 {
+			return "", fmt.Errorf("transaction note requires one element")
 		}
 	default:
 		return "", fmt.Errorf("invalid note type: %s", noteType)
