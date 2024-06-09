@@ -20,7 +20,7 @@
       {{ if .Block.IsFutureBlock }}
         <p>Not mined yet</p>
       {{ else }}
-        <p>Fees Paid: {{ .BlockStats.Totalfee }}</p>
+        <p>Fees Paid: {{ (Int64ToBTC .BlockStats.Totalfee).SatoshisToBTC true }}</p>
         <p>Actual Subsidy: {{ .CoinStats.Coinbase.SatoshisToBTC true }}</p>
       {{ end }}
     </div>

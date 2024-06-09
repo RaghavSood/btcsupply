@@ -124,10 +124,10 @@
           {{ range .Schedule }}
           <tr>
               <td class="px-4 py-2 border-b border-slate-700"><a class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200" href="/block/{{ .Height }}">{{ .Height }}</a></td>
-              <td class="px-4 py-2 border-b border-slate-700">{{ Int64ToBTC .Subsidy }}</td>
+              <td class="px-4 py-2 border-b border-slate-700">{{ (Int64ToBTC .Subsidy).SatoshisToBTC false }}</td>
               <td class="px-4 py-2 border-b border-slate-700 text-right">{{ .Subsidy }}</td>
               <td class="px-4 py-2 border-b border-slate-700">{{ printf "%b" .Subsidy }}</td>
-              <td class="px-4 py-2 border-b border-slate-700">{{ Int64ToBTC .Supply }}</td>
+              <td class="px-4 py-2 border-b border-slate-700">{{ (Int64ToBTC .Supply).SatoshisToBTC false }}</td>
           </tr>
           {{ end }}
       </tbody>

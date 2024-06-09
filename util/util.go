@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"math/big"
 	"runtime/debug"
 	"time"
 
@@ -11,8 +12,9 @@ import (
 	"github.com/RaghavSood/btcsupply/types"
 )
 
-func Int64ToBTC(sats int64) string {
-	return fmt.Sprintf("%.8f", float64(sats)/1e8)
+func Int64ToBTC(sats int64) *types.BigInt {
+	bigInt := big.NewInt(sats)
+	return types.FromMathBigInt(bigInt)
 }
 
 func NoEscapeHTML(str string) template.HTML {
