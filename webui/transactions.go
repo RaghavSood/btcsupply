@@ -89,11 +89,15 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		})
 	}
 
+	seenGroups := make(map[string]bool)
 	for _, burnScript := range burnScripts {
-		notePointers = append(notePointers, notes.NotePointer{
-			NoteType:     notes.ScriptGroup,
-			PathElements: []string{burnScript.ScriptGroup},
-		})
+		if !seenGroups[burnScript.ScriptGroup] {
+			seenGroups[burnScript.ScriptGroup] = true
+			notePointers = append(notePointers, notes.NotePointer{
+				NoteType:     notes.ScriptGroup,
+				PathElements: []string{burnScript.ScriptGroup},
+			})
+		}
 	}
 
 	notes := notes.ReadNotes(notePointers)

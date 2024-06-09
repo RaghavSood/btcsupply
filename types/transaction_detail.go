@@ -71,10 +71,12 @@ func (t *TransactionDetail) NotePointers() ([]notes.NotePointer, bool, []string)
 			noteType = notes.NullData
 		}
 
-		notePointers = append(notePointers, notes.NotePointer{
-			NoteType:     noteType,
-			PathElements: []string{vout.ScriptPubKey.Hex},
-		})
+		if !scriptsSeen[vout.ScriptPubKey.Hex] {
+			notePointers = append(notePointers, notes.NotePointer{
+				NoteType:     noteType,
+				PathElements: []string{vout.ScriptPubKey.Hex},
+			})
+		}
 
 		scriptsSeen[vout.ScriptPubKey.Hex] = true
 	}
