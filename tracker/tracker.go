@@ -91,9 +91,9 @@ func (t *Tracker) Run() {
 			t.processScriptQueue()
 			t.processTransactionQueue()
 
-			// We limit ourselves to batch processing 25 blocks at a time
+			// We limit ourselves to batch processing 50 blocks at a time
 			// so that other indexing jobs also run often enough
-			target := min(latestBlock.BlockHeight+1+25, info.Blocks)
+			target := min(latestBlock.BlockHeight+1+50, info.Blocks)
 
 			for i := latestBlock.BlockHeight + 1; i <= target; i++ {
 				err = t.processBlock(i)
