@@ -81,7 +81,7 @@ func (w *WebUI) Block(c *gin.Context) {
 }
 
 func (w *WebUI) Blocks(c *gin.Context) {
-	blocks, err := w.db.GetLossyBlocks(10)
+	blocks, err := w.db.GetLossyBlocks(500)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get lossy blocks")
 		c.AbortWithError(http.StatusInternalServerError, err)
