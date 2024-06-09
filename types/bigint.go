@@ -43,6 +43,10 @@ func (b *BigInt) BigFloat() *big.Float {
 	return new(big.Float).SetInt(b.BigInt())
 }
 
+func (b *BigInt) Positive() bool {
+	return b.Sign() == 1
+}
+
 func (b *BigInt) Scan(src interface{}) error {
 	var s string
 	switch src.(type) {
