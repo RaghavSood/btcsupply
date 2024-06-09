@@ -81,6 +81,11 @@ func (t *TransactionDetail) NotePointers() ([]notes.NotePointer, bool, []string)
 		scriptsSeen[vout.ScriptPubKey.Hex] = true
 	}
 
+	notePointers = append(notePointers, notes.NotePointer{
+		NoteType:     notes.Transaction,
+		PathElements: []string{t.Txid},
+	})
+
 	scripts := maps.Keys(scriptsSeen)
 	return notePointers, hasNulldata, scripts
 }
