@@ -45,7 +45,7 @@ func (d *SqliteBackend) GetTransactionLossSummaryForBlock(identifier string) ([]
 }
 
 func (d *SqliteBackend) GetTransactionLossSummaryForScript(script string) ([]types.TransactionLossSummary, error) {
-	query := `SELECT tx_id, sum(amount), block_height, block_hash FROM losses WHERE burn_script = ? GROUP BY tx_id`
+	query := `SELECT tx_id, sum(amount), block_height, block_hash FROM losses WHERE burn_script = ? GROUP BY tx_id ORDER BY block_height DESC`
 
 	rows, err := d.db.Query(query, script)
 	if err != nil {
