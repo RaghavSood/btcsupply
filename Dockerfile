@@ -17,13 +17,9 @@ FROM alpine:3.6 as alpine
 
 RUN apk add -U --no-cache ca-certificates
 
-# Copy the built application to the runtime container
-FROM scratch
-
 WORKDIR /app
 
 # Copy /nix/store
-COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /tmp/nix-store-closure /nix/store
 COPY --from=builder /src/result /app
 CMD ["/app/bin/btcsupply"]
