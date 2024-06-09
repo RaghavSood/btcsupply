@@ -3,7 +3,12 @@
     <div class="border rounded-lg border-slate-700 bg-slate-950/30 p-4">
       <h1 class="text-2xl font-semibold break-words">Transaction <span class="select-all">{{ .Transaction.Txid }}</span></h1>
       <h3 class="text-lg text-gray-400 font-mono"><a class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200" href="/block/{{ .Block.BlockHeight }}">Block #{{ .Block.BlockHeight }}</a></h3>
-      <h3 class="text-md text-gray-400 font-mono mb-4">{{ .Block.BlockTimestamp.UTC }}{{ .Block.BlockTimestamp.UTC | TimeDisclaimer }}</h3>
+      <h3 class="text-md text-gray-400 font-mono">{{ .Block.BlockTimestamp.UTC }}{{ .Block.BlockTimestamp.UTC | TimeDisclaimer }}</h3>
+      {{ $burntext := "" }}
+      {{ if .Summary.TotalLoss.Positive }}
+        {{ $burntext = "🔥" }}
+      {{ end }}
+      <h3 class="text-md text-gray-400 font-mono">BTC Burned: {{ $burntext }}{{ .Summary.TotalLoss.SatoshisToBTC true }} BTC{{ $burntext }}</h3>
     </div>
     <br />
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">

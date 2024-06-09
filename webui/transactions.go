@@ -63,6 +63,13 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		return
 	}
 
+	txSummary, err := w.db.GetTransactionLossSummaryForTxid(hash)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get transaction summary")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
 	notePointers, hasNulldata, scripts := transaction.NotePointers()
 
 	for _, loss := range losses {
@@ -111,6 +118,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		"Title":       fmt.Sprintf("Transaction %s", hash),
 		"Losses":      losses,
 		"Transaction": transaction,
+		"Summary":     txSummary,
 		"Notes":       notes,
 		"BurnScripts": burnScripts,
 		"Block":       block,
