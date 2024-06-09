@@ -17,9 +17,21 @@ func FromMathBigInt(i *big.Int) *BigInt {
 	return &BigInt{*i}
 }
 
-func FromBTCFloat64(f float64) *BigInt {
-	i64sats := int64(f * 1e8)
-	i := new(big.Int).SetInt64(i64sats)
+func FromBTCString(btc BTCString) *BigInt {
+	btcString := string(btc)
+	parts := strings.Split(btcString, ".")
+
+	btcValue, _ := strconv.ParseInt(parts[0], 10, 64)
+	btcValue = btcValue * 1e8
+
+	var satsValue int64
+
+	if len(parts) > 1 {
+		satsValue, _ = strconv.ParseInt(parts[1], 10, 64)
+	}
+
+	satsInt := btcValue + satsValue
+	i := new(big.Int).SetInt64(satsInt)
 	return &BigInt{*i}
 }
 

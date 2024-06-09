@@ -15,7 +15,6 @@ import (
 	"github.com/RaghavSood/btcsupply/electrum"
 	"github.com/RaghavSood/btcsupply/storage"
 	"github.com/RaghavSood/btcsupply/types"
-	"github.com/RaghavSood/btcsupply/util"
 )
 
 var log = btclogger.NewLogger("tracker")
@@ -212,15 +211,15 @@ func (t *Tracker) processBlock(height int64) error {
 	}
 
 	log.Info().
-		Float64("total_amount", coinStats.TotalAmount).
-		Float64("total_unspendable_amount", coinStats.TotalUnspendableAmount).
+		Stringer("total_amount", coinStats.TotalAmount).
+		Stringer("total_unspendable_amount", coinStats.TotalUnspendableAmount).
 		Str("bestblock", coinStats.Bestblock).
-		Float64("coinbase", coinStats.BlockInfo.Coinbase).
-		Float64("unspendable", coinStats.BlockInfo.Unspendable).
-		Float64("genesis_block", coinStats.BlockInfo.Unspendables.GenesisBlock).
-		Float64("bip30", coinStats.BlockInfo.Unspendables.Bip30).
-		Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).
-		Float64("unclaimed_rewards", coinStats.BlockInfo.Unspendables.UnclaimedRewards).
+		Stringer("coinbase", coinStats.BlockInfo.Coinbase).
+		Stringer("unspendable", coinStats.BlockInfo.Unspendable).
+		Stringer("genesis_block", coinStats.BlockInfo.Unspendables.GenesisBlock).
+		Stringer("bip30", coinStats.BlockInfo.Unspendables.Bip30).
+		Stringer("scripts", coinStats.BlockInfo.Unspendables.Scripts).
+		Stringer("unclaimed_rewards", coinStats.BlockInfo.Unspendables.UnclaimedRewards).
 		Int64("height", coinStats.Height).
 		Msg("Coin stats")
 
@@ -241,20 +240,23 @@ func (t *Tracker) processBlock(height int64) error {
 	coinbaseEntitlement := blockStats.Subsidy
 	expectedCoinbase := coinbaseEntitlement + feesAccumulated
 
-	coinbaseMinted := util.FloatBTCToSats(coinStats.BlockInfo.Coinbase)
+	coinbaseMinted := types.FromBTCString(types.BTCString(coinStats.BlockInfo.Coinbase))
+	expectedCoinbaseBig := types.FromMathBigInt(big.NewInt(expectedCoinbase))
 
-	if coinbaseMinted != expectedCoinbase {
+	if coinbaseMinted.Cmp(expectedCoinbaseBig.BigInt()) != 0 {
 		log.Warn().
-			Int64("coinbase_minted", coinbaseMinted).
-			Int64("coinbase_entitlement", coinbaseEntitlement).
+			Stringer("coinbase_minted", coinbaseMinted).
+			Stringer("coinbase_entitlement", expectedCoinbaseBig).
 			Msg("Coinbase mismatch")
+
+		lostAmount := big.NewInt(0).Sub(coinbaseMinted.BigInt(), expectedCoinbaseBig.BigInt())
 
 		losses = append(losses, types.Loss{
 			TxID:        block.Tx[0].Txid,
 			BlockHash:   block.Hash,
 			BlockHeight: block.Height,
 			Vout:        -1,
-			Amount:      types.FromMathBigInt(big.NewInt(expectedCoinbase - coinbaseMinted)),
+			Amount:      types.FromMathBigInt(lostAmount),
 		})
 
 		jsonTx, err := json.Marshal(block.Tx[0])
@@ -268,10 +270,6 @@ func (t *Tracker) processBlock(height int64) error {
 			BlockHeight:        block.Height,
 			BlockHash:          block.Hash,
 		})
-	}
-
-	if coinStats.BlockInfo.Unspendables.Scripts != 0 {
-		log.Warn().Float64("scripts", coinStats.BlockInfo.Unspendables.Scripts).Msg("Unspendable scripts")
 	}
 
 	// The Genesis block has a unique case where the funds are lost both because
@@ -342,7 +340,7 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 					BlockHash:   blockhash,
 					BlockHeight: blockHeight,
 					Vout:        vout.N,
-					Amount:      types.FromBTCFloat64(vout.Value),
+					Amount:      types.FromBTCString(types.BTCString(vout.Value)),
 					BurnScript:  vout.ScriptPubKey.Hex,
 				})
 
@@ -362,7 +360,7 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 						BlockHash:   blockhash,
 						BlockHeight: blockHeight,
 						Vout:        vout.N,
-						Amount:      types.FromBTCFloat64(vout.Value),
+						Amount:      types.FromBTCString(types.BTCString(vout.Value)),
 						BurnScript:  vout.ScriptPubKey.Hex,
 					})
 

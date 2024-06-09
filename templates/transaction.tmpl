@@ -36,14 +36,14 @@
               {{ $linkscript := false }}
               {{ if IsScriptInBurnScripts .ScriptPubKey.Hex $.BurnScripts }}
                 {{ $bgc = "bg-red-900/30" }}
-                {{ if gt .Value 0.0 }}
+                {{ if .Value.NonZero }}
                   {{ $burnText = "🔥" }}
                 {{ end }}
                 {{ $linkscript = true }}
               {{ end }}
               {{ if eq .ScriptPubKey.Type "nulldata" }}
                 {{ $bgc = "bg-yellow-700/30" }}
-                {{ if gt .Value 0.0 }}
+                {{ if .Value.NonZero }}
                   {{ $burnText = "🔥" }}
                 {{ else }}
                   {{ $burnText = "" }}

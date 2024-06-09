@@ -6,20 +6,20 @@ import (
 )
 
 type TransactionDetail struct {
-	Txid      string  `json:"txid"`
-	Hash      string  `json:"hash"`
-	Version   int     `json:"version"`
-	Size      int     `json:"size"`
-	Vsize     int     `json:"vsize"`
-	Weight    int     `json:"weight"`
-	Locktime  int     `json:"locktime"`
-	Vin       []Vin   `json:"vin"`
-	Vout      []Vout  `json:"vout"`
-	Fee       float64 `json:"fee"`
-	Hex       string  `json:"hex"`
-	Blockhash string  `json:"blockhash,omitempty"`
-	Time      int     `json:"time,omitempty"`
-	Blocktime int     `json:"blocktime,omitempty"`
+	Txid      string    `json:"txid"`
+	Hash      string    `json:"hash"`
+	Version   int       `json:"version"`
+	Size      int       `json:"size"`
+	Vsize     int       `json:"vsize"`
+	Weight    int       `json:"weight"`
+	Locktime  int       `json:"locktime"`
+	Vin       []Vin     `json:"vin"`
+	Vout      []Vout    `json:"vout"`
+	Fee       BTCString `json:"fee"`
+	Hex       string    `json:"hex"`
+	Blockhash string    `json:"blockhash,omitempty"`
+	Time      int       `json:"time,omitempty"`
+	Blocktime int       `json:"blocktime,omitempty"`
 }
 
 type ScriptSig struct {
@@ -30,7 +30,7 @@ type ScriptSig struct {
 type Prevout struct {
 	Generated    bool         `json:"generated"`
 	Height       int          `json:"height"`
-	Value        float64      `json:"value"`
+	Value        BTCString    `json:"value"`
 	ScriptPubKey ScriptPubKey `json:"scriptPubKey"`
 }
 
@@ -43,7 +43,7 @@ type ScriptPubKey struct {
 }
 
 type Vout struct {
-	Value        float64      `json:"value"`
+	Value        BTCString    `json:"value"`
 	N            int          `json:"n"`
 	ScriptPubKey ScriptPubKey `json:"scriptPubKey"`
 }
@@ -97,6 +97,6 @@ func ScriptPubKeyDisplay(scriptPubKey ScriptPubKey) string {
 	return scriptPubKey.Hex
 }
 
-func ValueToBigInt(value float64) *BigInt {
-	return FromBTCFloat64(value)
+func ValueToBigInt(value BTCString) *BigInt {
+	return FromBTCString(value)
 }
