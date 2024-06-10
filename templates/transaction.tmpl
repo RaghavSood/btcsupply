@@ -46,16 +46,17 @@
             {{ range .Transaction.Vout }}
               {{ $bgc := "bg-slate-950/30" }}
               {{ $burnText := "" }}
-              {{ $linkscript := false }}
+              {{ $linkprefix := "" }}
               {{ if IsScriptInBurnScripts .ScriptPubKey.Hex $.BurnScripts }}
                 {{ $bgc = "bg-red-900/30" }}
+                {{ $linkprefix = "script" }}
                 {{ if .Value.NonZero }}
                   {{ $burnText = "🔥" }}
                 {{ end }}
-                {{ $linkscript = true }}
               {{ end }}
               {{ if eq .ScriptPubKey.Type "nulldata" }}
                 {{ $bgc = "bg-yellow-700/30" }}
+                {{ $linkprefix = "opreturn" }}
                 {{ if .Value.NonZero }}
                   {{ $burnText = "🔥" }}
                 {{ else }}
@@ -65,11 +66,11 @@
               <div class="border rounded-lg border-slate-700 {{ $bgc }} p-4 mb-4 font-mono">
                 <div class="flex flex-row gap-x-2 text-wrap font-medium">
                   <span class="basis-9/12 break-words min-w-0">
-                  {{ if $linkscript }}
-                    <a href="/script/{{ .ScriptPubKey.Hex }}" class="break-words text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">
+                  {{ if $linkprefix }}
+                    <a href="/{{ $linkprefix }}/{{ .ScriptPubKey.Hex }}" class="break-words text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">
                   {{ end }}
                     {{ .ScriptPubKey | ScriptPubKeyDisplay }}
-                  {{ if $linkscript }}
+                  {{ if $linkprefix }}
                     </a>
                   {{ end }}
                   </span>
