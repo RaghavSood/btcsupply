@@ -30,6 +30,7 @@ func New() *Template {
 		"TimeDisclaimer":        util.TimeDisclaimer,
 		"GitCommit":             util.GitCommit,
 		"ParseDecodeScript":     types.ParseDecodeScriptJSON,
+		"HexToASCII":            util.HexToASCII,
 	}
 
 	templates := template.Must(template.New("").Funcs(funcMap).ParseFS(Templates, "footer.tmpl", "header.tmpl", "base.tmpl", "note.tmpl"))

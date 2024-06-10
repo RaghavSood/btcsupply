@@ -1,6 +1,7 @@
 package util
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"html/template"
@@ -92,4 +93,19 @@ func GitCommit() string {
 	}
 
 	return "unknown"
+}
+
+func HexToASCII(hexstring string) string {
+	// Drop OP_RETURN
+	if hexstring[:2] == "6a" {
+		hexstring = hexstring[2:]
+	}
+
+	bytes, err := hex.DecodeString(hexstring)
+	if err != nil {
+		fmt.Printf("Error decoding hex string: %w\n", err)
+		return ""
+	}
+
+	return string(bytes)
 }

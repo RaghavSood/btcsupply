@@ -18,7 +18,15 @@
             {{ range .Transaction.Vin }}
               <div class="border rounded-lg border-slate-700 bg-slate-950/30 p-4 mb-4">
                 {{ if .Coinbase }}
-                  <p class="break-words"><strong>Coinbase:</strong> {{ .Coinbase }}</p>
+                  <div class="flex flex-row gap-x-2 text-wrap font-medium">
+                    <p class="break-words"><strong>Coinbase:</strong> {{ .Coinbase }}</p>
+                  </div>
+                  <div class="flex gap-x-2 text-wrap text-sm text-gray-600">
+                    <p class="break-words has-tooltip">
+                      <span class="tooltip rounded shadow-lg p-2 bg-black text-slate-200 mt-6">Coinbase converted to ASCII</span>
+                      {{ HexToASCII .Coinbase }}
+                    </p>
+                  </div>
                 {{ else }}
                   <div class="flex flex-row gap-x-2 text-wrap font-medium">
                     <span class="basis-9/12 break-words min-w-0">{{ .Prevout.ScriptPubKey | ScriptPubKeyDisplay }}</span>
@@ -66,6 +74,14 @@
                   {{ end }}
                   </span>
                   <span class="text-right ml-auto">{{ $burnText }}{{ (.Value | ValueToBigInt).SatoshisToBTC true }} BTC{{ $burnText }}</span>
+                </div>
+                <div class="flex gap-x-2 text-wrap text-sm text-gray-600">
+                  {{ if eq .ScriptPubKey.Type "nulldata" }}
+                    <span class="basis-9/12 break-words min-w-0 has-tooltip">
+                      <span class="tooltip rounded shadow-lg p-2 bg-black text-slate-200 mt-6">OP_RETURN converted to ASCII</span>
+                      {{ HexToASCII .ScriptPubKey.Hex }}
+                    </span>
+                  {{ end }}
                 </div>
                 <div class="flex gap-x-2 text-wrap text-sm text-gray-600">
                   <span class="basis-9/12 break-words min-w-0">{{ .ScriptPubKey.Asm }}</span>
