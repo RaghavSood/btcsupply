@@ -13,8 +13,7 @@ func (d *SqliteBackend) GetScriptGroupSummary(group string) (types.ScriptGroupSu
 					  JOIN 
 					    losses l ON bs.script = l.burn_script
 						WHERE
-						  bs.script_group = ?
-					  GROUP BY bs.script_group`
+						  bs.script_group = ?`
 
 	var summary types.ScriptGroupSummary
 	err := d.db.QueryRow(query, group).Scan(&summary.ScriptGroup, &summary.TotalLoss, &summary.Scripts, &summary.Transactions)
@@ -33,6 +32,7 @@ func (d *SqliteBackend) GetScriptGroupSummaries(limit int) ([]types.ScriptGroupS
 					  JOIN 
 					    losses l ON bs.script = l.burn_script
 					  GROUP BY bs.script_group
+						ORDER BY total_loss DESC
 					  LIMIT ?`
 
 	rows, err := d.db.Query(query, limit)
