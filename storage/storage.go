@@ -46,6 +46,9 @@ type Storage interface {
 	GetScriptGroupSummaries(limit int) ([]types.ScriptGroupSummary, error)
 	GetScriptGroupSummary(group string) (types.ScriptGroupSummary, error)
 
+	GetOpReturnSummaries(limit int) ([]types.OpReturnSummary, error)
+	GetOpReturnSummary(script string) (types.OpReturnSummary, error)
+
 	GetScriptQueue() ([]types.ScriptQueue, error)
 	IncrementScriptQueueTryCount(scriptID int) error
 	RecordScriptUnspents(script types.ScriptQueue, unspentTxids []string, unspentHeights []int64) error
