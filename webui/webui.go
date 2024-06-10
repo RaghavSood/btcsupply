@@ -42,6 +42,9 @@ func (w *WebUI) Serve() {
 	router.GET("/scriptgroups", w.ScriptGroups)
 	router.GET("/scriptgroup/:scriptgroup", w.ScriptGroup)
 
+	router.GET("/opreturns", w.OpReturns)
+	router.GET("/opreturn/:opreturn", w.OpReturn)
+
 	router.GET("/why", w.Why)
 	router.GET("/methodology", w.Methodology)
 	router.GET("/schedule", w.HalvingSchedule)
