@@ -21,16 +21,14 @@ func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.BlockLossSummary, err
         SELECT 
             b.block_height, 
             b.block_hash, 
-            COUNT(l.tx_id) AS loss_tx_count, 
-            SUM(l.amount) AS sum_of_losses
+            COUNT(s.tx_id) AS loss_tx_count, 
+            SUM(s.total_loss) AS sum_of_losses
         FROM 
             blocks b
         INNER JOIN 
-            losses l ON b.block_height = l.block_height
+            transaction_summary s ON b.block_height = s.block_height
         GROUP BY 
             b.block_height, b.block_hash
-        HAVING 
-            SUM(l.amount) > 0
         ORDER BY 
             b.block_height DESC
         LIMIT ?`
