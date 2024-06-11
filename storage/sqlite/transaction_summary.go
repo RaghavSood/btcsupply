@@ -20,6 +20,20 @@ func (d *SqliteBackend) GetTransactionSummary(limit int) ([]types.TransactionSum
 	return summaries, err
 }
 
+func (d *SqliteBackend) GetTransactionSummaryForBlock(identifier string) ([]types.TransactionSummary, error) {
+	query := `SELECT tx_id, coinbase, total_loss, block_height, block_hash FROM transaction_summary WHERE block_hash = ? OR block_height = ? ORDER BY total_loss DESC`
+
+	rows, err := d.db.Query(query, identifier, identifier)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+	summaries, err := scanTransactionSummaries(rows)
+
+	return summaries, err
+}
+
 func (d *SqliteBackend) GetTransactionSummaryForTxid(txid string) (types.TransactionSummary, error) {
 	query := `SELECT tx_id, coinbase, total_loss, block_height, block_hash FROM transaction_summary WHERE tx_id = ?`
 
