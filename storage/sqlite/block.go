@@ -17,21 +17,7 @@ func (d *SqliteBackend) GetBlock(identifier string) (types.Block, error) {
 }
 
 func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.BlockLossSummary, error) {
-	query := `
-        SELECT 
-            b.block_height, 
-            b.block_hash, 
-            COUNT(s.tx_id) AS loss_tx_count, 
-            SUM(s.total_loss) AS sum_of_losses
-        FROM 
-            blocks b
-        INNER JOIN 
-            transaction_summary s ON b.block_height = s.block_height
-        GROUP BY 
-            b.block_height, b.block_hash
-        ORDER BY 
-            b.block_height DESC
-        LIMIT ?`
+	query := `SELECT block_height, block_hash, COUNT(*), SUM(total_loss) FROM transaction_summary GROUP BY block_height ORDER BY block_height DESC LIMIT ?`
 
 	rows, err := d.db.Query(query, limit)
 	if err != nil {
