@@ -25,10 +25,12 @@ func (d *SqliteBackend) GetIndexStatistics(height int64) (types.IndexStatistics,
 	stats.LastBlockHeight = lastBlock.BlockHeight
 	stats.LastBlockTime = lastBlock.BlockTimestamp
 
-	err = d.db.QueryRow("SELECT COUNT(*), SUM(amount) FROM losses WHERE block_height <= ?", lastBlock.BlockHeight).Scan(&stats.BurnOutputCount, &stats.BurnedSupply)
+	err = d.db.QueryRow("SELECT COUNT(*) FROM losses WHERE block_height <= ?", lastBlock.BlockHeight).Scan(&stats.BurnOutputCount)
 	if err != nil {
 		return stats, err
 	}
+
+	err = d.db.QueryRow("SELECT SUM(total_loss) FROM transaction_summary WHERE block_height <= ?", lastBlock.BlockHeight).Scan(&stats.BurnedSupply)
 
 	err = d.db.QueryRow("SELECT COUNT(*) FROM burn_scripts").Scan(&stats.BurnScriptsCount)
 	if err != nil {
