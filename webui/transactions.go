@@ -12,7 +12,7 @@ import (
 )
 
 func (w *WebUI) Transactions(c *gin.Context) {
-	recentTransactions, err := w.db.GetTransactionLossSummary(500)
+	recentTransactions, err := w.db.GetTransactionSummary(500)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get recent transactions")
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -63,7 +63,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		return
 	}
 
-	txSummary, err := w.db.GetTransactionLossSummaryForTxid(hash)
+	txSummary, err := w.db.GetTransactionSummaryForTxid(hash)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get transaction summary")
 		c.AbortWithError(http.StatusInternalServerError, err)
