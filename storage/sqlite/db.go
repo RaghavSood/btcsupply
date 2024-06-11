@@ -36,6 +36,10 @@ func NewSqliteBackend() (*SqliteBackend, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to enable WAL mode: %w", err)
 	}
+	_, err = db.Exec("PRAGMA synchronous=NORMAL;")
+	if err != nil {
+		return nil, fmt.Errorf("failed to set synchronous mode: %w", err)
+	}
 
 	log.Info().
 		Str("path", path).
