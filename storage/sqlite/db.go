@@ -40,6 +40,10 @@ func NewSqliteBackend() (*SqliteBackend, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to set synchronous mode: %w", err)
 	}
+	_, err = db.Exec("PRAGMA cache_size=-128000;")
+	if err != nil {
+		return nil, fmt.Errorf("failed to set cache size: %w", err)
+	}
 
 	log.Info().
 		Str("path", path).
