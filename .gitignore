@@ -2,6 +2,8 @@
 *.sw*
 .env
 *.sqlite
+*.sqlite-shm
+*.sqlite-wal
 static/css/tailwind.css
 tmp/
 result

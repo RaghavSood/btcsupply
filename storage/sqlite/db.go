@@ -31,6 +31,12 @@ func NewSqliteBackend() (*SqliteBackend, error) {
 		return nil, fmt.Errorf("failed to open database: %w", err)
 	}
 
+	// Enable WAL mode for better performance
+	_, err = db.Exec("PRAGMA journal_mode=WAL;")
+	if err != nil {
+		return nil, fmt.Errorf("failed to enable WAL mode: %w", err)
+	}
+
 	log.Info().
 		Str("path", path).
 		Msg("Database opened")
