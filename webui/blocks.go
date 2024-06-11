@@ -26,7 +26,7 @@ func (w *WebUI) Block(c *gin.Context) {
 		return
 	}
 
-	losses, err := w.db.GetTransactionLossSummaryForBlock(identifier)
+	losses, err := w.db.GetTransactionSummaryForBlock(identifier)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get block losses")
 		c.AbortWithError(http.StatusInternalServerError, err)
