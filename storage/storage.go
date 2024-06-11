@@ -17,6 +17,7 @@ type Storage interface {
 	GetTransactionLossSummaryForTxid(txid string) (types.TransactionLossSummary, error)
 
 	GetTransactionSummary(limit int) ([]types.TransactionSummary, error)
+	GetTransactionSummaryForTxid(txid string) (types.TransactionSummary, error)
 
 	GetLossyBlocks(limit int) ([]types.BlockLossSummary, error)
 	GetBlockLossSummary(identifier string) (types.BlockLossSummary, error)
