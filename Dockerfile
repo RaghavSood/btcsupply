@@ -15,7 +15,7 @@ RUN cp -R $(nix-store -qR result/) /tmp/nix-store-closure
 
 FROM alpine:3.6 as alpine
 
-RUN apk add -U --no-cache ca-certificates
+RUN apk add -U --no-cache ca-certificates sqlite
 
 WORKDIR /app
 
