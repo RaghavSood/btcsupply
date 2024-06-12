@@ -381,8 +381,6 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 		atLeastOneBurn := false
 		for _, vout := range tx.Vout {
 			if vout.ScriptPubKey.Type == "nulldata" {
-				log.Info().Str("script", vout.ScriptPubKey.Hex).Msg("Null data output")
-
 				losses = append(losses, types.Loss{
 					TxID:        tx.Txid,
 					BlockHash:   blockhash,
