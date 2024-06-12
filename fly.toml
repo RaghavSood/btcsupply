@@ -26,5 +26,5 @@ primary_region = 'cdg'
   source = "btcsupply_data"
   destination = "/data"
   auto_extend_size_increment = "5GB"
-  auto_extend_size_limit = "100GB"
+  auto_extend_size_limit = "500GB"
   auto_extend_size_threshold = 80
