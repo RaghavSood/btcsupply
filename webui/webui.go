@@ -61,6 +61,9 @@ func (w *WebUI) Serve() {
 	{
 		sitemap.GET("/index/blocks", w.SitemapIndexBlocks)
 		sitemap.GET("/blocks/:index", w.SitemapBlocks)
+
+		sitemap.GET("/index/transactions", w.SitemapIndexTransactions)
+		sitemap.GET("/transactions/:index", w.SitemapTransactions)
 	}
 
 	router.Run(":8080")

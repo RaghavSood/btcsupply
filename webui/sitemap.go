@@ -8,6 +8,59 @@ import (
 	"github.com/snabb/sitemap"
 )
 
+func (w *WebUI) SitemapIndexTransactions(c *gin.Context) {
+	transactionCount, err := w.db.GetTransactionCount()
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
+	pages := (transactionCount / 10000) + 1
+
+	si := sitemap.NewSitemapIndex()
+	for i := 0; i < pages; i++ {
+		result := "https://burned.money/sitemap/transactions/" + strconv.Itoa(i) + ".txt"
+		si.Add(&sitemap.URL{Loc: result})
+	}
+
+	c.XML(200, si)
+}
+
+func (w *WebUI) SitemapTransactions(c *gin.Context) {
+	index := c.Param("index")
+
+	parts := strings.Split(index, ".")
+	if len(parts) != 2 || parts[1] != "txt" {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	page, err := strconv.Atoi(parts[0])
+	if err != nil {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	if page < 0 {
+		c.AbortWithStatus(400)
+		return
+	}
+
+	pageSize := 10000
+	offset := page * pageSize
+	txids, err := w.db.GetTransactionTxids(pageSize, offset)
+	if err != nil {
+		c.AbortWithStatus(500)
+		return
+	}
+
+	c.Header("Content-Type", "text/plain")
+	for _, txid := range txids {
+		result := "https://burned.money/transaction/" + txid + "\n"
+		c.Writer.WriteString(result)
+	}
+}
+
 func (w *WebUI) SitemapIndexBlocks(c *gin.Context) {
 	si := sitemap.NewSitemapIndex()
 	for i := 0; i < 200; i++ {

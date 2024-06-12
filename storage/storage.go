@@ -31,6 +31,8 @@ type Storage interface {
 	GetBlockStats(identifier string) (btypes.BlockStats, error)
 
 	GetTransaction(hash string) (types.Transaction, error)
+	GetTransactionTxids(limit int, offset int) ([]string, error)
+	GetTransactionCount() (int, error)
 
 	RecordBlockIndexResults(block types.Block, txoutset types.TxOutSetInfo, blockstats btypes.BlockStats, losses []types.Loss, transactions []types.Transaction, spentTxids []string, spentVouts []int) error
 	RecordTransactionIndexResults(losses []types.Loss, transactions []types.Transaction, spentTxids []string, spentVouts []int) error

@@ -16,6 +16,40 @@ func (d *SqliteBackend) GetTransaction(hash string) (types.Transaction, error) {
 	return transaction, nil
 }
 
+func (d *SqliteBackend) GetTransactionTxids(limit int, offset int) ([]string, error) {
+	query := `SELECT tx_id FROM transaction_summary ORDER BY block_height ASC LIMIT ? OFFSET ?`
+
+	rows, err := d.db.Query(query, limit, offset)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var txids []string
+	for rows.Next() {
+		var txid string
+		err := rows.Scan(&txid)
+		if err != nil {
+			return nil, err
+		}
+
+		txids = append(txids, txid)
+	}
+
+	return txids, nil
+}
+
+func (d *SqliteBackend) GetTransactionCount() (int, error) {
+	var count int
+	err := d.db.QueryRow("SELECT COUNT(*) FROM transaction_summary").Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
 func (d *SqliteBackend) GetTransactionLossSummary(limit int) ([]types.TransactionLossSummary, error) {
 	query := `SELECT tx_id, min(vout), sum(amount), block_height, block_hash FROM losses GROUP BY tx_id ORDER BY block_height DESC LIMIT ?`
 
