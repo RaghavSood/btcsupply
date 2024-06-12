@@ -2,6 +2,11 @@ package types
 
 import "time"
 
+type IndexRollupStatistics struct {
+	TotalLosses *BigInt `json:"total_losses"`
+	BurnOutputs int64   `json:"burn_outputs"`
+}
+
 type IndexStatistics struct {
 	PlannedSupply     *BigInt   `json:"planned_supply"`
 	CirculatingSupply *BigInt   `json:"circulating_supply"`
