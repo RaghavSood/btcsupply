@@ -59,6 +59,7 @@ func (w *WebUI) Serve() {
 
 	sitemap := router.Group("/sitemap")
 	{
+		sitemap.GET("/index/blocks", w.SitemapIndexBlocks)
 		sitemap.GET("/blocks/:index", w.SitemapBlocks)
 	}
 

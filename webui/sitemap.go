@@ -5,7 +5,18 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/snabb/sitemap"
 )
+
+func (w *WebUI) SitemapIndexBlocks(c *gin.Context) {
+	si := sitemap.NewSitemapIndex()
+	for i := 0; i < 200; i++ {
+		result := "https://burned.money/sitemap/blocks/" + strconv.Itoa(i) + ".txt"
+		si.Add(&sitemap.URL{Loc: result})
+	}
+
+	c.XML(200, si)
+}
 
 func (w *WebUI) SitemapBlocks(c *gin.Context) {
 	index := c.Param("index")
