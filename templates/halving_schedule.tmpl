@@ -1,7 +1,13 @@
 {{ define "content" }}
 <div class="lg:container mx-auto p-4">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.3.3/echarts.min.js"></script>
-  <h2 class="text-xl font-semibold mb-4">Bitcoin Halving Schedule</h2>
+  <h1 class="text-2xl font-semibold mb-4">Bitcoin Halving Schedule</h1>
+  <div class="text-pretty border rounded-lg border-slate-700 bg-slate-950/30 p-4 mb-4">
+    <p class="mb-4">The Bitcoin halving is an event that occurs approximately every four years, reducing the block reward miners receive for solving a block by half. The halving is programmed to occur every 210,000 blocks, or roughly every four years, until the maximum supply of 21 million bitcoins is reached. The halving is a key feature of Bitcoin's monetary policy, designed to control the rate at which new bitcoins are created and distributed.</p>
+    <p class="mb-4">Although the Bitcoin Supply is commonly considered to be capped at 21 million BTC, the implementation of the halving schedule means that the actual supply will be slightly less than this. The maximum amount of BTC that can ever be mined is 20,999,999.97690000.</p>
+    <p class="mb-4">Over the years, additional factors have reduced Bitcoin's supply such as the <a class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200" href="/transaction/4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">Genesis Block's</a> Coinbase output never being added to the UTXO set, as well as miner errors over the years which have destroyed BTC.</p>
+    <p class="mb-4">burned.money tracks such events, providing a more realistic view of the Bitcoin supply.</p>
+  </div>
   <div id="main" class="hidden lg:block w-full mx-auto mb-4" style="height: 600px;"></div>
 
   <script type="text/javascript">
