@@ -25,6 +25,6 @@ primary_region = 'cdg'
 [mounts]
   source = "btcsupply_data"
   destination = "/data"
-  auto_extend_size_increment = "5GB"
+  auto_extend_size_increment = "20GB"
   auto_extend_size_limit = "500GB"
   auto_extend_size_threshold = 80
