@@ -52,9 +52,13 @@ func (w *WebUI) Serve() {
 	router.GET("/stats", w.Stats)
 
 	router.StaticFS("/static", http.FS(static.Static))
-	// Serve /favicon.ico from the root
+	// Serve /favicon.ico and /robots.txt from the root
 	router.GET("/favicon.ico", func(c *gin.Context) {
 		c.FileFromFS("favicon.ico", http.FS(static.Static))
+	})
+
+	router.GET("/robots.txt", func(c *gin.Context) {
+		c.FileFromFS("robots.txt", http.FS(static.Static))
 	})
 
 	sitemap := router.Group("/sitemap")
