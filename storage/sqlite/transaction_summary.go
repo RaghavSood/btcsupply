@@ -7,7 +7,7 @@ import (
 )
 
 func (d *SqliteBackend) GetTransactionSummary(limit int) ([]types.TransactionSummary, error) {
-	query := `SELECT tx_id, coinbase, total_loss, block_height, block_hash FROM transaction_summary ORDER BY block_height DESC LIMIT ?`
+	query := `SELECT tx_id, coinbase, total_loss, block_height, block_hash FROM transaction_summary WHERE total_loss > 0 ORDER BY block_height DESC LIMIT ?`
 
 	rows, err := d.db.Query(query, limit)
 	if err != nil {
