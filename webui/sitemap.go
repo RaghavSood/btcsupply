@@ -19,7 +19,7 @@ func (w *WebUI) SitemapIndexTransactions(c *gin.Context) {
 
 	si := sitemap.NewSitemapIndex()
 	for i := 0; i < pages; i++ {
-		result := "https://burned.money/sitemap/transactions/" + strconv.Itoa(i) + ".txt"
+		result := "https://burned.money/sitemap/transactions/" + strconv.Itoa(i) + ".xml"
 		si.Add(&sitemap.URL{Loc: result})
 	}
 
@@ -30,7 +30,7 @@ func (w *WebUI) SitemapTransactions(c *gin.Context) {
 	index := c.Param("index")
 
 	parts := strings.Split(index, ".")
-	if len(parts) != 2 || parts[1] != "txt" {
+	if len(parts) != 2 || parts[1] != "xml" {
 		c.AbortWithStatus(400)
 		return
 	}
@@ -54,17 +54,19 @@ func (w *WebUI) SitemapTransactions(c *gin.Context) {
 		return
 	}
 
-	c.Header("Content-Type", "text/plain")
+	si := sitemap.New()
 	for _, txid := range txids {
-		result := "https://burned.money/transaction/" + txid + "\n"
-		c.Writer.WriteString(result)
+		result := "https://burned.money/transaction/" + txid
+		si.Add(&sitemap.URL{Loc: result})
 	}
+
+	c.XML(200, si)
 }
 
 func (w *WebUI) SitemapIndexBlocks(c *gin.Context) {
 	si := sitemap.NewSitemapIndex()
 	for i := 0; i < 200; i++ {
-		result := "https://burned.money/sitemap/blocks/" + strconv.Itoa(i) + ".txt"
+		result := "https://burned.money/sitemap/blocks/" + strconv.Itoa(i) + ".xml"
 		si.Add(&sitemap.URL{Loc: result})
 	}
 
@@ -76,7 +78,7 @@ func (w *WebUI) SitemapBlocks(c *gin.Context) {
 
 	parts := strings.Split(index, ".")
 
-	if len(parts) != 2 || parts[1] != "txt" {
+	if len(parts) != 2 || parts[1] != "xml" {
 		c.AbortWithStatus(400)
 		return
 	}
@@ -92,10 +94,12 @@ func (w *WebUI) SitemapBlocks(c *gin.Context) {
 		return
 	}
 
-	c.Header("Content-Type", "text/plain")
+	si := sitemap.New()
 	startBlock := blockIndex * 10000
 	for i := startBlock; i < startBlock+10000; i++ {
-		result := "https://burned.money/block/" + strconv.Itoa(i) + "\n"
-		c.Writer.WriteString(result)
+		result := "https://burned.money/block/" + strconv.Itoa(i)
+		si.Add(&sitemap.URL{Loc: result})
 	}
+
+	c.XML(200, si)
 }
