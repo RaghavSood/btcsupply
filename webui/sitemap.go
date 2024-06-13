@@ -31,7 +31,7 @@ func (w *WebUI) SitemapTransactions(c *gin.Context) {
 
 	parts := strings.Split(index, ".")
 	if len(parts) != 2 || parts[1] != "xml" {
-		c.AbortWithStatus(400)
+		c.AbortWithStatus(404)
 		return
 	}
 
@@ -79,7 +79,7 @@ func (w *WebUI) SitemapBlocks(c *gin.Context) {
 	parts := strings.Split(index, ".")
 
 	if len(parts) != 2 || parts[1] != "xml" {
-		c.AbortWithStatus(400)
+		c.AbortWithStatus(404)
 		return
 	}
 
