@@ -405,3 +405,5 @@ script,confidence_level,provenance,script_group,reference_address
 76a914d7548ca476ae9003c7cc60b6eea587a00401767088ac,high,https://old.reddit.com/r/Bitcoin/comments/1mu3kr/i_lost_my_private_key/,lost_keys,1LdZZqbEzDKb74CYrqmiBvDnX7n6b8TYKR
 76a91491d6ebf8a17da295a184b19fce14d238e6de315288ac,medium,"https://old.reddit.com/r/Bitcoin/comments/3k0sxc/20_btc_reward_for_bitaddressorg_issue/
 https://blockchair.com/bitcoin/outputs?s=time(desc)&q=value(12000000000..14000000000),time(2015-09-07..2015-09-08),is_spent(false)",lost_keys,1EJ8Sqo2EShCB5tDWkj8pufi4yz7HwxqfW
+76a9149f7fd096d37ed2c0e3f7f0cfc924beef4ffceb6888ac,provable,"https://gobittest.appspot.com/Address
+Public key 00",ecdsa_incompatibility,1FYMZEHnszCHKTBdFZ2DLrUuk3dGwYKQxh
