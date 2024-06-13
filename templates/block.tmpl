@@ -14,7 +14,7 @@
       <h3 class="text-md font-mono">{{ .Block.BlockTimestamp.UTC }}{{ .Block.BlockTimestamp.UTC | TimeDisclaimer }}</h3>
       <h3 class="text-md font-mono">Burn Transactions: {{ .BlockSummary.LossOutputs }}</h3>
       {{ $burntext := "" }}
-      {{ if gt .BlockSummary.LossOutputs 0 }}
+      {{ if .BlockSummary.TotalLost.Positive }}
         {{ $burntext = "🔥" }}
       {{ end }}
       <h3 class="text-md font-mono">BTC Burned: {{ $burntext }}{{ .BlockSummary.TotalLost.SatoshisToBTC true }} BTC{{ $burntext }}</h3>
