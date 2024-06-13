@@ -101,7 +101,6 @@ func (w *WebUI) Index(c *gin.Context) {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
-
 }
 
 func (w *WebUI) Why(c *gin.Context) {

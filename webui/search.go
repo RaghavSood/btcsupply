@@ -12,7 +12,6 @@ import (
 
 func (w *WebUI) Search(c *gin.Context) {
 	q := c.Query("q")
-	log.Debug().Str("query", q).Msg("Search query")
 
 	// Check if query is a block number or hash
 	block, err := w.db.GetBlock(q)
@@ -48,6 +47,7 @@ func (w *WebUI) Search(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "search.tmpl", map[string]interface{}{
 		"Title": "Search",
+		"Query": q,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")
