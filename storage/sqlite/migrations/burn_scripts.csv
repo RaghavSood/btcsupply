@@ -401,3 +401,7 @@ script,confidence_level,provenance,script_group,reference_address
 76a91431feabcca9914c58dad89ac0f9610915ca49fd2488ac,medium,https://bitcointalk.org/index.php?topic=7253.msg1609536#msg1609536,lost_keys,15ZMCFvj6LBnNPufa97LEo6544XScqETP6
 76a914b140bceda61459b18c5008c5e54f7096bfff67ad88ac,high,https://bitcointalk.org/index.php?topic=7253.msg810167#msg810167,lost_keys,1HAEA2h7it1w8U1sLgQYNS9eYLjTCR6Z9E
 76a914c1ac9042b50a9d2e7a6a1b42bad66e61a9ec3f6b88ac,high,https://bitcointalk.org/index.php?topic=224159.msg2362945#msg2362945,lost_keys,1Jf48wufcDpPQ2EEgX1jUULuTHVzDhqBSF
+76a91437d3cf3cd85592775233c9c2172ec8ef326c4b5c88ac,medium,https://news.ycombinator.com/item?id=14571124,lost_keys,166BuLPWHUjqoqiYp5rGE3B5r5AmqgHpoL
+76a914d7548ca476ae9003c7cc60b6eea587a00401767088ac,high,https://old.reddit.com/r/Bitcoin/comments/1mu3kr/i_lost_my_private_key/,lost_keys,1LdZZqbEzDKb74CYrqmiBvDnX7n6b8TYKR
+76a91491d6ebf8a17da295a184b19fce14d238e6de315288ac,medium,"https://old.reddit.com/r/Bitcoin/comments/3k0sxc/20_btc_reward_for_bitaddressorg_issue/
+https://blockchair.com/bitcoin/outputs?s=time(desc)&q=value(12000000000..14000000000),time(2015-09-07..2015-09-08),is_spent(false)",lost_keys,1EJ8Sqo2EShCB5tDWkj8pufi4yz7HwxqfW
