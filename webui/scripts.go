@@ -1,6 +1,7 @@
 package webui
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 
@@ -35,7 +36,7 @@ func (w *WebUI) Script(c *gin.Context) {
 	script := c.Param("script")
 
 	burnScriptSummary, err := w.db.GetBurnScriptSummary(script)
-	if err != nil {
+	if err != nil && err != sql.ErrNoRows {
 		log.Error().Err(err).Msg("Failed to get script summary")
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return

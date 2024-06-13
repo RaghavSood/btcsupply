@@ -51,6 +51,8 @@ func (w *WebUI) Serve() {
 
 	router.GET("/stats", w.Stats)
 
+	router.GET("/search", w.Search)
+
 	router.StaticFS("/static", http.FS(static.Static))
 	// Serve /favicon.ico and /robots.txt from the root
 	router.GET("/favicon.ico", func(c *gin.Context) {

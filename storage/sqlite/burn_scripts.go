@@ -76,20 +76,20 @@ func (d *SqliteBackend) RecordDecodedBurnScript(script string, decodeScript stri
 
 func (d *SqliteBackend) GetBurnScriptSummary(script string) (types.BurnScriptSummary, error) {
 	query := `SELECT 
-						    bs.script,
-								bs.confidence_level,
-								bs.provenance,
-								bs.script_group,
-								bs.decodescript,
-							  COUNT(DISTINCT(l.tx_id)) AS transactions,
-						    SUM(l.amount) AS total_loss
-						FROM 
-						    burn_scripts bs
-						JOIN 
-						    losses l ON bs.script = l.burn_script
-						WHERE l.burn_script = ?
-						GROUP BY 
-						    bs.script`
+                bs.script,
+                bs.confidence_level,
+                bs.provenance,
+                bs.script_group,
+                bs.decodescript,
+                COALESCE(COUNT(DISTINCT(l.tx_id)), 0) AS transactions,
+                COALESCE(SUM(l.amount), 0) AS total_loss
+              FROM 
+                burn_scripts bs
+              LEFT JOIN 
+                losses l ON bs.script = l.burn_script
+              WHERE bs.script = ?
+              GROUP BY 
+                bs.script`
 
 	var summary types.BurnScriptSummary
 	err := d.db.QueryRow(query, script).Scan(&summary.Script, &summary.ConfidenceLevel, &summary.Provenance, &summary.Group, &summary.DecodeScript, &summary.Transactions, &summary.TotalLoss)
