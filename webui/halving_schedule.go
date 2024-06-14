@@ -7,6 +7,7 @@ import (
 	"github.com/RaghavSood/blockreward"
 	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/RaghavSood/btcsupply/types"
+	"github.com/RaghavSood/btcsupply/util"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
@@ -18,6 +19,29 @@ func (w *WebUI) HalvingSchedule(c *gin.Context) {
 		log.Warn().
 			Err(err).
 			Msg("Failed to get latest block")
+	}
+
+	scheduleHeights := make([]int64, len(schedule))
+	for i, s := range schedule {
+		scheduleHeights[i] = s.Height
+	}
+
+	halvingBlocks, err := w.db.GetBlocksByHeights(scheduleHeights)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get halving blocks")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	blocks := make(map[int64]types.Block)
+	for _, block := range halvingBlocks {
+		blocks[block.BlockHeight] = block
+	}
+
+	for _, s := range schedule {
+		if _, ok := blocks[s.Height]; !ok {
+			blocks[s.Height] = util.FutureBlock(s.Height, latestBlock.BlockHeight)
+		}
 	}
 
 	var emissionCurveHeights []int64
@@ -45,6 +69,7 @@ func (w *WebUI) HalvingSchedule(c *gin.Context) {
 	err = tmpl.Render(c.Writer, "halving_schedule.tmpl", map[string]interface{}{
 		"Title":    "Bitcoin Halving Schedule",
 		"Schedule": schedule,
+		"Blocks":   blocks,
 		"Curve": map[string]interface{}{
 			"Heights": emissionCurveHeights,
 			"Rewards": emissionCurveRewards,

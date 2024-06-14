@@ -134,6 +134,7 @@
       <thead>
           <tr>
               <th class="px-4 py-2 border-b border-slate-700">Block Height</th>
+              <th class="px-4 py-2 border-b border-slate-700">Mined On</th>
               <th class="px-4 py-2 border-b border-slate-700">Subsidy (BTC)</th>
               <th class="px-4 py-2 border-b border-slate-700">Subsidy (sats)</th>
               <th class="px-4 py-2 border-b border-slate-700">Binary</th>
@@ -142,8 +143,14 @@
       </thead>
       <tbody>
           {{ range .Schedule }}
-          <tr>
+            {{ $bgc := "bg-emerald-800/30" }}
+            {{ $block := index $.Blocks .Height }}
+            {{ if $block.IsFutureBlock }}
+              {{ $bgc = "bg-sky-800/30" }}
+            {{ end }}
+            <tr class="{{ $bgc }}">
               <td class="px-4 py-2 border-b border-slate-700"><a class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200" href="/block/{{ .Height }}">{{ .Height }}</a></td>
+              <td class="px-4 py-2 border-b border-slate-700"><p>{{ $block.BlockTimestamp.UTC }}</p><p class="text-xs">{{ PrettyDuration $block.BlockTimestamp.UTC 2 }}</p></td>
               <td class="px-4 py-2 border-b border-slate-700">{{ (Int64ToBTC .Subsidy).SatoshisToBTC false }}</td>
               <td class="px-4 py-2 border-b border-slate-700 text-right">{{ .Subsidy }}</td>
               <td class="px-4 py-2 border-b border-slate-700">{{ printf "%b" .Subsidy }}</td>
