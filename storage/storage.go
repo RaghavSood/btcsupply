@@ -24,6 +24,7 @@ type Storage interface {
 	GetLossyBlocks(limit int) ([]types.BlockLossSummary, error)
 	GetBlockLossSummary(identifier string) (types.BlockLossSummary, error)
 	GetBlock(identifier string) (types.Block, error)
+	GetBlocksByHeights(heights []int64) ([]types.Block, error)
 	GetLatestBlock() (types.Block, error)
 	GetBlockIdentifiers(identifier string) (string, int64, error)
 

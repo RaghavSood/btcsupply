@@ -2,6 +2,7 @@ package sqlite
 
 import (
 	"database/sql"
+	"strings"
 
 	"github.com/RaghavSood/btcsupply/types"
 )
@@ -14,6 +15,21 @@ func (d *SqliteBackend) GetBlock(identifier string) (types.Block, error) {
 	}
 
 	return block, nil
+}
+
+func (d *SqliteBackend) GetBlocksByHeights(heights []int64) ([]types.Block, error) {
+	anyHeights := make([]interface{}, len(heights))
+	for i, height := range heights {
+		anyHeights[i] = height
+	}
+
+	rows, err := d.db.Query("SELECT * FROM blocks WHERE block_height IN (?"+strings.Repeat(",?", len(heights)-1)+")", anyHeights...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	return scanBlocks(rows)
 }
 
 func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.BlockLossSummary, error) {
