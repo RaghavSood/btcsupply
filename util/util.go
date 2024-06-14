@@ -73,12 +73,72 @@ func BlockHeightString(height int64) string {
 	return fmt.Sprintf("%d", height)
 }
 
-func TimeDisclaimer(target time.Time) string {
-	if target.After(time.Now()) {
-		duration := target.Sub(time.Now()).Round(time.Minute)
-		return fmt.Sprintf(" (Estimated to be mined in %s)", duration.String())
+func PrettyDuration(t time.Time, significantPlaces int) string {
+	now := time.Now()
+	var d time.Duration
+	var prefix string
+	var suffix string
+
+	if now.After(t) {
+		d = time.Since(t)
+		prefix = "~"
+		suffix = " ago"
+	} else {
+		d = time.Until(t)
+		prefix = "in ~"
 	}
-	return ""
+
+	const (
+		secondsInMinute = 60
+		secondsInHour   = 60 * secondsInMinute
+		secondsInDay    = 24 * secondsInHour
+		secondsInMonth  = 30 * secondsInDay
+		secondsInYear   = 12 * secondsInMonth
+	)
+
+	totalSeconds := int(d.Seconds())
+	years := totalSeconds / secondsInYear
+	months := (totalSeconds % secondsInYear) / secondsInMonth
+	days := (totalSeconds % secondsInMonth) / secondsInDay
+	hours := (totalSeconds % secondsInDay) / secondsInHour
+	minutes := (totalSeconds % secondsInHour) / secondsInMinute
+	seconds := totalSeconds % secondsInMinute
+
+	parts := []struct {
+		value int
+		unit  string
+	}{
+		{years, "year"},
+		{months, "month"},
+		{days, "day"},
+		{hours, "hour"},
+		{minutes, "minute"},
+		{seconds, "second"},
+	}
+
+	result := ""
+	count := 0
+	for _, part := range parts {
+		if part.value > 0 {
+			if count > 0 {
+				result += ", "
+			}
+			result += fmt.Sprintf("%d %s", part.value, part.unit)
+			if part.value > 1 {
+				result += "s"
+			}
+			count++
+			if significantPlaces > 0 && count >= significantPlaces {
+				break
+			}
+		}
+	}
+
+	if result == "" {
+		result = "0 seconds"
+	}
+
+	return fmt.Sprintf("%s%s%s", prefix, result, suffix)
 }
 
 func GitCommit() string {

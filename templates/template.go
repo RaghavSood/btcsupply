@@ -27,7 +27,7 @@ func New() *Template {
 		"IsScriptInBurnScripts": util.IsScriptInBurnScripts,
 		"IsScriptInNotes":       util.IsScriptInNotes,
 		"ValueToBigInt":         types.ValueToBigInt,
-		"TimeDisclaimer":        util.TimeDisclaimer,
+		"PrettyDuration":        util.PrettyDuration,
 		"GitCommit":             util.GitCommit,
 		"ParseDecodeScript":     types.ParseDecodeScriptJSON,
 		"HexToASCII":            util.HexToASCII,
