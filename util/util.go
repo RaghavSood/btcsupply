@@ -60,7 +60,7 @@ func FutureBlock(height int64, lastBlock int64) types.Block {
 	blocksTill := height - lastBlock
 	timeToMine := blocksTill * 10 * int64(time.Minute)
 	durationToMine := time.Duration(timeToMine)
-	estimatedMineTime := time.Now().Add(time.Duration(durationToMine))
+	estimatedMineTime := time.Now().Add(time.Duration(durationToMine)).Truncate(time.Second)
 
 	return types.Block{
 		BlockHeight:    height,
