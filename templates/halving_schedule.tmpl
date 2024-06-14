@@ -2,6 +2,41 @@
 <div class="lg:container mx-auto p-4">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.3.3/echarts.min.js"></script>
   <h1 class="text-2xl font-semibold mb-4">Bitcoin Halving Schedule</h1>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+    <div class="border rounded-lg border-slate-700 bg-slate-950/30">
+      <div class="p-4 bg-emerald-800/30">
+        <p class="text-2xl font-medium">{{ .LatestBlock.BlockHeight }}</p>
+        <h3 class="text-xs mb-4">Latest Block</h3>
+      </div>
+      <div class="p-4">
+        <p class="text-2xl font-medium">{{ .CurrentSubsidy.SatoshisToBTC true }} BTC</p>
+        <h3 class="text-xs mb-4">Current Subsidy</h3>
+      </div>
+      <div class="p-4">
+        <p class="text-2xl font-medium">{{ (index .Blocks .LastHalvingBlock).BlockTimestamp.UTC }}</p>
+        <p class="text-lg font-medium">{{ PrettyDuration (index .Blocks .LastHalvingBlock).BlockTimestamp.UTC 2 }}</p>
+        <h3 class="text-xs mb-4">Last Halving Time</h3>
+      </div>
+    </div>
+    <div class="border rounded-lg border-slate-700 bg-slate-950/30">
+      <div class="p-4 bg-emerald-800/30">
+        <p class="text-2xl font-medium">{{ .NextHalvingBlock }}</p>
+        <h3 class="text-xs mb-4">Next Halving</h3>
+      </div>
+      <div class="p-4">
+        <p class="text-2xl font-medium">{{ .NextSubsidy.SatoshisToBTC true }} BTC</p>
+        <h3 class="text-xs mb-4">Next Subsidy</h3>
+      </div>
+      <div class="p-4">
+        <p class="text-2xl font-medium">{{ (index .Blocks .NextHalvingBlock).BlockTimestamp.UTC }}</p>
+        <p class="text-lg font-medium">{{ PrettyDuration (index .Blocks .NextHalvingBlock).BlockTimestamp.UTC 2 }}</p>
+        <h3 class="text-xs mb-4">Estimated Halving Time</h3>
+      </div>
+    </div>
+  </div>
+
+  <div id="countdown" class="text-2xl font-medium text-center mb-4">Checking next halving time...</div>
+
   <div class="text-pretty border rounded-lg border-slate-700 bg-slate-950/30 p-4 mb-4">
     <p class="mb-4">The Bitcoin halving is an event occuring approximately every four years, or more precisely every 210,000 blocks. It halves the block reward miners receive, a mechanism designed to control the creation and distribution of new Bitcoin until the total supply reaches its cap.</p>
     <p class="mb-4">Although the Bitcoin Supply is commonly considered to be capped at 21 million BTC, the implementation of the halving schedule means that the actual supply will fall slightly short of this. The maximum amount of BTC that can ever be mined is 20,999,999.97690000.</p>
@@ -161,4 +196,36 @@
   </table>
   </div>
 </div>
+
+
+<script>
+  // Set the date for the next halving (replace with actual date)
+  var nextHalvingDate = new Date("{{ (index .Blocks .NextHalvingBlock).BlockTimestamp.UTC }}").getTime();
+
+  // Update the countdown every 1 second
+  var x = setInterval(function() {
+    var now = new Date().getTime();
+    var distance = nextHalvingDate - now;
+
+    // Time calculations for years, months, days, hours, minutes and seconds
+    // var years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
+    // var months = Math.floor((distance % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+    // var days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="countdown"
+    document.getElementById("countdown").innerHTML = "Next halving in ~" + days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ";
+
+    // If the count down is over, write some text
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("countdown").innerHTML = "EXPIRED";
+    }
+  }, 1000);
+</script>
 {{ end }}

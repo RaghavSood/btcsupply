@@ -21,6 +21,12 @@ func (w *WebUI) HalvingSchedule(c *gin.Context) {
 			Msg("Failed to get latest block")
 	}
 
+	lastHalvingBlock := (latestBlock.BlockHeight / 210000) * 210000
+	nextHalvingBlock := ((latestBlock.BlockHeight / 210000) + 1) * 210000
+
+	currentSubsidy := types.FromMathBigInt(big.NewInt(blockreward.SubsidyAtHeight(blockreward.BitcoinMainnet, latestBlock.BlockHeight)))
+	nextSubsidy := types.FromMathBigInt(big.NewInt(blockreward.SubsidyAtHeight(blockreward.BitcoinMainnet, nextHalvingBlock)))
+
 	scheduleHeights := make([]int64, len(schedule))
 	for i, s := range schedule {
 		scheduleHeights[i] = s.Height
@@ -75,7 +81,11 @@ func (w *WebUI) HalvingSchedule(c *gin.Context) {
 			"Rewards": emissionCurveRewards,
 			"Supply":  emissionCurveSupply,
 		},
-		"LatestBlock": latestBlock,
+		"LatestBlock":      latestBlock,
+		"CurrentSubsidy":   currentSubsidy,
+		"NextSubsidy":      nextSubsidy,
+		"LastHalvingBlock": lastHalvingBlock,
+		"NextHalvingBlock": nextHalvingBlock,
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")
