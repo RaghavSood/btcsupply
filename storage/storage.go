@@ -45,6 +45,8 @@ type Storage interface {
 	GetBurnScriptsByScripts(scripts []string) ([]types.BurnScript, error)
 	GetUndecodedBurnScripts() ([]types.BurnScript, error)
 	RecordDecodedBurnScript(script string, decodeScript string) error
+	GetBurnScriptCount() (int, error)
+	GetBurnScriptPage(limit int, offset int) ([]types.BurnScript, error)
 
 	GetBurnScriptSummaries(limit int) ([]types.BurnScriptSummary, error)
 	GetBurnScriptSummariesForGroup(group string) ([]types.BurnScriptSummary, error)

@@ -157,6 +157,22 @@ func (d *SqliteBackend) GetBurnScriptSummaries(limit int) ([]types.BurnScriptSum
 	return summaries, err
 }
 
+func (d *SqliteBackend) GetBurnScriptCount() (int, error) {
+	var count int
+	err := d.db.QueryRow("SELECT COUNT(*) FROM burn_scripts").Scan(&count)
+	return count, err
+}
+
+func (d *SqliteBackend) GetBurnScriptPage(limit int, offset int) ([]types.BurnScript, error) {
+	rows, err := d.db.Query("SELECT * FROM burn_scripts ORDER BY script DESC LIMIT ? OFFSET ?", limit, offset)
+	if err != nil {
+		return nil, err
+	}
+
+	scripts, err := scanBurnScripts(rows)
+	return scripts, err
+}
+
 func (d *SqliteBackend) BurnScriptExists(script string) (bool, error) {
 	var exists bool
 	err := d.db.QueryRow("SELECT EXISTS(SELECT 1 FROM burn_scripts WHERE script = ?)", script).Scan(&exists)
