@@ -3,3 +3,4 @@ Disallow:
 
 Sitemap: https://burned.money/sitemap/index/blocks
 Sitemap: https://burned.money/sitemap/index/transactions
+Sitemap: https://burned.money/sitemap/index/scripts
