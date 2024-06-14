@@ -16,6 +16,7 @@
       var myChart = echarts.init(chartDom, 'dark');
       var option;
 
+      var latestBlock = {{ .LatestBlock.BlockHeight }};
       var blocks = {{ .Curve.Heights }};
       var supply = {{ .Curve.Supply }};
       var subsidy = {{ .Curve.Rewards }};
@@ -26,6 +27,22 @@
         subsidy[i] = subsidy[i]/100000000.0;
         if (i > 0 && blocks[i] % 210000 == 0 && blocks[i] < 7000000) {
           halvingDataLines.push({
+            symbol: 'none',
+            label: { show: false },
+            lineStyle: {
+              opacity: 0.5
+            },
+            xAxis: i,
+          });
+        }
+
+        if (blocks[i] == latestBlock) {
+          halvingDataLines.push({
+            symbol: 'circle',
+            label: { show: true, formatter: "Latest Block " + latestBlock },
+            lineStyle: {
+              opacity: 1
+            },
             xAxis: i,
           });
         }
@@ -84,9 +101,6 @@
             markLine: {
               symbol: ['none', 'none'],
               label: { show: false },
-              lineStyle: {
-                opacity: 0.5
-              },
               data: halvingDataLines
             }
           },
