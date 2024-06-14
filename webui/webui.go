@@ -45,6 +45,7 @@ func (w *WebUI) Serve() {
 	router.GET("/opreturns", w.OpReturns)
 	router.GET("/opreturn/:opreturn", w.OpReturn)
 
+	router.GET("/tips", w.Tips)
 	router.GET("/why", w.Why)
 	router.GET("/methodology", w.Methodology)
 	router.GET("/schedule", w.HalvingSchedule)
@@ -96,6 +97,19 @@ func (w *WebUI) Index(c *gin.Context) {
 		"Losses": losses,
 		"Stats":  indexStats,
 	})
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to render template")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+}
+
+func (w *WebUI) Tips(c *gin.Context) {
+	tmpl := templates.New()
+	err := tmpl.Render(c.Writer, "tips.tmpl", map[string]interface{}{
+		"Title": "Tips - Submit a BTC loss",
+	})
+
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")
 		c.AbortWithError(http.StatusInternalServerError, err)
