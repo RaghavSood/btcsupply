@@ -26,6 +26,6 @@ WORKDIR /app
 COPY --from=builder /tmp/nix-store-closure /nix/store
 COPY --from=builder /src/result /app
 COPY --from=builder /tmp/litestream/litestream /app/bin/litestream
-COPY ./deployment/etc/litestream.yml /etc/litestream.yml
-COPY ./deployment/bin/run.sh /app/bin/run.sh
+COPY --from=builder /src/deployment/bin/run.sh /app/bin/run.sh
+COPY --from=builder /src/deployment/etc/litestream.yml /etc/litestream.yml
 CMD ["/app/bin/run.sh"]
