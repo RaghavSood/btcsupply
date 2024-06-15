@@ -29,4 +29,4 @@ COPY --from=builder /src/result /app
 COPY --from=builder /tmp/litestream/litestream /app/bin/litestream
 COPY --from=builder /src/deployment/bin/run.sh /app/bin/run.sh
 COPY --from=builder /src/deployment/etc/litestream.yml /etc/litestream.yml
-CMD ["/app/bin/run.sh"]
+CMD ["/app/bin/btcsupply"]
