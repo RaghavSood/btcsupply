@@ -3,6 +3,7 @@ package webui
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/RaghavSood/btcsupply/address"
 	"github.com/RaghavSood/btcsupply/templates"
@@ -12,23 +13,24 @@ import (
 
 func (w *WebUI) Search(c *gin.Context) {
 	q := c.Query("q")
+	lowerQ := strings.ToLower(q)
 
 	// Check if query is a block number or hash
-	block, err := w.db.GetBlock(q)
+	block, err := w.db.GetBlock(lowerQ)
 	if err == nil {
 		c.Redirect(302, fmt.Sprintf("/block/%d", block.BlockHeight))
 		return
 	}
 
 	// Check if query is a transaction ID
-	tx, err := w.db.GetTransaction(q)
+	tx, err := w.db.GetTransaction(lowerQ)
 	if err == nil {
 		c.Redirect(302, fmt.Sprintf("/transaction/%s", tx.TxID))
 		return
 	}
 
 	// Check if query is a script
-	burnScript, err := w.db.GetBurnScript(q)
+	burnScript, err := w.db.GetBurnScript(lowerQ)
 	if err == nil {
 		c.Redirect(302, fmt.Sprintf("/script/%s", burnScript.Script))
 		return
