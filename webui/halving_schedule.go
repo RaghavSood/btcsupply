@@ -1,6 +1,7 @@
 package webui
 
 import (
+	"fmt"
 	"math/big"
 	"net/http"
 
@@ -74,6 +75,7 @@ func (w *WebUI) HalvingSchedule(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "halving_schedule.tmpl", map[string]interface{}{
 		"Title":    "Bitcoin Halving Schedule",
+		"Desc":     fmt.Sprintf("Track Bitcoin's Halving Schedule and Emission Curve. Next halving is at block #%d.", nextHalvingBlock),
 		"Schedule": schedule,
 		"Blocks":   blocks,
 		"Curve": map[string]interface{}{

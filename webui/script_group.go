@@ -37,6 +37,7 @@ func (w *WebUI) ScriptGroup(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "scriptgroup.tmpl", map[string]interface{}{
 		"Title":            fmt.Sprintf("Script Group %s", scriptGroup),
+		"Desc":             fmt.Sprintf("%s BTC lost across %d transactions in this group.", groupSummary.TotalLoss.SatoshisToBTC(true), groupSummary.Transactions),
 		"BurnTransactions": burnScriptSummaries,
 		"GroupSummary":     groupSummary,
 		"Notes":            notes,
@@ -59,6 +60,7 @@ func (w *WebUI) ScriptGroups(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "scriptgroups.tmpl", map[string]interface{}{
 		"Title":        "Script Groups",
+		"Desc":         "View the top 500 groups that have burned Bitcoin.",
 		"ScriptGroups": scriptGroups,
 	})
 	if err != nil {

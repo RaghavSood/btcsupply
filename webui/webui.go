@@ -111,6 +111,7 @@ func (w *WebUI) Tips(c *gin.Context) {
 	tmpl := templates.New()
 	err := tmpl.Render(c.Writer, "tips.tmpl", map[string]interface{}{
 		"Title": "Tips - Submit a BTC loss",
+		"Desc":  "Submit a tip about lost, missing, or burned BTC and help us track the total supply of Bitcoin",
 	})
 
 	if err != nil {
@@ -136,6 +137,7 @@ func (w *WebUI) Methodology(c *gin.Context) {
 	tmpl := templates.New()
 	err := tmpl.Render(c.Writer, "methodology.tmpl", map[string]interface{}{
 		"Title": "Methodology",
+		"Desc":  "How we calculate the total supply of Bitcoin",
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")

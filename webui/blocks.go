@@ -71,7 +71,8 @@ func (w *WebUI) Block(c *gin.Context) {
 
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "block.tmpl", map[string]interface{}{
-		"Title":              fmt.Sprintf("Block %d - %s", block.BlockHeight, block.BlockHash),
+		"Title":              fmt.Sprintf("Block #%d - %s", block.BlockHeight, block.BlockHash),
+		"Desc":               fmt.Sprintf("Block #%d burned %s BTC", block.BlockHeight, blockSummary.TotalLost.SatoshisToBTC(true)),
 		"Block":              block,
 		"BlockSummary":       blockSummary,
 		"Losses":             losses,
@@ -99,6 +100,7 @@ func (w *WebUI) Blocks(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "blocks.tmpl", map[string]interface{}{
 		"Title":  "Blocks",
+		"Desc":   "Find Bitcoin blocks that have resulted in a loss of BTC.",
 		"Blocks": blocks,
 	})
 	if err != nil {

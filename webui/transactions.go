@@ -22,6 +22,7 @@ func (w *WebUI) Transactions(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "transactions.tmpl", map[string]interface{}{
 		"Title":        "Burn Transactions",
+		"Desc":         "View recent transactions that burn BTC on the Bitcoin network.",
 		"Transactions": recentTransactions,
 	})
 
@@ -116,6 +117,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "transaction.tmpl", map[string]interface{}{
 		"Title":       fmt.Sprintf("Transaction %s", hash),
+		"Desc":        fmt.Sprintf("%s BTC burned in transaction %s on the Bitcoin network.", txSummary.TotalLoss.SatoshisToBTC(true), hash),
 		"Losses":      losses,
 		"Transaction": transaction,
 		"Summary":     txSummary,

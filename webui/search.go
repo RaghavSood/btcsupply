@@ -47,6 +47,7 @@ func (w *WebUI) Search(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "search.tmpl", map[string]interface{}{
 		"Title": "Search",
+		"Desc":  "Search the Bitcoin Blockchain for blocks, transactions, scripts, and addresses that burn BTC.",
 		"Query": q,
 	})
 	if err != nil {

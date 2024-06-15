@@ -1,6 +1,7 @@
 package webui
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/RaghavSood/btcsupply/templates"
@@ -19,6 +20,7 @@ func (w *WebUI) OpReturns(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "opreturns.tmpl", map[string]interface{}{
 		"Title":     "Top OP_RETURNs",
+		"Desc":      "The top 500 OP_RETURN losses in Bitcoin history.",
 		"OpReturns": opReturns,
 	})
 
@@ -49,6 +51,7 @@ func (w *WebUI) OpReturn(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "opreturn.tmpl", map[string]interface{}{
 		"Title":        "OP_RETURN " + opReturn,
+		"Desc":         fmt.Sprintf("%s BTC burned in %d transactions with this OP_RETURN.", opReturnSummary.TotalLoss.SatoshisToBTC(true), opReturnSummary.Transactions),
 		"OpReturn":     opReturnSummary,
 		"Transactions": burnTransactions,
 	})

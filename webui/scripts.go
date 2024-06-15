@@ -22,6 +22,7 @@ func (w *WebUI) Scripts(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "scripts.tmpl", map[string]interface{}{
 		"Title":   "Bitcoin Burn Scripts",
+		"Desc":    "View the top 500 burn scripts on the Bitcoin blockchain.",
 		"Scripts": topScripts,
 	})
 
@@ -64,6 +65,7 @@ func (w *WebUI) Script(c *gin.Context) {
 	tmpl := templates.New()
 	err = tmpl.Render(c.Writer, "script.tmpl", map[string]interface{}{
 		"Title":         fmt.Sprintf("Burn Script %s", script),
+		"Desc":          fmt.Sprintf("%s BTC burned in %d transactions for this script.", burnScriptSummary.TotalLoss.SatoshisToBTC(true), burnScriptSummary.Transactions),
 		"ScriptSummary": burnScriptSummary,
 		"Transactions":  burnTransactions,
 		"Notes":         notes,
