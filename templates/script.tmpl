@@ -4,12 +4,12 @@
       {{ $decoded := ParseDecodeScript .ScriptSummary.DecodeScript }}
       {{ if ne $decoded.Type "nonstandard" }}
       <h1 class="text-2xl font-semibold break-words">Address: <span class="select-all">{{ $decoded.DisplayAddress .ScriptSummary.Script }}</span></h1>
-      <h3 class="text-lg text-gray-400 font-mono break-words">Script: {{ .ScriptSummary.Script }}</a></h3>
+      <h3 class="text-lg text-gray-400 break-words">Script: {{ .ScriptSummary.Script }}</a></h3>
       {{ else }}
       <h1 class="text-2xl font-semibold break-words">Script: <span class="select-all">{{ .ScriptSummary.Script }}</span></h1>
       {{ end }}
-      <h3 class="text-lg text-gray-400 font-mono">Total Lost: {{ .ScriptSummary.TotalLoss.SatoshisToBTC true }} BTC</a></h3>
-      <h3 class="text-lg text-gray-400 font-mono">Transactions: {{ .ScriptSummary.Transactions }}</a></h3>
+      <h3 class="text-lg text-gray-400">Total Lost: {{ .ScriptSummary.TotalLoss.SatoshisToBTC true }} BTC</a></h3>
+      <h3 class="text-lg text-gray-400">Transactions: {{ .ScriptSummary.Transactions }}</a></h3>
     </div>
         <h3 class="text-lg font-medium mb-2">How did this script burn BTC?</h3>
         <div class="mb-4">
