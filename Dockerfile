@@ -21,6 +21,7 @@ FROM alpine:3.6 as alpine
 RUN apk add -U --no-cache ca-certificates sqlite
 
 WORKDIR /app
+RUN mkdir -p /app/bin /etc
 
 # Copy /nix/store
 COPY --from=builder /tmp/nix-store-closure /nix/store
@@ -28,4 +29,4 @@ COPY --from=builder /src/result /app
 COPY --from=builder /tmp/litestream/litestream /app/bin/litestream
 COPY --from=builder /src/deployment/bin/run.sh /app/bin/run.sh
 COPY --from=builder /src/deployment/etc/litestream.yml /etc/litestream.yml
-CMD ["/app/bin/run.sh; sleep 1000000"]
+CMD ["/app/bin/run.sh"]
