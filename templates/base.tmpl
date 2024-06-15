@@ -5,13 +5,17 @@
     {{ if .Desc }}
         {{ $desc = .Desc }}
     {{ end }}
+    {{ $ogimage := "https://burned.money/static/images/og.png" }}
+    {{ if .OGImage }}
+        {{ $ogimage = .OGImage }}
+    {{ end }}
     <title>{{ .Title }} | burned.money</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="{{ .Title }}" />
-    <meta property="og:image" content="https://burned.money/static/images/og.png" />
+    <meta property="og:image" content="{{ $ogimage }}" />
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ .Title }}">
-    <meta name="twitter:image" content="https://burned.money/static/images/og.png">
+    <meta name="twitter:image" content="{{ $ogimage }}">
     <meta name="twitter:site" content="@burned_money">
     <meta name="twitter:description" content="{{ $desc }}">
     <meta name="description" content="{{ $desc }}">
