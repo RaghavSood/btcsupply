@@ -18,7 +18,7 @@ RUN tar -C /tmp/litestream -xzf /tmp/litestream.tar.gz
 
 FROM alpine:3.6 as alpine
 
-RUN apk add -U --no-cache ca-certificates sqlite
+RUN apk add -U --no-cache ca-certificates sqlite bash
 
 WORKDIR /app
 RUN mkdir -p /app/bin /etc
