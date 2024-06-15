@@ -39,6 +39,12 @@ func (w *WebUI) generateOGImage(slug string) ([]byte, error) {
 		return nil, fmt.Errorf("invalid slug: %s", slug)
 	}
 
+	slugParts := strings.Split(parts[1], ".")
+
+	if slugParts[1] != "png" {
+		return nil, fmt.Errorf("invalid slug: %s", slug)
+	}
+
 	var title string
 	var subtitle string
 	var description string
@@ -46,15 +52,15 @@ func (w *WebUI) generateOGImage(slug string) ([]byte, error) {
 
 	switch parts[0] {
 	case "tx":
-		title, subtitle, description, err = w.getTxOGData(parts[1])
+		title, subtitle, description, err = w.getTxOGData(slugParts[0])
 	case "block":
-		title, subtitle, description, err = w.getBlockOGData(parts[1])
+		title, subtitle, description, err = w.getBlockOGData(slugParts[0])
 	case "script":
-		title, subtitle, description, err = w.getScriptOGData(parts[1])
+		title, subtitle, description, err = w.getScriptOGData(slugParts[0])
 	case "scriptgroup":
-		title, subtitle, description, err = w.getScriptGroupOGData(parts[1])
+		title, subtitle, description, err = w.getScriptGroupOGData(slugParts[0])
 	case "opreturn":
-		title, subtitle, description, err = w.getOpReturnOGData(parts[1])
+		title, subtitle, description, err = w.getOpReturnOGData(slugParts[0])
 	default:
 		title = "Explore BTC Burns"
 		subtitle = "Discover the history of Bitcoin burns"

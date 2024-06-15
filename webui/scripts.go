@@ -66,6 +66,7 @@ func (w *WebUI) Script(c *gin.Context) {
 	err = tmpl.Render(c.Writer, "script.tmpl", map[string]interface{}{
 		"Title":         fmt.Sprintf("Burn Script %s", script),
 		"Desc":          fmt.Sprintf("%s BTC burned in %d transactions for this script.", burnScriptSummary.TotalLoss.SatoshisToBTC(true), burnScriptSummary.Transactions),
+		"OGImage":       fmt.Sprintf("https://burned.money/ogimage/script-%s.png", script),
 		"ScriptSummary": burnScriptSummary,
 		"Transactions":  burnTransactions,
 		"Notes":         notes,

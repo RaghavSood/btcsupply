@@ -118,6 +118,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 	err = tmpl.Render(c.Writer, "transaction.tmpl", map[string]interface{}{
 		"Title":       fmt.Sprintf("Transaction %s", hash),
 		"Desc":        fmt.Sprintf("%s BTC burned in transaction %s on the Bitcoin network.", txSummary.TotalLoss.SatoshisToBTC(true), hash),
+		"OGImage":     fmt.Sprintf("https://burned.money/ogimage/tx-%s.png", hash),
 		"Losses":      losses,
 		"Transaction": transaction,
 		"Summary":     txSummary,

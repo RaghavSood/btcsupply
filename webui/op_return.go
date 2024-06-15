@@ -52,6 +52,7 @@ func (w *WebUI) OpReturn(c *gin.Context) {
 	err = tmpl.Render(c.Writer, "opreturn.tmpl", map[string]interface{}{
 		"Title":        "OP_RETURN " + opReturn,
 		"Desc":         fmt.Sprintf("%s BTC burned in %d transactions with this OP_RETURN.", opReturnSummary.TotalLoss.SatoshisToBTC(true), opReturnSummary.Transactions),
+		"OGImage":      fmt.Sprintf("https://burned.money/ogimage/opreturn-%s.png", opReturn),
 		"OpReturn":     opReturnSummary,
 		"Transactions": burnTransactions,
 	})

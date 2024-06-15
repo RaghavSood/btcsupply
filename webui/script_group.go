@@ -38,6 +38,7 @@ func (w *WebUI) ScriptGroup(c *gin.Context) {
 	err = tmpl.Render(c.Writer, "scriptgroup.tmpl", map[string]interface{}{
 		"Title":            fmt.Sprintf("Script Group %s", scriptGroup),
 		"Desc":             fmt.Sprintf("%s BTC lost across %d transactions in this group.", groupSummary.TotalLoss.SatoshisToBTC(true), groupSummary.Transactions),
+		"OGImage":          fmt.Sprintf("https://burned.money/ogimage/scriptgroup-%s.png", scriptGroup),
 		"BurnTransactions": burnScriptSummaries,
 		"GroupSummary":     groupSummary,
 		"Notes":            notes,

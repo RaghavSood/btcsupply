@@ -73,6 +73,7 @@ func (w *WebUI) Block(c *gin.Context) {
 	err = tmpl.Render(c.Writer, "block.tmpl", map[string]interface{}{
 		"Title":              fmt.Sprintf("Block #%d - %s", block.BlockHeight, block.BlockHash),
 		"Desc":               fmt.Sprintf("Block #%d burned %s BTC", block.BlockHeight, blockSummary.TotalLost.SatoshisToBTC(true)),
+		"OGImage":            fmt.Sprintf("https://burned.money/ogimage/block-%d.png", block.BlockHeight),
 		"Block":              block,
 		"BlockSummary":       blockSummary,
 		"Losses":             losses,
