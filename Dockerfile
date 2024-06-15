@@ -10,8 +10,11 @@ RUN nix \
     --option filter-syscalls false \
     build
 
-RUN mkdir /tmp/nix-store-closure
+RUN mkdir -p /tmp/nix-store-closure /tmp/litestream
 RUN cp -R $(nix-store -qR result/) /tmp/nix-store-closure
+
+ADD https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-amd64.tar.gz /tmp/litestream.tar.gz
+RUN tar -C /tmp/litestream -xzf /tmp/litestream.tar.gz
 
 FROM alpine:3.6 as alpine
 
@@ -22,4 +25,7 @@ WORKDIR /app
 # Copy /nix/store
 COPY --from=builder /tmp/nix-store-closure /nix/store
 COPY --from=builder /src/result /app
-CMD ["/app/bin/btcsupply"]
+COPY --from=builder /tmp/litestream/litestream /app/bin/litestream
+COPY ./deployment/etc/litestream.yml /etc/litestream.yml
+COPY ./deployment/bin/run.sh /app/bin/run.sh
+CMD ["/app/bin/run.sh"]

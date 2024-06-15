@@ -1,0 +1,9 @@
+dbs:
+  - path: /data/prod.sqlite
+    replicas:
+      - type: s3
+        endpoint: ${LITESTREAM_ENDPOINT}
+        bucket: ${LITESTREAM_BUCKET}
+        path: ${LITESTREAM_PATH}
+        access_key_id: ${LITESTREAM_ACCESS_KEY_ID}
+        secret_access_key: ${LITESTREAM_SECRET_ACCESS_KEY}
