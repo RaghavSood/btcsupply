@@ -35,11 +35,15 @@ func (w *WebUI) OGImage(c *gin.Context) {
 func (w *WebUI) generateOGImage(slug string) ([]byte, error) {
 	parts := strings.Split(slug, "-")
 
-	if len(parts) < 2 {
+	if len(parts) != 2 {
 		return nil, fmt.Errorf("invalid slug: %s", slug)
 	}
 
 	slugParts := strings.Split(parts[1], ".")
+
+	if len(slugParts) != 2 {
+		return nil, fmt.Errorf("invalid slug: %s", slug)
+	}
 
 	if slugParts[1] != "png" {
 		return nil, fmt.Errorf("invalid slug: %s", slug)
