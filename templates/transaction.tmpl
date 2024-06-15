@@ -30,7 +30,10 @@
                 {{ else }}
                   <div class="flex flex-row gap-x-2 text-wrap font-medium">
                     <span class="basis-9/12 break-words min-w-0">{{ .Prevout.ScriptPubKey | ScriptPubKeyDisplay }}</span>
-                    <span class="text-right ml-auto">{{ (.Prevout.Value | ValueToBigInt).SatoshisToBTC true }} BTC</span>
+                    <div class="text-right ml-auto has-tooltip">
+                      {{ template "btcfiat" (.Prevout.Value | ValueToBigInt) }}
+                      {{ (.Prevout.Value | ValueToBigInt).SatoshisToBTC true }} BTC
+                    </div>
                   </div>
                   <div class="flex gap-x-2 text-wrap text-sm text-gray-600">
                     <span class="basis-9/12 break-words min-w-0">{{ .Prevout.ScriptPubKey.Asm }}</span>
@@ -74,7 +77,10 @@
                     </a>
                   {{ end }}
                   </span>
-                  <span class="text-right ml-auto">{{ $burnText }}{{ (.Value | ValueToBigInt).SatoshisToBTC true }} BTC{{ $burnText }}</span>
+                  <div class="text-right ml-auto has-tooltip">
+                    {{ template "btcfiat" (.Value | ValueToBigInt) }}
+                    {{ $burnText }}{{ (.Value | ValueToBigInt).SatoshisToBTC true }} BTC{{ $burnText }}
+                  </div>
                 </div>
                 <div class="flex gap-x-2 text-wrap text-sm text-gray-600">
                   {{ if eq .ScriptPubKey.Type "nulldata" }}

@@ -4,15 +4,24 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <div class="border rounded-lg border-slate-700 bg-slate-950/30">
         <div class="p-4 bg-emerald-800/30">
-          <p class="text-2xl font-medium">{{ .Stats.PlannedSupply.SatoshisToBTC true }} BTC</p>
+          <div class="text-2xl font-medium has-tooltip">
+            {{ template "btcfiat" .Stats.PlannedSupply }}
+            {{ .Stats.PlannedSupply.SatoshisToBTC true }} BTC
+          </div>
           <h3 class="text-xs mb-4">Planned Supply</h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-medium">{{ .Stats.CirculatingSupply.SatoshisToBTC true }} BTC</p>
+          <div class="text-2xl font-medium has-tooltip">
+            {{ template "btcfiat" .Stats.CirculatingSupply }}
+            {{ .Stats.CirculatingSupply.SatoshisToBTC true }} BTC
+          </div>
           <h3 class="text-xs mb-4">Circulating Supply</h3>
         </div>
         <div class="p-4">
-          <p class="text-2xl font-medium">{{ .Stats.BurnedSupply.SatoshisToBTC true }} BTC</p>
+          <div class="text-2xl font-medium has-tooltip">
+            {{ template "btcfiat" .Stats.BurnedSupply }}
+            {{ .Stats.BurnedSupply.SatoshisToBTC true }} BTC
+          </div>
           <h3 class="text-xs mb-4">Burned Supply</h3>
         </div>
       </div>
@@ -70,7 +79,10 @@
                   {{ end }}
                 </td>
                 <td class="px-4 py-2 border-b border-slate-700"><a class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200" href="/block/{{ .BlockHeight }}">{{ .BlockHeight }}</a></td>
-                <td class="px-4 py-2 border-b border-slate-700">{{ .TotalLoss.SatoshisToBTC true }} BTC</td>
+                <td class="px-4 py-2 border-b border-slate-700 has-tooltip">
+                  {{ template "btcfiat" .TotalLoss }}
+                  {{ .TotalLoss.SatoshisToBTC true }} BTC
+                </td>
             </tr>
             {{ else }}
             <tr>

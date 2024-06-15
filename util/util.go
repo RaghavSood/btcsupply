@@ -7,9 +7,11 @@ import (
 	"html/template"
 	"math/big"
 	"runtime/debug"
+	"strings"
 	"time"
 
 	"github.com/RaghavSood/btcsupply/notes"
+	"github.com/RaghavSood/btcsupply/prices"
 	"github.com/RaghavSood/btcsupply/types"
 )
 
@@ -34,6 +36,15 @@ func RevaluePriceWithAdjustedSupply(expectedSupply, circulatingSupply *types.Big
 	expectedSupplyFloat, _ := expectedSupply.BigFloat().Float64()
 	circulatingSupplyFloat, _ := circulatingSupply.BigFloat().Float64()
 	return currentPrice * (expectedSupplyFloat / circulatingSupplyFloat)
+}
+
+func BTCValueToUSD(satsValue *types.BigInt) float64 {
+	price, err := prices.GetBTCUSDPrice()
+	if err != nil {
+		price = 0
+	}
+	satsValueFloat, _ := satsValue.BigFloat().Float64()
+	return (satsValueFloat / 100000000) * price
 }
 
 func IsScriptInBurnScripts(script string, burnScripts []types.BurnScript) bool {
@@ -139,6 +150,31 @@ func PrettyDuration(t time.Time, significantPlaces int) string {
 	}
 
 	return fmt.Sprintf("%s%s%s", prefix, result, suffix)
+}
+
+func FormatNumber(number string) string {
+	// Split the number into integer and decimal parts
+	parts := strings.Split(number, ".")
+	integerPart := parts[0]
+	decimalPart := ""
+	if len(parts) > 1 {
+		decimalPart = "." + parts[1]
+	}
+
+	// Handle negative numbers
+	startOffset := 3
+	if integerPart[0] == '-' {
+		startOffset++
+	}
+
+	// Format the integer part with commas
+	for outputIndex := len(integerPart); outputIndex > startOffset; {
+		outputIndex -= 3
+		integerPart = integerPart[:outputIndex] + "," + integerPart[outputIndex:]
+	}
+
+	// Concatenate the formatted integer part with the decimal part
+	return integerPart + decimalPart
 }
 
 func GitCommit() string {

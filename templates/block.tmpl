@@ -51,7 +51,10 @@
                     </span>
                   {{ end }}
                 </td>
-                <td class="px-4 py-2 border-b border-slate-700">{{ .TotalLoss.SatoshisToBTC true }} BTC</td>
+                <td class="px-4 py-2 border-b border-slate-700 has-tooltip">
+                  {{ template "btcfiat" .TotalLoss }}
+                  {{ .TotalLoss.SatoshisToBTC true }} BTC
+                </td>
             </tr>
             {{ else }}
             <tr>

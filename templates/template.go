@@ -31,9 +31,11 @@ func New() *Template {
 		"GitCommit":             util.GitCommit,
 		"ParseDecodeScript":     types.ParseDecodeScriptJSON,
 		"HexToASCII":            util.HexToASCII,
+		"BTCValueToUSD":         util.BTCValueToUSD,
+		"FormatNumber":          util.FormatNumber,
 	}
 
-	templates := template.Must(template.New("").Funcs(funcMap).ParseFS(Templates, "footer.tmpl", "header.tmpl", "base.tmpl", "note.tmpl"))
+	templates := template.Must(template.New("").Funcs(funcMap).ParseFS(Templates, "footer.tmpl", "header.tmpl", "base.tmpl", "note.tmpl", "btc_fiat.tmpl"))
 	return &Template{
 		templates: templates,
 	}

@@ -33,7 +33,10 @@
                 <td class="px-4 py-2 border-b border-slate-700"><a class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200" href="/scriptgroup/{{ .Group }}">{{ .Group }}</a></td>
                 <td class="px-4 py-2 border-b border-slate-700">{{ .Transactions }}</td>
                 <td class="px-4 py-2 border-b border-slate-700">{{ .ConfidenceLevel }}</td>
-                <td class="px-4 py-2 border-b border-slate-700">{{ .TotalLoss.SatoshisToBTC true }} BTC</td>
+                <td class="px-4 py-2 border-b border-slate-700 has-tooltip">
+                  {{ template "btcfiat" .TotalLoss }}
+                  {{ .TotalLoss.SatoshisToBTC true }} BTC
+                </td>
             </tr>
             {{ else }}
             <tr>
