@@ -3,15 +3,20 @@
   <h1 class="text-2xl font-semibold mb-4">Atom Feeds</h1>
   <div class="text-pretty border rounded-lg border-slate-700 bg-slate-950/30 p-4">
     <p class="mb-4">burned.money provides block and transaction ATOM feeds to keep you up to date on the latest losses</p>
-    <p class="mb-4">Both feed URLs accept a <pre>min_loss</pre> query parameter defined in Satoshis to filter for instances that burn that amount or greater. For transactions, this is the sum of all outputs in that transaction. For blocks, it is the sum of all outputs that burn BTC in that block.</p>
+    <p class="mb-4">Both feed URLs accept a "min_loss" query parameter defined in Satoshis to filter for instances that burn that amount or greater. For transactions, this is the sum of all outputs in that transaction. For blocks, it is the sum of all outputs that burn BTC in that block.</p>
     <p class="mb-4">The default filter is 100000 Satoshis, or 0.001 BTC, for both feeds.</p>
     <p class="mb-4">Both feeds are limited to the 100 most recent entries, after filtering by the minimum loss criteria.</p>
     <p class="mb-4">The feeds are updated as soon as new blocks are processed.</p>
     <h1 class="text-xl font-medium mb-4 mt-4">Subscribe to the feeds</h1>
-    <p>The feed URLs are:</p>
+    <p class="mb-4">The feed URLs are:</p>
     <ul class="list-disc ml-4 mb-4">
       <li><a href="/feeds/blocks" class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">https://burned.money/feeds/blocks</a> - New blocks that contain burned BTC</li>
       <li><a href="/feeds/transactions" class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">https://burned.money/feeds/transactions</a> - New transactions that burn BTC</li>
+     </ul>
+    <p class="mb-4">With a custom minimum loss:</p>
+    <ul class="list-disc ml-4 mb-4">
+      <li><a href="/feeds/blocks?min_loss=100000000" class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">https://burned.money/feeds/blocks?min_loss=100000000</a> - New blocks that contain burned BTC</li>
+      <li><a href="/feeds/transactions?min_loss=100000000" class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">https://burned.money/feeds/transactions?min_loss=100000000</a> - New transactions that burn BTC</li>
      </ul>
   </div>
 </div>
