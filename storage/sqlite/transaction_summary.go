@@ -38,7 +38,7 @@ func (d *SqliteBackend) GetTransactionSummaryForTxid(txid string) (types.Transac
 	query := `SELECT ts.tx_id, ts.coinbase, ts.total_loss, ts.block_height, ts.block_hash, b.block_timestamp FROM transaction_summary ts JOIN blocks b ON ts.block_hash = b.block_hash WHERE ts.tx_id = ?`
 
 	var summary types.TransactionSummary
-	err := d.db.QueryRow(query, txid).Scan(&summary.Txid, &summary.Coinbase, &summary.TotalLoss, &summary.BlockHeight, &summary.BlockHash)
+	err := d.db.QueryRow(query, txid).Scan(&summary.Txid, &summary.Coinbase, &summary.TotalLoss, &summary.BlockHeight, &summary.BlockHash, &summary.BlockTimestamp)
 	if err != nil {
 		return types.TransactionSummary{}, err
 	}
