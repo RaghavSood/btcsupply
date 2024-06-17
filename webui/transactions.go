@@ -12,7 +12,7 @@ import (
 )
 
 func (w *WebUI) Transactions(c *gin.Context) {
-	recentTransactions, err := w.db.GetTransactionSummary(500)
+	recentTransactions, err := w.db.GetTransactionSummary(500, 1)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get recent transactions")
 		c.AbortWithError(http.StatusInternalServerError, err)

@@ -78,11 +78,18 @@ func (w *WebUI) Serve() {
 		sitemap.GET("/scripts/:index", w.SitemapScripts)
 	}
 
+	feeds := router.Group("/feeds")
+	{
+		feeds.GET("/", w.FeedIndex)
+		feeds.GET("/blocks", w.FeedBlocks)
+		feeds.GET("/transactions", w.FeedTransactions)
+	}
+
 	router.Run(":8080")
 }
 
 func (w *WebUI) Index(c *gin.Context) {
-	losses, err := w.db.GetTransactionSummary(50)
+	losses, err := w.db.GetTransactionSummary(50, 1)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get recent losses")
 		c.AbortWithError(http.StatusInternalServerError, err)
