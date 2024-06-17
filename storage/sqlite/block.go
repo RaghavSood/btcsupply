@@ -33,7 +33,7 @@ func (d *SqliteBackend) GetBlocksByHeights(heights []int64) ([]types.Block, erro
 }
 
 func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.BlockLossSummary, error) {
-	query := `SELECT block_height, block_hash, COUNT(*), SUM(total_loss) FROM transaction_summary GROUP BY block_height ORDER BY block_height DESC LIMIT ?`
+	query := `SELECT ts.block_height, ts.block_hash, COUNT(*), SUM(ts.total_loss), b.block_timestamp FROM transaction_summary ts JOIN blocks b ON ts.block_hash = b.block_hash GROUP BY ts.block_height ORDER BY ts.block_height DESC LIMIT ?`
 
 	rows, err := d.db.Query(query, limit)
 	if err != nil {
@@ -45,7 +45,29 @@ func (d *SqliteBackend) GetLossyBlocks(limit int) ([]types.BlockLossSummary, err
 	for rows.Next() {
 		var summary types.BlockLossSummary
 		if err := rows.Scan(
-			&summary.BlockHeight, &summary.BlockHash, &summary.LossOutputs, &summary.TotalLost); err != nil {
+			&summary.BlockHeight, &summary.BlockHash, &summary.LossOutputs, &summary.TotalLost, &summary.BlockTimestamp); err != nil {
+			return nil, err
+		}
+		summaries = append(summaries, summary)
+	}
+
+	return summaries, nil
+}
+
+func (d *SqliteBackend) GetLossyBlocksWithMinimumLoss(limit int, minimumLoss int64) ([]types.BlockLossSummary, error) {
+	query := `SELECT ts.block_height, ts.block_hash, COUNT(*), SUM(ts.total_loss) as block_loss, b.block_timestamp FROM transaction_summary ts JOIN blocks b ON ts.block_hash = b.block_hash GROUP BY ts.block_height HAVING block_loss >= ? ORDER BY ts.block_height DESC LIMIT ?`
+
+	rows, err := d.db.Query(query, minimumLoss, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var summaries []types.BlockLossSummary
+	for rows.Next() {
+		var summary types.BlockLossSummary
+		if err := rows.Scan(
+			&summary.BlockHeight, &summary.BlockHash, &summary.LossOutputs, &summary.TotalLost, &summary.BlockTimestamp); err != nil {
 			return nil, err
 		}
 		summaries = append(summaries, summary)
@@ -58,16 +80,19 @@ func (d *SqliteBackend) GetBlockLossSummary(identifier string) (types.BlockLossS
 	var summary types.BlockLossSummary
 	err := d.db.QueryRow(`
 				SELECT
-				  block_height,
-				  block_hash,
-				  COUNT(DISTINCT(tx_id)) AS loss_tx_count,
-				  SUM(amount) AS sum_of_losses
+				  l.block_height,
+				  l.block_hash,
+				  COUNT(DISTINCT(l.tx_id)) AS loss_tx_count,
+				  SUM(l.amount) AS sum_of_losses,
+					b.block_timestamp
 				FROM
-				  losses
+				  losses l
+				JOIN
+				  blocks b ON l.block_hash = b.block_hash
 				WHERE
-				  block_hash = ? OR block_height = ?
+				 l.block_hash = ? OR l.block_height = ?
 				GROUP BY
-				  block_height, block_hash`, identifier, identifier).Scan(&summary.BlockHeight, &summary.BlockHash, &summary.LossOutputs, &summary.TotalLost)
+				  l.block_height`, identifier, identifier).Scan(&summary.BlockHeight, &summary.BlockHash, &summary.LossOutputs, &summary.TotalLost, &summary.BlockTimestamp)
 
 	return summary, err
 }

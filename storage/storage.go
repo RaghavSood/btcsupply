@@ -17,11 +17,12 @@ type Storage interface {
 	GetTransactionLossSummaryForScript(script string) ([]types.TransactionLossSummary, error)
 	GetTransactionLossSummaryForTxid(txid string) (types.TransactionLossSummary, error)
 
-	GetTransactionSummary(limit int) ([]types.TransactionSummary, error)
+	GetTransactionSummary(limit int, minLoss int64) ([]types.TransactionSummary, error)
 	GetTransactionSummaryForTxid(txid string) (types.TransactionSummary, error)
 	GetTransactionSummaryForBlock(identifier string) ([]types.TransactionSummary, error)
 
 	GetLossyBlocks(limit int) ([]types.BlockLossSummary, error)
+	GetLossyBlocksWithMinimumLoss(limit int, minimumLoss int64) ([]types.BlockLossSummary, error)
 	GetBlockLossSummary(identifier string) (types.BlockLossSummary, error)
 	GetBlock(identifier string) (types.Block, error)
 	GetBlocksByHeights(heights []int64) ([]types.Block, error)
