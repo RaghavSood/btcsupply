@@ -13,12 +13,14 @@ import (
 )
 
 type WebUI struct {
-	db storage.Storage
+	db       storage.Storage
+	readonly bool
 }
 
-func NewWebUI(db storage.Storage) *WebUI {
+func NewWebUI(db storage.Storage, noindex bool) *WebUI {
 	return &WebUI{
-		db: db,
+		db:       db,
+		readonly: noindex,
 	}
 }
 
@@ -132,6 +134,7 @@ func (w *WebUI) Methodology(c *gin.Context) {
 
 func (w *WebUI) renderTemplate(c *gin.Context, template string, params map[string]interface{}) {
 	tmpl := templates.New()
+	params["Readonly"] = w.readonly
 	err := tmpl.Render(c.Writer, template, params)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")

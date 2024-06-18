@@ -1,4 +1,10 @@
 {{ define "header" }}
+<!-- Show maintenance banner if site is in read only mode -->
+{{ if .Readonly }}
+<div class="bg-red-500 text-white text-center p-2">
+    <p class="text-sm">Maintenance ongoing. Block data may not be up to date.</p>
+</div>
+{{ end }}
 <header class="bg-gray-800 text-white">
     <nav class="flex items-center justify-between">
         <div class="pt-4 pb-4 pl-4 flex items-center space-x-3">

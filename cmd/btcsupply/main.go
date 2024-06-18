@@ -35,6 +35,6 @@ func main() {
 		log.Info().Msg("Running in read-only mode, not indexing the blockchain")
 	}
 
-	webuiServer := webui.NewWebUI(db)
+	webuiServer := webui.NewWebUI(db, noindex)
 	webuiServer.Serve()
 }
