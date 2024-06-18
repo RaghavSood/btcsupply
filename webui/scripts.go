@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/RaghavSood/btcsupply/notes"
-	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
@@ -19,18 +18,11 @@ func (w *WebUI) Scripts(c *gin.Context) {
 		return
 	}
 
-	tmpl := templates.New()
-	err = tmpl.Render(c.Writer, "scripts.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "scripts.tmpl", map[string]interface{}{
 		"Title":   "Bitcoin Burn Scripts",
 		"Desc":    "View the top 500 burn scripts on the Bitcoin blockchain.",
 		"Scripts": topScripts,
 	})
-
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }
 
 func (w *WebUI) Script(c *gin.Context) {
@@ -62,8 +54,7 @@ func (w *WebUI) Script(c *gin.Context) {
 		return
 	}
 
-	tmpl := templates.New()
-	err = tmpl.Render(c.Writer, "script.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "script.tmpl", map[string]interface{}{
 		"Title":         fmt.Sprintf("Burn Script %s", script),
 		"Desc":          fmt.Sprintf("%s BTC burned in %d transactions for this script.", burnScriptSummary.TotalLoss.SatoshisToBTC(true), burnScriptSummary.Transactions),
 		"OGImage":       fmt.Sprintf("https://burned.money/ogimage/script-%s.png", script),
@@ -71,10 +62,4 @@ func (w *WebUI) Script(c *gin.Context) {
 		"Transactions":  burnTransactions,
 		"Notes":         notes,
 	})
-
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }

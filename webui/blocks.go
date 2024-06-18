@@ -9,7 +9,6 @@ import (
 
 	"github.com/RaghavSood/blockreward"
 	btypes "github.com/RaghavSood/btcsupply/bitcoinrpc/types"
-	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/RaghavSood/btcsupply/types"
 	"github.com/RaghavSood/btcsupply/util"
 	"github.com/gin-gonic/gin"
@@ -69,8 +68,7 @@ func (w *WebUI) Block(c *gin.Context) {
 	theoreticalSubsidy := blockreward.SubsidyAtHeight(blockreward.BitcoinMainnet, block.BlockHeight)
 	theoreticalSupply := blockreward.SupplyAtHeight(blockreward.BitcoinMainnet, block.BlockHeight)
 
-	tmpl := templates.New()
-	err = tmpl.Render(c.Writer, "block.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "block.tmpl", map[string]interface{}{
 		"Title":              fmt.Sprintf("Block #%d - %s", block.BlockHeight, block.BlockHash),
 		"Desc":               fmt.Sprintf("Block #%d burned %s BTC", block.BlockHeight, blockSummary.TotalLost.SatoshisToBTC(true)),
 		"OGImage":            fmt.Sprintf("https://burned.money/ogimage/block-%d.png", block.BlockHeight),
@@ -83,11 +81,6 @@ func (w *WebUI) Block(c *gin.Context) {
 		"CoinStats":          txOutSetInfo,
 		"BlockStats":         blockStats,
 	})
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }
 
 func (w *WebUI) Blocks(c *gin.Context) {
@@ -98,17 +91,11 @@ func (w *WebUI) Blocks(c *gin.Context) {
 		return
 	}
 
-	tmpl := templates.New()
-	err = tmpl.Render(c.Writer, "blocks.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "blocks.tmpl", map[string]interface{}{
 		"Title":  "Blocks",
 		"Desc":   "Find Bitcoin blocks that have resulted in a loss of BTC.",
 		"Blocks": blocks,
 	})
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }
 
 func (w *WebUI) getBlockOrFutureBlock(identifier string) (types.Block, error) {

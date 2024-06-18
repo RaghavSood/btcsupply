@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/RaghavSood/btcsupply/notes"
-	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/RaghavSood/btcsupply/util"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -19,18 +18,11 @@ func (w *WebUI) Transactions(c *gin.Context) {
 		return
 	}
 
-	tmpl := templates.New()
-	err = tmpl.Render(c.Writer, "transactions.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "transactions.tmpl", map[string]interface{}{
 		"Title":        "Burn Transactions",
 		"Desc":         "View recent transactions that burn BTC on the Bitcoin network.",
 		"Transactions": recentTransactions,
 	})
-
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }
 
 func (w *WebUI) Transaction(c *gin.Context) {
@@ -114,8 +106,7 @@ func (w *WebUI) Transaction(c *gin.Context) {
 
 	notes := notes.ReadNotes(notePointers)
 
-	tmpl := templates.New()
-	err = tmpl.Render(c.Writer, "transaction.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "transaction.tmpl", map[string]interface{}{
 		"Title":       fmt.Sprintf("Transaction %s", hash),
 		"Desc":        fmt.Sprintf("%s BTC burned in transaction %s on the Bitcoin network.", txSummary.TotalLoss.SatoshisToBTC(true), hash),
 		"OGImage":     fmt.Sprintf("https://burned.money/ogimage/tx-%s.png", hash),
@@ -126,9 +117,4 @@ func (w *WebUI) Transaction(c *gin.Context) {
 		"BurnScripts": burnScripts,
 		"Block":       block,
 	})
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }

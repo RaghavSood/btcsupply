@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/RaghavSood/blockreward"
-	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/RaghavSood/btcsupply/types"
 	"github.com/RaghavSood/btcsupply/util"
 	"github.com/gin-gonic/gin"
@@ -72,8 +71,7 @@ func (w *WebUI) HalvingSchedule(c *gin.Context) {
 		emissionCurveSupply = append(emissionCurveSupply, types.FromMathBigInt(big.NewInt(blockreward.SupplyAtHeight(blockreward.BitcoinMainnet, i))))
 	}
 
-	tmpl := templates.New()
-	err = tmpl.Render(c.Writer, "halving_schedule.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "halving_schedule.tmpl", map[string]interface{}{
 		"Title":    "Bitcoin Halving Schedule",
 		"Desc":     fmt.Sprintf("Track Bitcoin's Halving Schedule and Emission Curve. Next halving is at block #%d.", nextHalvingBlock),
 		"Schedule": schedule,
@@ -89,9 +87,4 @@ func (w *WebUI) HalvingSchedule(c *gin.Context) {
 		"LastHalvingBlock": lastHalvingBlock,
 		"NextHalvingBlock": nextHalvingBlock,
 	})
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }

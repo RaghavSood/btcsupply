@@ -6,23 +6,16 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/feeds"
 	"github.com/rs/zerolog/log"
 )
 
 func (w *WebUI) FeedIndex(c *gin.Context) {
-	tmpl := templates.New()
-	err := tmpl.Render(c.Writer, "feeds.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "feeds.tmpl", map[string]interface{}{
 		"Title": "Feeds",
 		"Desc":  "Received updates on BTC burn transactions and blocks via RSS/ATOM feeds.",
 	})
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }
 
 func (w *WebUI) FeedBlocks(c *gin.Context) {

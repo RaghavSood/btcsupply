@@ -2,13 +2,10 @@ package webui
 
 import (
 	"fmt"
-	"net/http"
 	"strings"
 
 	"github.com/RaghavSood/btcsupply/address"
-	"github.com/RaghavSood/btcsupply/templates"
 	"github.com/gin-gonic/gin"
-	"github.com/rs/zerolog/log"
 )
 
 func (w *WebUI) Search(c *gin.Context) {
@@ -46,15 +43,9 @@ func (w *WebUI) Search(c *gin.Context) {
 		}
 	}
 
-	tmpl := templates.New()
-	err = tmpl.Render(c.Writer, "search.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "search.tmpl", map[string]interface{}{
 		"Title": "Search",
 		"Desc":  "Search the Bitcoin Blockchain for blocks, transactions, scripts, and addresses that burn BTC.",
 		"Query": q,
 	})
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }

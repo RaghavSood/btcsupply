@@ -103,51 +103,36 @@ func (w *WebUI) Index(c *gin.Context) {
 		return
 	}
 
-	tmpl := templates.New()
-	err = tmpl.Render(c.Writer, "index.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "index.tmpl", map[string]interface{}{
 		"Title":  "Track Bitcoin Supply",
 		"Losses": losses,
 		"Stats":  indexStats,
 	})
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }
 
 func (w *WebUI) Tips(c *gin.Context) {
-	tmpl := templates.New()
-	err := tmpl.Render(c.Writer, "tips.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "tips.tmpl", map[string]interface{}{
 		"Title": "Tips - Submit a BTC loss",
 		"Desc":  "Submit a tip about lost, missing, or burned BTC and help us track the total supply of Bitcoin",
 	})
-
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }
 
 func (w *WebUI) Why(c *gin.Context) {
-	tmpl := templates.New()
-	err := tmpl.Render(c.Writer, "why.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "why.tmpl", map[string]interface{}{
 		"Title": "Why?",
 	})
-	if err != nil {
-		log.Error().Err(err).Msg("Failed to render template")
-		c.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
 }
 
 func (w *WebUI) Methodology(c *gin.Context) {
-	tmpl := templates.New()
-	err := tmpl.Render(c.Writer, "methodology.tmpl", map[string]interface{}{
+	w.renderTemplate(c, "methodology.tmpl", map[string]interface{}{
 		"Title": "Methodology",
 		"Desc":  "How we calculate the total supply of Bitcoin",
 	})
+}
+
+func (w *WebUI) renderTemplate(c *gin.Context, template string, params map[string]interface{}) {
+	tmpl := templates.New()
+	err := tmpl.Render(c.Writer, template, params)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to render template")
 		c.AbortWithError(http.StatusInternalServerError, err)
