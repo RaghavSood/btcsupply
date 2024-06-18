@@ -20,7 +20,7 @@ type SqliteBackend struct {
 	db *sql.DB
 }
 
-func NewSqliteBackend() (*SqliteBackend, error) {
+func NewSqliteBackend(readonly bool) (*SqliteBackend, error) {
 	path := os.Getenv("DB_PATH")
 	if path == "" {
 		return nil, fmt.Errorf("DB_PATH environment variable must be set")
@@ -50,13 +50,15 @@ func NewSqliteBackend() (*SqliteBackend, error) {
 		Msg("Database opened")
 
 	backend := &SqliteBackend{db: db}
-	if err := backend.Migrate(); err != nil {
-		return nil, fmt.Errorf("failed to migrate database: %w", err)
-	}
+	if !readonly {
+		if err := backend.Migrate(); err != nil {
+			return nil, fmt.Errorf("failed to migrate database: %w", err)
+		}
 
-	err = backend.seedBurnScriptsFromCSV()
-	if err != nil {
-		return nil, fmt.Errorf("failed to seed burn scripts: %w", err)
+		err = backend.seedBurnScriptsFromCSV()
+		if err != nil {
+			return nil, fmt.Errorf("failed to seed burn scripts: %w", err)
+		}
 	}
 
 	return backend, nil

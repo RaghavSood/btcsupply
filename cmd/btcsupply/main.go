@@ -22,7 +22,7 @@ func init() {
 }
 
 func main() {
-	db, err := sqlite.NewSqliteBackend()
+	db, err := sqlite.NewSqliteBackend(noindex)
 	defer db.Close()
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to open database")
