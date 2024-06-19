@@ -16,7 +16,7 @@ RUN cp -R $(nix-store -qR result/) /tmp/nix-store-closure
 ADD https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-amd64.tar.gz /tmp/litestream.tar.gz
 RUN tar -C /tmp/litestream -xzf /tmp/litestream.tar.gz
 
-FROM alpine:3.6 as alpine
+FROM alpine:3 as alpine
 
 RUN apk add -U --no-cache ca-certificates sqlite bash
 
