@@ -9,3 +9,4 @@ tmp/
 result
 *.key
 *.key-cert.pub
+.DS_Store
