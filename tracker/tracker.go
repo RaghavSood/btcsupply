@@ -464,6 +464,7 @@ func (t *Tracker) fastScanTransactions(blockhash string, blockHeight int64, tran
 
 	var wg sync.WaitGroup
 	wg.Add(numCPUs)
+	log.Info().Int("num_cpus", numCPUs).Msg("Starting fast transaction scan")
 
 	for i := 0; i < numCPUs; i++ {
 		go func() {
@@ -474,31 +475,45 @@ func (t *Tracker) fastScanTransactions(blockhash string, blockHeight int64, tran
 		}()
 	}
 
+	log.Info().
+		Msg("Started runners")
+
 	go func() {
 		wg.Wait()
+		log.Info().Msg("All runners done")
 		close(lossCh)
 		close(txCh)
 		close(spentTxidVoutCh)
 	}()
 
+	log.Info().
+		Msg("Sending transactions to channel")
 	for _, tx := range transactions {
 		transactionCh <- tx
 	}
 	close(transactionCh)
+	log.Info().
+		Msg("Transactions sent to channel")
 
 	var losses []types.Loss
 	var txs []types.Transaction
 	var spentTxids []string
 	var spentVouts []int
 
+	log.Info().
+		Msg("Receiving losses")
 	for loss := range lossCh {
 		losses = append(losses, loss)
 	}
 
+	log.Info().
+		Msg("Receiving transactions")
 	for tx := range txCh {
 		txs = append(txs, tx)
 	}
 
+	log.Info().
+		Msg("Receiving spent txids")
 	for spent := range spentTxidVoutCh {
 		spentTxids = append(spentTxids, spent[0].(string))
 		spentVouts = append(spentVouts, spent[1].(int))
