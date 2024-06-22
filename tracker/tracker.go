@@ -500,23 +500,28 @@ func (t *Tracker) fastScanTransactions(blockhash string, blockHeight int64, tran
 	var spentTxids []string
 	var spentVouts []int
 
-	log.Info().
-		Msg("Receiving losses")
-	for loss := range lossCh {
-		losses = append(losses, loss)
-	}
-
-	log.Info().
-		Msg("Receiving transactions")
-	for tx := range txCh {
-		txs = append(txs, tx)
-	}
-
-	log.Info().
-		Msg("Receiving spent txids")
-	for spent := range spentTxidVoutCh {
-		spentTxids = append(spentTxids, spent[0].(string))
-		spentVouts = append(spentVouts, spent[1].(int))
+	for lossCh != nil || txCh != nil || spentTxidVoutCh != nil {
+		select {
+		case loss, ok := <-lossCh:
+			if !ok {
+				lossCh = nil
+				continue
+			}
+			losses = append(losses, loss)
+		case tx, ok := <-txCh:
+			if !ok {
+				txCh = nil
+				continue
+			}
+			txs = append(txs, tx)
+		case spent, ok := <-spentTxidVoutCh:
+			if !ok {
+				spentTxidVoutCh = nil
+				continue
+			}
+			spentTxids = append(spentTxids, spent[0].(string))
+			spentVouts = append(spentVouts, spent[1].(int))
+		}
 	}
 
 	return losses, txs, spentTxids, spentVouts
