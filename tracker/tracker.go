@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"math/big"
 	"os"
+	"runtime"
+	"sync"
 	"time"
 
 	"github.com/RaghavSood/btcsupply/bitcoinrpc"
@@ -322,7 +324,25 @@ func (t *Tracker) processBlock(height int64) error {
 	var spentTxids []string
 	var spentVouts []int
 	if block.Height > 0 {
+		start := time.Now()
 		txLosses, txTransactions, spentTxids, spentVouts = t.scanTransactions(block.Hash, block.Height, block.Tx)
+		elapsed := time.Since(start)
+		fastStart := time.Now()
+		fastTxLosses, fastTxTransactions, fastSpentTxids, fastSpentVouts := t.fastScanTransactions(block.Hash, block.Height, block.Tx)
+		fastElapsed := time.Since(fastStart)
+
+		log.Info().
+			Stringer("slow_elapsed", elapsed).
+			Stringer("fast_elapsed", fastElapsed).
+			Int("slow_losses", len(txLosses)).
+			Int("fast_losses", len(fastTxLosses)).
+			Int("slow_transactions", len(txTransactions)).
+			Int("fast_transactions", len(fastTxTransactions)).
+			Int("slow_spent_txids", len(spentTxids)).
+			Int("fast_spent_txids", len(fastSpentTxids)).
+			Int("slow_spent_vouts", len(spentVouts)).
+			Int("fast_spent_vouts", len(fastSpentVouts)).
+			Msg("Transaction scan results")
 
 		losses = append(losses, txLosses...)
 		transactions = append(transactions, txTransactions...)
@@ -433,4 +453,138 @@ func (t *Tracker) scanTransactions(blockhash string, blockHeight int64, transact
 	}
 
 	return losses, txs, spentTxids, spentVouts
+}
+
+func (t *Tracker) fastScanTransactions(blockhash string, blockHeight int64, transactions []btypes.TransactionDetail) ([]types.Loss, []types.Transaction, []string, []int) {
+	numCPUs := runtime.NumCPU()
+	transactionCh := make(chan btypes.TransactionDetail, len(transactions))
+	lossCh := make(chan types.Loss)
+	txCh := make(chan types.Transaction)
+	spentTxidVoutCh := make(chan [2]interface{})
+
+	var wg sync.WaitGroup
+	wg.Add(numCPUs)
+
+	for i := 0; i < numCPUs; i++ {
+		go func() {
+			defer wg.Done()
+			for tx := range transactionCh {
+				t.processTransaction(blockhash, blockHeight, tx, lossCh, txCh, spentTxidVoutCh)
+			}
+		}()
+	}
+
+	go func() {
+		wg.Wait()
+		close(lossCh)
+		close(txCh)
+		close(spentTxidVoutCh)
+	}()
+
+	for _, tx := range transactions {
+		transactionCh <- tx
+	}
+	close(transactionCh)
+
+	var losses []types.Loss
+	var txs []types.Transaction
+	var spentTxids []string
+	var spentVouts []int
+
+	for loss := range lossCh {
+		losses = append(losses, loss)
+	}
+
+	for tx := range txCh {
+		txs = append(txs, tx)
+	}
+
+	for spent := range spentTxidVoutCh {
+		spentTxids = append(spentTxids, spent[0].(string))
+		spentVouts = append(spentVouts, spent[1].(int))
+	}
+
+	return losses, txs, spentTxids, spentVouts
+}
+
+func (t *Tracker) processTransaction(blockhash string, blockHeight int64, tx btypes.TransactionDetail, lossCh chan types.Loss, txCh chan types.Transaction, spentTxidVoutCh chan [2]interface{}) {
+	var atLeastOneBurn bool
+
+	for _, vin := range tx.Vin {
+		if vin.Coinbase != "" {
+			continue
+		}
+
+		spentScript := vin.Prevout.ScriptPubKey.Hex
+
+		if t.bf.TestString(spentScript) {
+			exists, err := t.db.BurnScriptExists(spentScript)
+			if err != nil {
+				log.Error().Err(err).Str("script", spentScript).Msg("Failed to check if script exists")
+				continue
+			}
+
+			log.Info().
+				Str("script", spentScript).
+				Bool("exists", exists).
+				Str("txid", vin.Txid).
+				Int("vout", vin.Vout).
+				Msg("Identified spending of burn script output")
+
+			if exists {
+				spentTxidVoutCh <- [2]interface{}{vin.Txid, vin.Vout}
+			}
+		}
+	}
+
+	for _, vout := range tx.Vout {
+		if vout.ScriptPubKey.Type == "nulldata" {
+			lossCh <- types.Loss{
+				TxID:        tx.Txid,
+				BlockHash:   blockhash,
+				BlockHeight: blockHeight,
+				Vout:        vout.N,
+				Amount:      types.FromBTCString(types.BTCString(vout.Value)),
+				BurnScript:  vout.ScriptPubKey.Hex,
+			}
+
+			atLeastOneBurn = true
+		} else if t.bf.TestString(vout.ScriptPubKey.Hex) {
+			exists, err := t.db.BurnScriptExists(vout.ScriptPubKey.Hex)
+			if err != nil {
+				log.Error().Err(err).Str("script", vout.ScriptPubKey.Hex).Msg("Failed to check if script exists")
+				continue
+			}
+
+			log.Info().Str("script", vout.ScriptPubKey.Hex).Bool("exists", exists).Msg("Burn script identified")
+
+			if exists {
+				lossCh <- types.Loss{
+					TxID:        tx.Txid,
+					BlockHash:   blockhash,
+					BlockHeight: blockHeight,
+					Vout:        vout.N,
+					Amount:      types.FromBTCString(types.BTCString(vout.Value)),
+					BurnScript:  vout.ScriptPubKey.Hex,
+				}
+
+				atLeastOneBurn = true
+			}
+		}
+	}
+
+	if atLeastOneBurn {
+		jsonTx, err := json.Marshal(tx)
+		if err != nil {
+			log.Error().Err(err).Str("txid", tx.Txid).Msg("Failed to marshal transaction")
+			return
+		}
+
+		txCh <- types.Transaction{
+			TxID:               tx.Txid,
+			TransactionDetails: string(jsonTx),
+			BlockHeight:        blockHeight,
+			BlockHash:          blockhash,
+		}
+	}
 }
