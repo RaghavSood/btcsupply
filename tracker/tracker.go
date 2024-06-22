@@ -236,24 +236,31 @@ func (t *Tracker) processScriptQueue() {
 func (t *Tracker) processBlock(height int64) error {
 	log.Info().Int64("block_height", height).Msg("Processing block")
 	start := time.Now()
+	startBlockStats := time.Now()
 	blockStats, err := t.client.GetBlockStats(int64(height))
 	if err != nil {
 		return err
 	}
+	elapsedBlockStats := time.Since(startBlockStats)
 
 	log.Info().
 		Int64("subsidy", blockStats.Subsidy).
 		Str("hash", blockStats.Blockhash).
+		Stringer("block_stats_elapsed", elapsedBlockStats).
 		Int64("totalfee", blockStats.Totalfee).
 		Int64("height", blockStats.Height).
 		Msg("Block stats")
 
+	startCoinStats := time.Now()
 	coinStats, err := t.client.GetTxOutSetInfo("muhash", int64(height), true)
 	if err != nil {
 		return err
 	}
 
+	elapsedCoinStats := time.Since(startCoinStats)
+
 	log.Info().
+		Stringer("coin_stats_elapsed", elapsedCoinStats).
 		Stringer("total_amount", coinStats.TotalAmount).
 		Stringer("total_unspendable_amount", coinStats.TotalUnspendableAmount).
 		Str("bestblock", coinStats.Bestblock).
@@ -266,12 +273,16 @@ func (t *Tracker) processBlock(height int64) error {
 		Int64("height", coinStats.Height).
 		Msg("Coin stats")
 
+	startBlockTime := time.Now()
 	block, err := t.client.GetBlock(blockStats.Blockhash)
 	if err != nil {
 		return err
 	}
 
+	elapsedBlockTime := time.Since(startBlockTime)
+
 	log.Info().
+		Stringer("block_time_elapsed", elapsedBlockTime).
 		Int("nTx", block.NTx).
 		Int64("height", block.Height).
 		Msg("Block")
@@ -348,13 +359,16 @@ func (t *Tracker) processBlock(height int64) error {
 		transactions = append(transactions, txTransactions...)
 	}
 
+	startRecord := time.Now()
 	err = t.db.RecordBlockIndexResults(types.FromRPCBlock(block), types.FromRPCTxOutSetInfo(coinStats), blockStats, losses, transactions, spentTxids, spentVouts)
 	if err != nil {
 		return fmt.Errorf("failed to record block index results: %v", err)
 	}
+	endRecord := time.Since(startRecord)
 
 	elapsed := time.Since(start)
 	log.Info().
+		Stringer("record_elapsed", endRecord).
 		Int64("block_height", height).
 		Stringer("elapsed", elapsed).
 		Int("losses", len(losses)).
