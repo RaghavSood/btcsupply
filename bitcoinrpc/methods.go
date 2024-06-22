@@ -49,6 +49,20 @@ func (rpc *RpcClient) GetBlockStats(height int64) (types.BlockStats, error) {
 	return stats, nil
 }
 
+func (rpc *RpcClient) GetBlockHash(height int64) (string, error) {
+	result, err := rpc.Do("getblockhash", []interface{}{height})
+	if err != nil {
+		return "", err
+	}
+
+	var hash string
+	if err := json.Unmarshal(result, &hash); err != nil {
+		return "", fmt.Errorf("failed to unmarshal getblockhash response: %v", err)
+	}
+
+	return hash, nil
+}
+
 func (rpc *RpcClient) GetBlock(hash string) (types.Block, error) {
 	// Ensure we always get the block in the most verbose mode
 	result, err := rpc.Do("getblock", []interface{}{hash, 3})
