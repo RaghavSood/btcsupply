@@ -36,13 +36,20 @@ func NewSqliteBackend(readonly bool) (*SqliteBackend, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to enable WAL mode: %w", err)
 	}
+	// WAL prefers synchronous=normal
 	_, err = db.Exec("PRAGMA synchronous=NORMAL;")
 	if err != nil {
 		return nil, fmt.Errorf("failed to set synchronous mode: %w", err)
 	}
+	// Set a large cache size
 	_, err = db.Exec("PRAGMA cache_size=-2048000;")
 	if err != nil {
 		return nil, fmt.Errorf("failed to set cache size: %w", err)
+	}
+	// Increase busy_timeout
+	_, err = db.Exec("PRAGMA busy_timeout=30000;")
+	if err != nil {
+		return nil, fmt.Errorf("failed to set busy_timeout: %w", err)
 	}
 
 	log.Info().
