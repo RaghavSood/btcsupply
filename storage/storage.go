@@ -17,7 +17,7 @@ type Storage interface {
 	GetTransactionLossSummaryForScript(script string) ([]types.TransactionLossSummary, error)
 	GetTransactionLossSummaryForTxid(txid string) (types.TransactionLossSummary, error)
 
-	GetTransactionSummary(limit int, minLoss int64) ([]types.TransactionSummary, error)
+	GetTransactionSummary(limit int, minLoss int64, onlyCoinbase bool) ([]types.TransactionSummary, error)
 	GetTransactionSummaryForTxid(txid string) (types.TransactionSummary, error)
 	GetTransactionSummaryForBlock(identifier string) ([]types.TransactionSummary, error)
 

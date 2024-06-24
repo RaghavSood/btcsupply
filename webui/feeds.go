@@ -76,7 +76,7 @@ func (w *WebUI) FeedTransactions(c *gin.Context) {
 		return
 	}
 
-	transactions, err := w.db.GetTransactionSummary(100, int64(intMinLoss))
+	transactions, err := w.db.GetTransactionSummary(100, int64(intMinLoss), false)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get lossy transactions")
 		c.AbortWithError(http.StatusInternalServerError, err)

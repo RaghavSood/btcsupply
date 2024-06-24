@@ -1,6 +1,13 @@
 {{ define "content" }}
 <div class="lg:container mx-auto p-4">
     <h2 class="text-xl font-bold mb-4">Transactions</h2>
+    <div class="mb-4">
+      {{ if .Coinbase }}
+      <a href="/transactions" class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">All Transactions</a>
+      {{ else }}
+      <a href="/transactions/coinbase" class="text-sky-400/70 hover:underline hover:decoration-dotted hover:text-slate-200">Coinbase Only</a>
+      {{ end }}
+    </div>
     <table class="min-w-full bg-slate-950/30 border border-slate-700">
         <thead>
             <tr>

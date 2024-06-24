@@ -36,6 +36,7 @@ func (w *WebUI) Serve() {
 	router.GET("/block/:identifier", w.Block)
 
 	router.GET("/transactions", w.Transactions)
+	router.GET("/transactions/coinbase", w.CoinbaseTransactions)
 	router.GET("/transaction/:hash", w.Transaction)
 
 	router.GET("/scripts", w.Scripts)
@@ -91,7 +92,7 @@ func (w *WebUI) Serve() {
 }
 
 func (w *WebUI) Index(c *gin.Context) {
-	losses, err := w.db.GetTransactionSummary(50, 1)
+	losses, err := w.db.GetTransactionSummary(50, 1, false)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get recent losses")
 		c.AbortWithError(http.StatusInternalServerError, err)

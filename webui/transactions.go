@@ -11,7 +11,7 @@ import (
 )
 
 func (w *WebUI) Transactions(c *gin.Context) {
-	recentTransactions, err := w.db.GetTransactionSummary(500, 1)
+	recentTransactions, err := w.db.GetTransactionSummary(500, 1, false)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to get recent transactions")
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -22,6 +22,23 @@ func (w *WebUI) Transactions(c *gin.Context) {
 		"Title":        "Burn Transactions",
 		"Desc":         "View recent transactions that burn BTC on the Bitcoin network.",
 		"Transactions": recentTransactions,
+		"Coinbase":     false,
+	})
+}
+
+func (w *WebUI) CoinbaseTransactions(c *gin.Context) {
+	recentTransactions, err := w.db.GetTransactionSummary(500, 1, true)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get recent transactions")
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	w.renderTemplate(c, "transactions.tmpl", map[string]interface{}{
+		"Title":        "Coinbase Burn Transactions",
+		"Desc":         "View recent coinbase transactions that burn BTC on the Bitcoin network.",
+		"Transactions": recentTransactions,
+		"Coinbase":     true,
 	})
 }
 

@@ -6,8 +6,11 @@ import (
 	"github.com/RaghavSood/btcsupply/types"
 )
 
-func (d *SqliteBackend) GetTransactionSummary(limit int, minLoss int64) ([]types.TransactionSummary, error) {
+func (d *SqliteBackend) GetTransactionSummary(limit int, minLoss int64, onlyCoinbase bool) ([]types.TransactionSummary, error) {
 	query := `SELECT ts.tx_id, ts.coinbase, ts.total_loss, ts.block_height, ts.block_hash, b.block_timestamp FROM transaction_summary ts JOIN blocks b ON ts.block_hash = b.block_hash WHERE total_loss >= ? ORDER BY ts.block_height DESC LIMIT ?`
+	if onlyCoinbase {
+		query = `SELECT ts.tx_id, ts.coinbase, ts.total_loss, ts.block_height, ts.block_hash, b.block_timestamp FROM transaction_summary ts JOIN blocks b ON ts.block_hash = b.block_hash WHERE total_loss >= ? AND ts.coinbase = 1 ORDER BY ts.block_height DESC LIMIT ?`
+	}
 
 	rows, err := d.db.Query(query, minLoss, limit)
 	if err != nil {
