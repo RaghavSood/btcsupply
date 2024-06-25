@@ -416,3 +416,5 @@ a914000000000000000000000000000000000000000087,high,p2sh all-0 key,burn_address,
 76a914906b6fa1e53cc76a17c77c6726fb371b1181f78d88ac,medium,https://bitcoin.stackexchange.com/q/45930/7272,lost_keys,1EAd1Qua6fzyenPeSMRxYcpbcKgYUBpxQ7
 76a9143947b5155f8641756a90c935fbf61814a65ec4a288ac,medium,"https://bitcointalk.org/index.php?topic=359.0
 https://raghavsood.com/blog/2024/06/25/bitcoin-archeology-120-btc-lost/",lost_keys,16DsRFSCbv8aPMmDcbP4wYsS4FV9hf6rt2
+76a914699599dda59d7f4b73ffa23da578e96da9baff8588ac,high,"https://web.archive.org/web/20140704184820/https://multibit.org/blog/2014/04/28/private-key-safety-improvements.html
+https://github.com/Multibit-Legacy/multibit/issues/524",lost_keys,1AdHAc4kYrMzwijP75b4qp4xqP3ZRuFqL1
